@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.homeapp.HomeController">
+   <children>
+      <Button layoutX="129.0" layoutY="188.0" mnemonicParsing="false" onAction="#on_leaderboard_clicked" text="Leaderboard" />
+      <Button layoutX="394.0" layoutY="188.0" mnemonicParsing="false" onAction="#on_rules_clicked" text="Rules" />
+      <Button layoutX="266.0" layoutY="233.0" mnemonicParsing="false" onAction="#on_run_clicked" text="LinkedList" />
+      <Label layoutX="265.0" layoutY="66.0" text="Home Screen" />
+   </children>
+</AnchorPane>

@@ -6,7 +6,7 @@ Sorry! Game Application
 
 # Setup
 * Choose four pawns of the same color. Put all four on that color START space.
-* Shuffle the deck. Place face down on "Place PAck Here" to form Draw pile.
+* Shuffle the deck. Place face down on "Place Pack Here" to form Draw pile.
 * Pick a player to go first. Movement is clockwise around the board and play passes to the left.
 
 # Game Play

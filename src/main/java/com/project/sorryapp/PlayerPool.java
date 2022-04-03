@@ -31,4 +31,6 @@ public class PlayerPool {
          iterator_ = (iterator_ + 1)%players_.size();
      }
 
+     public int get_iterator() { return iterator_; }
+
 }

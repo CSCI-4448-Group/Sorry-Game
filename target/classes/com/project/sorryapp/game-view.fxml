@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.sorryapp.GameController">
+   <children>
+      <Button layoutX="417.0" layoutY="333.0" mnemonicParsing="false" onAction="#on_next_clicked" text="Next" />
+      <Button layoutX="179.0" layoutY="333.0" mnemonicParsing="false" onAction="#on_prev_clicked" text="Prev" />
+   </children>
+</AnchorPane>

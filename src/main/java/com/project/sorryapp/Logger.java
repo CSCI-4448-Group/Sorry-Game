@@ -9,15 +9,15 @@ public class Logger implements Observer {
     // Singleton instance of Logger. Eager instantiation
     private static Logger loggerInstance = new Logger();
     private String announcement_; // Logger has an announcement String attribute (used to store incoming announcement
-    private int currTurn; // Track the current day
+    private int currTurn; // Track the current turn
 
     // Construct the Logger by registering it as an observer of clerk and getting the current day
     private Logger() {}
 
-    public void Logger_set(Game g, Subject player)
+    public void Logger_set(PlayerPool p, Subject player)
     {
         player.registerObserver(this);
-        currTurn = g.get_calendar().get_current_turn();
+        currTurn = p.get_iterator();
     }
 
     public static synchronized Logger getInstance() {

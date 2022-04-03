@@ -7,18 +7,18 @@ import java.util.HashMap;
 public class Tracker implements Observer {
     private static Tracker trackerInstance = null;
     private HashMap<String, ArrayList<Integer>> trackerMap_ = new HashMap<>(); // Define data structure to store relevant player information
-    private Calendar calendar; // Calendar attribute for tracking
+    private PlayerPool playerPool; // Calendar attribute for tracking
 
     // Constructor for Tracker
-    private Tracker(Game g) {
-        calendar = g.get_calendar();
+    private Tracker(PlayerPool p) {
+        playerPool = p;
     }
 
     // Double checked locking. Wait to synchronize until we know the tracker instance is null
-    public static synchronized Tracker getInstance(Game g) {
+    public static synchronized Tracker getInstance(PlayerPool p) {
         if (trackerInstance == null)
         {
-            trackerInstance = new Tracker(g);
+            trackerInstance = new Tracker(p);
         }
         return trackerInstance;
     }
@@ -53,7 +53,7 @@ public class Tracker implements Observer {
     public void print_turn_stats() {
         // Divide print statements
         System.out.println("===========================================");
-        System.out.println("Tracker: Day " + (calendar.get_current_turn() - 1));
+        System.out.println("Tracker: Day " + (playerPool.get_iterator() - 1));
         System.out.println("Player       Num Spaces Moved      Num Sorries     Num Pawns Started    Num Pawns Home");
 
         // Go through trackerMap data structure and print out player name, num spaces moved, num sorries, num pawns started, num pawns home

@@ -14,7 +14,7 @@ interface SceneLoader{
             stage.show();
         }
         catch(Exception e){
-            System.out.println(e.getStackTrace());
+            e.printStackTrace();
             System.out.println("Failed to load file " + fileName);
         }
     }

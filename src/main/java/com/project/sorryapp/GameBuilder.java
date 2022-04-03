@@ -16,19 +16,19 @@ public class GameBuilder{
         Tile currTile = originTile;
         gameWindow.getChildren().add(currTile);
         for(int i = 1; i < 16; i++){ //Build top row
-            currTile = buildTile(currTile, (int)currTile.getX()+20, (int)currTile.getY());
+            currTile = buildTile(currTile, (int)(currTile.getX()+currTile.getWidth()), (int)currTile.getY());
             gameWindow.getChildren().add(currTile);
         }
         for(int i = 0; i < 15; i++){ //Build right column
-            currTile = buildTile(currTile, (int)currTile.getX(), (int)currTile.getY()+20);
+            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.getWidth()));
             gameWindow.getChildren().add(currTile);
         }
         for(int i = 0; i < 15; i++){ //Build bottom row
-            currTile = buildTile(currTile, (int)currTile.getX()-20,(int)currTile.getY());
+            currTile = buildTile(currTile, (int)(currTile.getX()-currTile.getWidth()),(int)currTile.getY());
             gameWindow.getChildren().add(currTile);
         }
         for(int i = 0; i < 14; i++){ //Build left col
-            currTile = buildTile(currTile, (int)currTile.getX(), (int)currTile.getY()-20);
+            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.getWidth()));
             gameWindow.getChildren().add(currTile);
         }
         currTile.set_next(originTile); //Connect the first tile and the last tile
@@ -43,12 +43,8 @@ public class GameBuilder{
     //Sets border color of tile to black
     private static Tile buildTile(Tile prevTile, int x, int y){
         Tile newTile = new Tile();
-        newTile.setWidth(20);
-        newTile.setHeight(20);
         newTile.setX(x);
         newTile.setY(y);
-        newTile.setFill(Color.WHITE);
-        newTile.setStroke(Color.BLACK);
         newTile.set_prev(prevTile);
         if(prevTile != null){
             prevTile.set_next(newTile);

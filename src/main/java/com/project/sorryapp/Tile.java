@@ -1,5 +1,6 @@
 package com.project.sorryapp;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Tile extends Rectangle{
@@ -8,6 +9,12 @@ public class Tile extends Rectangle{
     private Pawn currPawn_;
     private GameColor color_;
 
+    Tile(){
+        this.setWidth(25);
+        this.setHeight(25);
+        this.setFill(Color.WHITE);
+        this.setStroke(Color.BLACK);
+    }
     public void set_next(Tile nextTile){
         next_ = nextTile;
     }

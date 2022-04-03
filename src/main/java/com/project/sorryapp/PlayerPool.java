@@ -14,6 +14,7 @@ public class PlayerPool {
      }
 
      public void initializePlayers(){
+         players_ = new ArrayList<>();
          players_.add(new Player(GameColor.BLUE));
          players_.add(new Player(GameColor.RED));
          players_.add(new Player(GameColor.GREEN));

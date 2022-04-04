@@ -4,6 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 //repeated code here, figure this out (i.e., this would get ugly if we had more than 2 buttons)

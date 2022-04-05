@@ -4,17 +4,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class Pawn extends Circle {
-    private GameColor color_;
+    private Color color_;
     private Tile currTile_;
 
-    Pawn(GameColor color){
+    Pawn(Color color){
         color_ = color;
         this.setRadius(10);
-        switch(color_){
-            case RED -> this.setFill(Color.RED);
-            case BLUE -> this.setFill(Color.BLUE);
-            case GREEN -> this.setFill(Color.GREEN);
-            case YELLOW -> this.setFill(Color.YELLOW);
+        switch(color_.toString()){
+            case "0xff0000ff" -> this.setFill(Color.RED);
+            case "0xffff00ff" -> this.setFill(Color.YELLOW);
+            case "0x0000ffff" -> this.setFill(Color.BLUE);
+            case "0x008000ff" -> this.setFill(Color.GREEN);
         }
     }
 

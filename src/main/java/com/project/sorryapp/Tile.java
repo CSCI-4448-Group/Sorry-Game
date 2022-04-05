@@ -7,7 +7,6 @@ public class Tile extends Rectangle{
     private Tile next_;
     private Tile prev_;
     private Pawn currPawn_;
-    private MoveBehavior moveBehavior_;
 
     Tile(int x, int y, double length, Color color){
         this.setX(x);
@@ -16,7 +15,6 @@ public class Tile extends Rectangle{
         this.setHeight(length);
         this.setFill(color);
         this.setStroke(Color.BLACK);
-        moveBehavior_ = new NormalMove(); //Probably will want to pass in a move behavior to the constructor
     }
     public void set_next(Tile nextTile){
         next_ = nextTile;
@@ -28,11 +26,19 @@ public class Tile extends Rectangle{
     public Tile get_next(){
         return next_;
     }
-    public Tile get_prev(){
-        return prev_;
-    }
+    public Tile get_prev(){return prev_;}
     public Pawn get_pawn(){return currPawn_;}
-    public boolean perform_move(int distance){
-        return moveBehavior_.move_pawn(currPawn_, distance);
+    public double get_length(){return getWidth();}
+}
+
+class GatewayTile extends Tile{
+    private Tile gatewaynext_;
+
+    GatewayTile(int x, int y, double length, Color color){
+        super(x,y,length,color);
     }
+
+    public void set_gateway_next(Tile next){ gatewaynext_ = next; }
+    public Tile get_gateway_next(){ return gatewaynext_; }
+
 }

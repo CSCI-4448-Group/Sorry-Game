@@ -10,40 +10,46 @@ public class GameBuilder{
         return new PlayerPool();
     }
 
+    //!! A lot of repeated code here !!
+
+    //Seperate the building of the game board with adding to the gui
+    //Build a view class that encapsulates the drawing and only the drawing of the board, pass it the minimal amt of data possible to do this
+    
+    
     //Initialize the game board
     //Links each tile to its neighboring tiles
-    static public Tile initializeBoard(PlayerPool players, AnchorPane gameWindow){
-        Tile originTile = buildTile(null,(int)gameWindow.getPrefWidth()/4,(int)gameWindow.getPrefHeight()/6);
+    static public Tile initializeBoard(PlayerPool players, AnchorPane gameView){
+        Tile originTile = buildTile(null,(int)gameView.getPrefWidth()/4,(int)gameView.getPrefHeight()/6);
         Tile currTile = originTile;
         Tile testTile = null;
-        gameWindow.getChildren().add(currTile);
-        for(int i = 1; i < 16; i++){ //Build top row
-            if(i==5){
-                gameWindow.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() - currTile.getWidth()/4), (int)(currTile.getY()+currTile.getHeight()),Color.RED));
+        gameView.getChildren().add(currTile);
+        for(int i = 0; i < 15; i++){ //Build top row
+            if(i==4){ //Top Home tile
+                gameView.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() - currTile.get_length()/4), (int)(currTile.getY()+currTile.getHeight()),Color.RED));
             }
-            currTile = buildTile(currTile, (int)(currTile.getX()+currTile.getWidth()), (int)currTile.getY());
-            gameWindow.getChildren().add(currTile);
+            currTile = buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+            gameView.getChildren().add(currTile);
         }
         for(int i = 0; i < 15; i++){ //Build right column
-            if(i==4){
-                gameWindow.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() - currTile.getWidth()*1.5), (int)(currTile.getY()-currTile.getHeight()/4),Color.BLUE));
+            if(i==4){ //Right home tile
+                gameView.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() - currTile.get_length()*1.5), (int)(currTile.getY()-currTile.getHeight()/4),Color.BLUE));
             }
-            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.getWidth()));
-            gameWindow.getChildren().add(currTile);
+            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.get_length()));
+            gameView.getChildren().add(currTile);
         }
         for(int i = 0; i < 15; i++){ //Build bottom row
-            if(i==4){
-                gameWindow.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() - currTile.getWidth()/4), (int)(currTile.getY()-currTile.getHeight()*1.5),Color.YELLOW));
+            if(i==4){ //Bottom row tile
+                gameView.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() - currTile.get_length()/4), (int)(currTile.getY()-currTile.getHeight()*1.5),Color.YELLOW));
             }
-            currTile = buildTile(currTile, (int)(currTile.getX()-currTile.getWidth()),(int)currTile.getY());
-            gameWindow.getChildren().add(currTile);
+            currTile = buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
+            gameView.getChildren().add(currTile);
         }
         for(int i = 0; i < 14; i++){ //Build left col
-            if(i==4){
-                gameWindow.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() + currTile.getWidth()), (int)(currTile.getY()-currTile.getHeight()/4),Color.GREEN));
+            if(i==4){ //Left home tile
+                gameView.getChildren().add(buildHomeTile(currTile,(int)(currTile.getX() + currTile.get_length()), (int)(currTile.getY()-currTile.getHeight()/4),Color.GREEN));
             }
-            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.getWidth()));
-            gameWindow.getChildren().add(currTile);
+            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
+            gameView.getChildren().add(currTile);
         }
         currTile.set_next(originTile); //Connect the first tile and the last tile
         originTile.set_prev(currTile);
@@ -62,10 +68,16 @@ public class GameBuilder{
         return newTile;
     }
 
+
     private static Tile buildHomeTile(Tile nextTile, int x, int y, Color color){
         Tile homeTile = new Tile(x,y,tileLength_*1.5, color);
         homeTile.set_next(nextTile);
         homeTile.set_prev(null);
         return homeTile;
+    }
+    
+    private static Tile buildGatewayTile(){
+        return null;
+        //return gatewayTile;
     }
 }

@@ -16,12 +16,8 @@ public class Tile extends Rectangle{
         this.setFill(color);
         this.setStroke(Color.BLACK);
     }
-    public void set_next(Tile nextTile){
-        next_ = nextTile;
-    }
-    public void set_prev(Tile prevTile){
-        prev_ = prevTile;
-    }
+    public void set_next(Tile nextTile){next_ = nextTile;}
+    public void set_prev(Tile prevTile){prev_ = prevTile;}
     public void set_pawn(Pawn pawn){ currPawn_ = pawn;}
     public Tile get_next(){
         return next_;
@@ -32,13 +28,12 @@ public class Tile extends Rectangle{
 }
 
 class GatewayTile extends Tile{
-    private Tile gatewaynext_;
+    private Tile safeZoneNext_;
 
     GatewayTile(int x, int y, double length, Color color){
         super(x,y,length,color);
     }
-
-    public void set_gateway_next(Tile next){ gatewaynext_ = next; }
-    public Tile get_gateway_next(){ return gatewaynext_; }
+    public void set_safezone_next(Tile next){ safeZoneNext_ = next; }
+    public Tile get_safezone_next(){ return safeZoneNext_; }
 
 }

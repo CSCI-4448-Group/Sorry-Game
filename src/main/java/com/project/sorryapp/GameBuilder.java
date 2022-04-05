@@ -16,19 +16,20 @@ public class GameBuilder{
     //Links each tile to its neighboring tiles
     //returns the first initialized tile
     static public Tile initializePerimeter(double beginX, double beginY){
-        Tile originTile = buildTile(null,(int)beginX/4,(int)beginY/6); //Initialize origin tile (top left corner tile)
+        Tile originTile = TileFactory.buildTile(null,(int)beginX/4,(int)beginY/6); //Initialize origin tile (top left corner tile)
         Tile currTile = originTile;
+        TileFactory.buildTile(null,5,5);
         for(int i = 0; i < 15; i++){ //Build top row
-            currTile = buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
         }
         for(int i = 0; i < 15; i++){ //Build right column
-            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.get_length()));
+            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.get_length()));
         }
         for(int i = 0; i < 15; i++){ //Build bottom row
-            currTile = buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
+            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
         }
         for(int i = 0; i < 14; i++){ //Build left col
-            currTile = buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
+            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
         }
         currTile.set_next(originTile); //Connect the first tile and the last tile
         originTile.set_prev(currTile);
@@ -49,45 +50,24 @@ public class GameBuilder{
             currTileIndex += 1;
             switch(currTileIndex){
                 case 4:
-                    homeTiles.add(buildHomeTile(crawler,(int)(crawler.getX() - crawler.get_length()/4),
+                    homeTiles.add(TileFactory.buildHomeTile(crawler,(int)(crawler.getX() - crawler.get_length()/4),
                                     (int)(crawler.getY()+crawler.getHeight()),Color.RED));
                     break;
                 case 19:
-                    homeTiles.add(buildHomeTile(crawler,(int)(crawler.getX() - crawler.getWidth()*1.5),
+                    homeTiles.add(TileFactory.buildHomeTile(crawler,(int)(crawler.getX() - crawler.getWidth()*1.5),
                                     (int)(crawler.getY()-crawler.getHeight()/4),Color.BLUE));
                     break;
                 case 34:
-                    homeTiles.add(buildHomeTile(crawler,(int)(crawler.getX() - crawler.getWidth()/4),
+                    homeTiles.add(TileFactory.buildHomeTile(crawler,(int)(crawler.getX() - crawler.getWidth()/4),
                                     (int)(crawler.getY()-crawler.getHeight()*1.5),Color.YELLOW));
                     break;
                 case 49:
-                    homeTiles.add(buildHomeTile(crawler,(int)(crawler.getX() + crawler.getWidth()),
+                    homeTiles.add(TileFactory.buildHomeTile(crawler,(int)(crawler.getX() + crawler.getWidth()),
                                     (int)(crawler.getY()-crawler.getHeight()/4),Color.GREEN));
             }
         }
         return homeTiles;
     }
-
-    //Build a new tile setting x and y to arguments.
-    //Sets prev_ field of tile to prevTile.
-    //Sets next_ field of prevTile to new tile
-    private static Tile buildTile(Tile prevTile, int x, int y){
-        Tile newTile = new Tile(x,y,25,Color.WHITE);
-        newTile.set_prev(prevTile);
-        if(prevTile != null){
-            prevTile.set_next(newTile);
-        }
-        return newTile;
-    }
-
-
-    private static Tile buildHomeTile(Tile nextTile, int x, int y, Color color){
-        Tile homeTile = new Tile(x,y,25*1.5, color);
-        homeTile.set_next(nextTile);
-        homeTile.set_prev(null);
-        return homeTile;
-    }
-    
     private static Tile buildGatewayTile(){
         return null;
         //return gatewayTile;

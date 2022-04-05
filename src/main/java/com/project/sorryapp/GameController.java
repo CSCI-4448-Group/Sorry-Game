@@ -1,8 +1,11 @@
 package com.project.sorryapp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class GameController implements SceneLoader {
     @FXML
@@ -30,5 +33,12 @@ public class GameController implements SceneLoader {
         currTile_.setFill(Color.WHITE);
         currTile_ = currTile_.get_prev();
         currTile_.setFill(Color.RED);
+    }
+
+    @FXML
+    public void on_home_clicked(ActionEvent event){
+        Node node = (Node)event.getSource();
+        Stage thisStage = (Stage)node.getScene().getWindow();
+        load_scene("home-view.fxml", thisStage);
     }
 }

@@ -26,14 +26,3 @@ public class Tile extends Rectangle{
     public Pawn get_pawn(){return currPawn_;}
     public double get_length(){return getWidth();}
 }
-
-class GatewayTile extends Tile{
-    private Tile safeZoneNext_;
-
-    GatewayTile(int x, int y, double length, Color color){
-        super(x,y,length,color);
-    }
-    public void set_safezone_next(Tile next){ safeZoneNext_ = next; }
-    public Tile get_safezone_next(){ return safeZoneNext_; }
-
-}

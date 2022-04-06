@@ -63,7 +63,6 @@ public class GameBuilder{
     }
 
     public static void initializeSafeTiles(Tile originTile){
-        ArrayList<Tile> homeTiles = new ArrayList<>();
         int currTileIndex = 1;
         Tile crawler = originTile;
         crawler = crawler.get_next(); //Set crawler to next at start so we dont immediatly false out of loop
@@ -73,10 +72,9 @@ public class GameBuilder{
         while(crawler != null && !originTile.equals(crawler)){
             crawler = crawler.get_next();
             currTileIndex += 1;
-            System.out.println(currTileIndex);
 
-            Tile nextHolderTile = null;
-            GatewayTile gateTile = null;
+            Tile nextHolderTile ;
+            GatewayTile gateTile;
             switch(currTileIndex){
                 case 2:
                     nextHolderTile = crawler.get_next();
@@ -84,7 +82,6 @@ public class GameBuilder{
                     gateTile = (GatewayTile)(nextHolderTile.get_prev());
                     gateTile.set_gateway_next(gateTile.get_next());
                     gateTile.set_next(nextHolderTile);
-                    crawler = nextHolderTile.get_prev();
                     break;
                 case 17:
                     nextHolderTile = crawler.get_next();

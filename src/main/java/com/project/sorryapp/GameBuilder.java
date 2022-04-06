@@ -1,10 +1,11 @@
 package com.project.sorryapp;
 
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
+
+//Note: There is alot of overdone work here. We iterate over the entire board each time
+//      Could be offset by instead returning from the initializePerimeter function the locations of
+//      where the hometiles and safezone tiles need to be built
 
 public class GameBuilder{
     //Initialize the Player Pool.
@@ -18,35 +19,10 @@ public class GameBuilder{
     static public Tile initializePerimeter(double beginX, double beginY){
         Tile originTile = TileFactory.buildTile(null,(int)beginX/4,(int)beginY/6); //Initialize origin tile (top left corner tile)
         Tile currTile = originTile;
-        TileFactory.buildTile(null,5,5);
-        for(int i = 0; i < 15; i++){ //Build top row
-            if(i==1){
-                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
-        }
-        for(int i = 0; i < 15; i++){ //Build right column
-            if(i==1){
-                currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.get_length()));
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()+currTile.get_length()));
-        }
-        for(int i = 0; i < 15; i++){ //Build bottom row
-            if(i==1){
-                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
-        }
-        for(int i = 0; i < 14; i++){ //Build left col
-            if(i==1){
-                currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
-        }
+        currTile = buildEastBoundRow(currTile, 15,1);
+        currTile = buildSouthBoundRow(currTile,15,1);
+        currTile = buildWestBoundRow(currTile,15,1);
+        currTile = buildNorthBoundRow(currTile, 14,1);
         currTile.set_next(originTile); //Connect the first tile and the last tile
         originTile.set_prev(currTile);
         return originTile;
@@ -58,9 +34,10 @@ public class GameBuilder{
         ArrayList<Tile> homeTiles = new ArrayList<>();
         int currTileIndex = 1;
         Tile crawler = originTile;
-        crawler = crawler.get_next();
+        crawler = crawler.get_next(); //Set crawler to next at start so we dont immediatly false out of loop
 
-        //Iterate through game board, building home tiles and assigning their neighbors
+        //Iterate through game board, building home tiles and assigning their neighbors at the specific...
+        //...Index positions in switch case
         while(crawler != null && !originTile.equals(crawler)){
             crawler = crawler.get_next();
             currTileIndex += 1;
@@ -86,19 +63,130 @@ public class GameBuilder{
     }
 
     public static void initializeSafeTiles(Tile originTile){
+        ArrayList<Tile> homeTiles = new ArrayList<>();
+        int currTileIndex = 1;
         Tile crawler = originTile;
-        crawler = crawler.get_next();
-        while (crawler != null && !originTile.equals(crawler)){
-            if(crawler instanceof GatewayTile){
-                Tile tile_ = TileFactory.buildTile(null,(int)crawler.getX(),(int)(crawler.getY()+crawler.get_length()));
-                ((GatewayTile) crawler).set_gateway_next(tile_);
-                tile_.set_prev(crawler);
-                for(int i = 0; i < 4; i++){
-                    tile_ = TileFactory.buildTile(tile_,(int)tile_.getX(),(int)(tile_.getY()+tile_.get_length()));
-                }
-                return;
-            }
+        crawler = crawler.get_next(); //Set crawler to next at start so we dont immediatly false out of loop
+
+        //Iterate through game board, building home tiles and assigning their neighbors at the specific...
+        //...Index positions in switch case
+        while(crawler != null && !originTile.equals(crawler)){
             crawler = crawler.get_next();
+            currTileIndex += 1;
+            System.out.println(currTileIndex);
+
+            Tile nextHolderTile = null;
+            GatewayTile gateTile = null;
+            switch(currTileIndex){
+                case 2:
+                    nextHolderTile = crawler.get_next();
+                    buildSouthBoundRow(crawler,5);
+                    gateTile = (GatewayTile)(nextHolderTile.get_prev());
+                    gateTile.set_gateway_next(gateTile.get_next());
+                    gateTile.set_next(nextHolderTile);
+                    crawler = nextHolderTile.get_prev();
+                    break;
+                case 17:
+                    nextHolderTile = crawler.get_next();
+                    buildWestBoundRow(crawler,5);
+                    gateTile = (GatewayTile)(nextHolderTile.get_prev());
+                    gateTile.set_gateway_next(gateTile.get_next());
+                    gateTile.set_next(nextHolderTile);
+                    break;
+                case 32:
+                    nextHolderTile = crawler.get_next();
+                    buildNorthBoundRow(crawler,5);
+                    gateTile = (GatewayTile)(nextHolderTile.get_prev());
+                    gateTile.set_gateway_next(gateTile.get_next());
+                    gateTile.set_next(nextHolderTile);
+                    break;
+                case 47:
+                    nextHolderTile = crawler.get_next();
+                    buildEastBoundRow(crawler,5);
+                    gateTile = (GatewayTile)(nextHolderTile.get_prev());
+                    gateTile.set_gateway_next(gateTile.get_next());
+                    gateTile.set_next(nextHolderTile);
+                    break;
+            }
         }
+    }
+
+
+    private static Tile buildEastBoundRow(Tile originTile, int length){
+        Tile currTile = originTile;
+        for(int i = 0; i < length; i++){
+            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+        }
+        return currTile;
+    }
+    private static Tile buildEastBoundRow(Tile originTile, int length, int gatePosition){
+        Tile currTile = originTile;
+        for(int i = 0; i < length; i++){
+            if(i==gatePosition){
+                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+                continue;
+            }
+            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+        }
+        return currTile;
+    }
+
+    private static Tile buildSouthBoundRow(Tile originTile, int length){
+        Tile currTile = originTile;
+        for (int i = 0; i < length; i++) {
+            currTile = TileFactory.buildTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()));
+        }
+        return currTile;
+    }
+
+    private static Tile buildSouthBoundRow(Tile originTile, int length, int gatePosition) {
+        Tile currTile = originTile;
+        for (int i = 0; i < length; i++) {
+            if (i==gatePosition) {
+                currTile = TileFactory.buildGateTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()));
+                continue;
+            }
+            currTile = TileFactory.buildTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()));
+        }
+        return currTile;
+    }
+
+    private static Tile buildWestBoundRow(Tile originTile, int length){
+        Tile currTile = originTile;
+        for(int i = 0; i < length; i++){ //Build bottom row
+            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
+        }
+        return currTile;
+    }
+
+    private static Tile buildWestBoundRow(Tile originTile, int length, int gatePosition){
+        Tile currTile = originTile;
+        for(int i = 0; i < length; i++){ //Build bottom row
+            if(i==gatePosition){
+                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
+                continue;
+            }
+            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
+        }
+        return currTile;
+    }
+
+    private static Tile buildNorthBoundRow(Tile originTile, int length){
+        Tile currTile = originTile;
+        for(int i = 0; i < length; i++){ //Build left col
+            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
+        }
+        return currTile;
+    }
+    private static Tile buildNorthBoundRow(Tile originTile, int length, int gatePosition){
+        Tile currTile = originTile;
+        for(int i = 0; i < length; i++){ //Build left col
+            if(i==gatePosition){
+                currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
+                continue;
+            }
+            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
+        }
+        return currTile;
     }
 }

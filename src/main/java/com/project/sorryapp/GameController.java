@@ -22,6 +22,8 @@ public class GameController implements SceneLoader {
         ArrayList<Tile> homeTiles = GameBuilder.intitializeHomeTiles(originTile); //Build the home tiles model
         GameBuilder.initializeSafeTiles(originTile);
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
+
+        currTile_ = originTile;
     }
 
 //    //This is just for testing to make sure the whole board is connected

@@ -14,6 +14,13 @@ public class GameView{
 
         while(crawler != null && !originTile.equals(crawler)){ //Add all perimeter tiles to the view
             gameView_.getChildren().add(crawler);
+            if(crawler instanceof GatewayTile){ //If we reached a gateway tile
+                Tile safeZoneCrawler = ((GatewayTile) crawler).get_gateway_next();
+                while(safeZoneCrawler != null){ //Iterate through the safe zone and add all tiles to view
+                    gameView_.getChildren().add(safeZoneCrawler);
+                    safeZoneCrawler = safeZoneCrawler.get_next();
+                }
+            }
             crawler = crawler.get_next();
         }
         gameView_.getChildren().addAll(homeTiles); //Add all home tiles to the view

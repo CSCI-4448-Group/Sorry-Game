@@ -23,4 +23,13 @@ public class TileFactory{
         homeTile.set_prev(null);
         return homeTile;
     }
+
+    public static Tile buildGateTile(Tile prevTile, int x, int y){
+        Tile newTile = new GatewayTile(x,y,25, Color.WHITE);
+        newTile.set_prev(prevTile);
+        if(prevTile != null){
+            prevTile.set_next(newTile);
+        }
+        return newTile;
+    }
 }

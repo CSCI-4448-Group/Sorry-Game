@@ -1,6 +1,7 @@
 package com.project.sorryapp;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Deck {
     private ArrayList<Card> cards_ = new ArrayList<Card>();
@@ -35,8 +36,17 @@ public class Deck {
         return get_deck().size();
     }
 
-    public void get_next_card(int i)
+    public int getRandomNumber()
     {
-        get_deck().remove(i);
+        Random rand = new Random();
+        int upperBound = deck_size();
+        int randomNumber = rand.nextInt(upperBound);
+        return randomNumber;
+    }
+
+    public Card get_next_card(int i)
+    {
+        Card pulledCard = get_deck().remove(i);
+        return pulledCard;
     }
 }

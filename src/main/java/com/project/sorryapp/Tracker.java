@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tracker implements Observer {
+
+
     private static Tracker trackerInstance = null;
     private HashMap<String, ArrayList<Integer>> trackerMap_ = new HashMap<>(); // Define data structure to store relevant player information
     private PlayerPool playerPool; // Calendar attribute for tracking
+    private static DbRunner dbRunner;
 
     // Constructor for Tracker
     private Tracker(PlayerPool p) {
@@ -19,6 +22,7 @@ public class Tracker implements Observer {
         if (trackerInstance == null)
         {
             trackerInstance = new Tracker(p);
+            dbRunner = new DbRunner();
         }
         return trackerInstance;
     }
@@ -34,6 +38,7 @@ public class Tracker implements Observer {
         {
             // Call setTrackerMap which will create a new entry in HashMap with name of player and arrayList containing zero values for numSpacesMoved, numSorries, numPawnsStarted, numPawnsHome
             setTrackerMap_(nameOfPlayer, new ArrayList<Integer>());
+            dbRunner.create(nameOfPlayer, numSpacesMoved, numSorries, numPawnsStarted, numPawnsHome);
         }
         // If the tracker map does contain the name of the employee as a key
         // Update all relevant indices of ArrayList value with increments of parameters
@@ -46,7 +51,9 @@ public class Tracker implements Observer {
         trackerMap_.get(nameOfPlayer).set(0, updateNumSpacesMoved);
         trackerMap_.get(nameOfPlayer).set(1, updateNumSorries);
         trackerMap_.get(nameOfPlayer).set(2, updateNumPawnsStarted);
-        trackerMap_.get(nameOfPlayer).set(2, updateNumPawnsHome);
+        trackerMap_.get(nameOfPlayer).set(3, updateNumPawnsHome);
+        dbRunner.update();
+
     }
 
     // Print out relevant data in table format

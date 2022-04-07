@@ -3,6 +3,8 @@ package com.project.sorryapp;
 //Possible issue: This class has two responsibilities that we may want to encapsulate
                     //1.] Maintaining the pool of players
                     //2.] Maintaining the iterator
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 public class PlayerPool {
     int iterator_;
@@ -15,10 +17,10 @@ public class PlayerPool {
 
      public void initializePlayers(){
          players_ = new ArrayList<>();
-         players_.add(new Player(GameColor.BLUE));
-         players_.add(new Player(GameColor.RED));
-         players_.add(new Player(GameColor.GREEN));
-         players_.add(new Player(GameColor.YELLOW));
+         players_.add(new Player(Color.RED));
+         players_.add(new Player(Color.YELLOW));
+         players_.add(new Player(Color.BLUE));
+         players_.add(new Player(Color.GREEN));
      }
 
      //Returns the current player pointed to by pool iterator

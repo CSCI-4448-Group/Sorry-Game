@@ -2,7 +2,11 @@ package com.project.sorryapp;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
+import java.io.FileInputStream;
 
 interface SceneLoader{
     default void load_scene(String fileName, Stage stage){

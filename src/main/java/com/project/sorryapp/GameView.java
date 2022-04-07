@@ -30,7 +30,7 @@ public class GameView{
         gameView_.getChildren().addAll(homeTiles); //Add all home tiles to the view
 
         try {
-            Image image = new Image("https://www.pngkey.com/png/full/125-1257676_sorry-logo-png-transparent-sorry-game.png");
+            Image image = new Image(getClass().getResource("125-1257676_sorry-logo-png-transparent-sorry-game.png").toURI().toString());
             ImageView imageView1 = new ImageView(image);
             imageView1.setFitWidth(200);
             imageView1.setPreserveRatio(true);

@@ -34,9 +34,6 @@ public class HomeController implements SceneLoader{
     public void on_newgame_clicked(ActionEvent event) throws Exception {
         Node node = (Node)event.getSource();
         Stage thisStage = (Stage)node.getScene().getWindow();
-//        FileInputStream input = new FileInputStream("");
-//        Image image = new Image(input);
-//        ImageView imageView = new ImageView(image);
         load_scene("game-view.fxml", thisStage);
     }
 }

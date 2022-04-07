@@ -9,14 +9,20 @@ import java.util.ArrayList;
 
 public class GameBuilder{
     //Initialize the Player Pool.
-    static public PlayerPool initializePlayers(){
+    public static PlayerPool initializePlayers(){
         return new PlayerPool();
+    }
+
+    // Initialize the deck for the game
+    public static Deck initializeDeck()
+    {
+        return new Deck();
     }
     
     //Initialize the perimeter of the game board
     //Links each tile to its neighboring tiles
     //returns the first initialized tile
-    static public Tile initializePerimeter(double beginX, double beginY){
+    public static Tile initializePerimeter(double beginX, double beginY){
         Tile originTile = TileFactory.buildTile(null,(int)beginX/4,(int)beginY/6); //Initialize origin tile (top left corner tile)
         Tile currTile = originTile;
         currTile = buildEastBoundRow(currTile, 15,1);
@@ -107,7 +113,6 @@ public class GameBuilder{
             }
         }
     }
-
 
     private static Tile buildEastBoundRow(Tile originTile, int length){
         Tile currTile = originTile;

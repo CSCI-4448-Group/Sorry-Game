@@ -3,10 +3,13 @@ package com.project.sorryapp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class GameController implements SceneLoader {
@@ -14,10 +17,12 @@ public class GameController implements SceneLoader {
     AnchorPane anchorPane;
     GameView gameView_;
     PlayerPool playerPool_;
+    Deck deck_;
 
     Tile currTile_;
     public void initialize(){
         playerPool_ = GameBuilder.initializePlayers(); //Build the players model
+        deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
         ArrayList<Tile> homeTiles = GameBuilder.intitializeHomeTiles(originTile); //Build the home tiles model
         GameBuilder.initializeSafeTiles(originTile);
@@ -42,9 +47,16 @@ public class GameController implements SceneLoader {
     }
 
     @FXML
-    public void on_home_clicked(ActionEvent event){
+    public void on_home_clicked(ActionEvent event) {
         Node node = (Node)event.getSource();
         Stage thisStage = (Stage)node.getScene().getWindow();
         load_scene("home-view.fxml", thisStage);
+    }
+
+    @FXML
+    public void on_deck_clicked(){
+        Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
+        int cardValue = pulledCard.get_card_value();
+        System.out.println(cardValue);
     }
 }

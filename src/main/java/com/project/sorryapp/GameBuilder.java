@@ -9,8 +9,34 @@ import java.util.ArrayList;
 
 public class GameBuilder{
     //Initialize the Player Pool.
-    public static PlayerPool initializePlayers(){
-        return new PlayerPool();
+    public static PlayerPool initializePlayers(ArrayList<Tile> homeTiles){
+        PlayerPool pool = new PlayerPool();
+        for(int i = 0; i < homeTiles.size(); i++){
+            Tile currHomeTile = homeTiles.get(i);
+            Player currPlayer = pool.get_curr_player();
+            connectPawnsHome(currHomeTile, currPlayer.get_pawns());
+            pool.increment_iterator();
+        }
+        return pool;
+    }
+
+    private static void connectPawnsHome(Tile homeTile, ArrayList<Pawn> pawns){
+        for(int i = 0; i < pawns.size(); i++){
+            pawns.get(i).set_tile(homeTile);
+            homeTile.add_pawn(pawns.get(i));
+        }
+        double radius = pawns.get(0).getRadius();
+        pawns.get(0).setCenterX(pawns.get(0).getCenterX() + radius);
+        pawns.get(0).setCenterY(pawns.get(0).getCenterY() + radius);
+
+        pawns.get(1).setCenterX(pawns.get(1).getCenterX() + radius);
+        pawns.get(1).setCenterY(pawns.get(1).getCenterY() - radius);
+
+        pawns.get(2).setCenterX(pawns.get(2).getCenterX() - radius);
+        pawns.get(2).setCenterY(pawns.get(2).getCenterY() + radius);
+
+        pawns.get(3).setCenterX(pawns.get(3).getCenterX() - radius);
+        pawns.get(3).setCenterY(pawns.get(3).getCenterY() - radius);
     }
 
     // Initialize the deck for the game

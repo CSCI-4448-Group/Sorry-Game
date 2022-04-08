@@ -3,8 +3,8 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 public class Player{
-    Color color_;
-    ArrayList<Pawn> pawns_;
+    private Color color_;
+    private ArrayList<Pawn> pawns_;
 
     Player(Color color){
         color_ = color;
@@ -13,4 +13,6 @@ public class Player{
             pawns_.add(new Pawn(color_));
         }
     }
+
+    public ArrayList<Pawn> get_pawns(){return pawns_;}
 }

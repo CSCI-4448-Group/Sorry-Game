@@ -18,8 +18,8 @@ public class PlayerPool {
      public void initializePlayers(){
          players_ = new ArrayList<>();
          players_.add(new Player(Color.RED));
-         players_.add(new Player(Color.YELLOW));
          players_.add(new Player(Color.BLUE));
+         players_.add(new Player(Color.YELLOW));
          players_.add(new Player(Color.GREEN));
      }
 

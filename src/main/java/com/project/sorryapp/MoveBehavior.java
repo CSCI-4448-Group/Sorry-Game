@@ -11,9 +11,9 @@ class NormalMove implements MoveBehavior{
             return true;
         Tile nextTile = pawn.get_tile().get_next(); //Get the next and current tile
         Tile currTile = pawn.get_tile();
-        nextTile.set_pawn(pawn); //Set the tiles pawn
+        nextTile.add_pawn(pawn); //Set the tiles pawn
         pawn.set_tile(nextTile); //Se the pawns tile
-        currTile.set_pawn(null);
+        currTile.remove_pawn(pawn);
         return move_pawn(pawn, distance-1); //Recursively move the pawn
     }
 }

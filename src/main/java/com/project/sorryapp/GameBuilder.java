@@ -51,10 +51,10 @@ public class GameBuilder{
     public static Tile initializePerimeter(double beginX, double beginY){
         Tile originTile = TileFactory.buildTile(null,(int)beginX/4,(int)beginY/6); //Initialize origin tile (top left corner tile)
         Tile currTile = originTile;
-        currTile = buildEastBoundRow(currTile, 15,1);
-        currTile = buildSouthBoundRow(currTile,15,1);
-        currTile = buildWestBoundRow(currTile,15,1);
-        currTile = buildNorthBoundRow(currTile, 14,1);
+        currTile = buildEastBoundRow(currTile, 15,1, Color.RED);
+        currTile = buildSouthBoundRow(currTile,15,1, Color.BLUE);
+        currTile = buildWestBoundRow(currTile,15,1, Color.YELLOW);
+        currTile = buildNorthBoundRow(currTile, 14,1, Color.GREEN);
         currTile.set_next(originTile); //Connect the first tile and the last tile
         originTile.set_prev(currTile);
         return originTile;
@@ -147,11 +147,11 @@ public class GameBuilder{
         }
         return currTile;
     }
-    private static Tile buildEastBoundRow(Tile originTile, int length, int gatePosition){
+    private static Tile buildEastBoundRow(Tile originTile, int length, int gatePosition, Color gateColor){
         Tile currTile = originTile;
         for(int i = 0; i < length; i++){
             if(i==gatePosition){
-                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY(), gateColor);
                 continue;
             }
             currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
@@ -167,11 +167,11 @@ public class GameBuilder{
         return currTile;
     }
 
-    private static Tile buildSouthBoundRow(Tile originTile, int length, int gatePosition) {
+    private static Tile buildSouthBoundRow(Tile originTile, int length, int gatePosition, Color gateColor) {
         Tile currTile = originTile;
         for (int i = 0; i < length; i++) {
             if (i==gatePosition) {
-                currTile = TileFactory.buildGateTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()));
+                currTile = TileFactory.buildGateTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()), gateColor);
                 continue;
             }
             currTile = TileFactory.buildTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()));
@@ -187,11 +187,11 @@ public class GameBuilder{
         return currTile;
     }
 
-    private static Tile buildWestBoundRow(Tile originTile, int length, int gatePosition){
+    private static Tile buildWestBoundRow(Tile originTile, int length, int gatePosition, Color gateColor){
         Tile currTile = originTile;
         for(int i = 0; i < length; i++){ //Build bottom row
             if(i==gatePosition){
-                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
+                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY(), gateColor);
                 continue;
             }
             currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
@@ -206,11 +206,11 @@ public class GameBuilder{
         }
         return currTile;
     }
-    private static Tile buildNorthBoundRow(Tile originTile, int length, int gatePosition){
+    private static Tile buildNorthBoundRow(Tile originTile, int length, int gatePosition, Color gateColor){
         Tile currTile = originTile;
         for(int i = 0; i < length; i++){ //Build left col
             if(i==gatePosition){
-                currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
+                currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()), gateColor);
                 continue;
             }
             currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));

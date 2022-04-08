@@ -20,6 +20,7 @@ public class GameController implements SceneLoader {
     Deck deck_;
 
     Tile currTile_;
+    Pawn testPawn_ = new Pawn(Color.RED);
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -27,7 +28,7 @@ public class GameController implements SceneLoader {
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
-
+        testPawn_.set_tile(originTile);
         currTile_ = originTile;
     }
 
@@ -54,9 +55,12 @@ public class GameController implements SceneLoader {
     }
 
     @FXML
-    public void on_deck_clicked(){
+    public int on_deck_clicked(){
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
         System.out.println(cardValue);
+        NormalMove moveCard = new NormalMove();
+        boolean moveSuccessful = moveCard.move_pawn(testPawn_, cardValue);
+        return cardValue;
     }
 }

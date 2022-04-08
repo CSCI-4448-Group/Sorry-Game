@@ -19,8 +19,8 @@ public class GameController implements SceneLoader {
     PlayerPool playerPool_;
     Deck deck_;
 
-    Tile currTile_;
-    Pawn testPawn_ = new Pawn(Color.RED);
+    Pawn dummyPawn_ = new Pawn(Color.YELLOW);
+  
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -28,23 +28,19 @@ public class GameController implements SceneLoader {
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
-        testPawn_.set_tile(originTile);
-        currTile_ = originTile;
+        dummyPawn_.set_tile(originTile);
+        originTile.add_pawn(dummyPawn_);
+        anchorPane.getChildren().add(dummyPawn_);
     }
 
 //    //This is just for testing to make sure the whole board is connected
     @FXML
     public void on_next_clicked(){
-        currTile_.setFill(Color.WHITE);
-        currTile_ = currTile_.get_next();
-        currTile_.setFill(Color.RED);
+        dummyPawn_.get_tile().perform_move(1);
     }
 
     @FXML
     public void on_prev_clicked(){
-        currTile_.setFill(Color.WHITE);
-        currTile_= currTile_.get_prev();
-        currTile_.setFill(Color.RED);
     }
 
     @FXML
@@ -58,6 +54,7 @@ public class GameController implements SceneLoader {
     public int on_deck_clicked(){
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
+      
         System.out.println(cardValue);
         NormalMove moveCard = new NormalMove();
         boolean moveSuccessful = moveCard.move_pawn(testPawn_, cardValue);
@@ -87,4 +84,5 @@ public class GameController implements SceneLoader {
     {
         System.out.println("This is pawn 4");
     }
+    dummyPawn_.get_tile().perform_move(cardValue);
 }

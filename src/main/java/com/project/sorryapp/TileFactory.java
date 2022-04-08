@@ -24,8 +24,8 @@ public class TileFactory{
         return homeTile;
     }
 
-    public static Tile buildGateTile(Tile prevTile, int x, int y){
-        Tile newTile = new GatewayTile(x,y,25, Color.WHITE);
+    public static Tile buildGateTile(Tile prevTile, int x, int y, Color color){
+        Tile newTile = new GatewayTile(x,y,25, color);
         newTile.set_prev(prevTile);
         if(prevTile != null){
             prevTile.set_next(newTile);

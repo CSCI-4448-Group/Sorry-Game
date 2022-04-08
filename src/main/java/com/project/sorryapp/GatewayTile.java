@@ -3,11 +3,11 @@ package com.project.sorryapp;
 import javafx.scene.paint.Color;
 
 public class GatewayTile extends Tile{
-    Tile gatewayNext_;
+    private Tile gatewayNext_;
 
     GatewayTile(int x, int y, double length, Color color){
         super(x,y,length,color);
-        this.setFill(Color.PURPLE);
+        this.set_moveBehavior(new GatewayMove());
     }
 
     public Tile get_gateway_next(){

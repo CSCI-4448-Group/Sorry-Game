@@ -12,6 +12,7 @@ public class Tile extends Rectangle{
     private Tile next_;
     private Tile prev_;
     private ArrayList<Pawn> currPawns_ = new ArrayList<>();
+    private MoveBehavior moveType_ = new NormalMove();
 
     Tile(int x, int y, double length, Color color){
         this.setX(x);
@@ -31,6 +32,8 @@ public class Tile extends Rectangle{
     }
     public void set_next(Tile nextTile){next_ = nextTile;}
     public void set_prev(Tile prevTile){prev_ = prevTile;}
+    public void set_moveBehavior(MoveBehavior move){moveType_ = move;}
+    public void set_length(double size){this.setWidth(size);this.setHeight(size);}
     public void add_pawn(Pawn pawn){ currPawns_.add(pawn);}
     public void remove_pawn(Pawn pawn){currPawns_.remove(pawn);}
     public Tile get_next(){
@@ -39,4 +42,14 @@ public class Tile extends Rectangle{
     public Tile get_prev(){return prev_;}
     public ArrayList<Pawn> get_pawns(){return currPawns_;}
     public double get_length(){return getWidth();}
+    public boolean perform_move(int distance){
+        try{
+            return moveType_.move_pawn(currPawns_.get(0), distance);
+        }catch(Exception e){
+            System.out.println("PAWNS: " + currPawns_.toString());
+            System.out.println("DISTANCE: " + distance);
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

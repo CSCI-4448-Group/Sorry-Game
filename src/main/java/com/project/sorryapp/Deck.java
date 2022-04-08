@@ -47,6 +47,7 @@ public class Deck {
     public Card get_next_card(int i)
     {
         Card pulledCard = get_deck().remove(i);
+        get_deck().add(pulledCard);
         return pulledCard;
     }
 }

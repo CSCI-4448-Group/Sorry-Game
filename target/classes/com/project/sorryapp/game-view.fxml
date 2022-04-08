@@ -9,6 +9,10 @@
       <Button layoutX="179.0" layoutY="25.0" mnemonicParsing="false" onAction="#on_prev_clicked" text="Prev" />
       <Button layoutX="323.0" layoutY="25.0" mnemonicParsing="false" onAction="#on_home_clicked" text="Home" />
       <Button layoutX="32.0" layoutY="250.0" mnemonicParsing="false" onAction="#on_deck_clicked" text="Draw Card" />
+      <Button layoutX="594.0" layoutY="250.0" mnemonicParsing="false" text="Pawn 4" onAction="#on_pawnfour_clicked"/>
+      <Button layoutX="595.0" layoutY="214.0" mnemonicParsing="false" text="Pawn 3" onAction="#on_pawnthree_clicked"/>
+      <Button layoutX="595.0" layoutY="175.0" mnemonicParsing="false" text="Pawn 2" onAction="#on_pawntwo_clicked"/>
+      <Button layoutX="595.0" layoutY="134.0" mnemonicParsing="false" text="Pawn 1" onAction="#on_pawnone_clicked" />
 
    </children>
 </AnchorPane>

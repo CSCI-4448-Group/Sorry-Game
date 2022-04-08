@@ -63,4 +63,28 @@ public class GameController implements SceneLoader {
         boolean moveSuccessful = moveCard.move_pawn(testPawn_, cardValue);
         return cardValue;
     }
+
+    @FXML
+    public void on_pawnone_clicked()
+    {
+        System.out.println("This is pawn 1");
+    }
+
+    @FXML
+    public void on_pawntwo_clicked()
+    {
+        System.out.println("This is pawn 2");
+    }
+
+    @FXML
+    public void on_pawnthree_clicked()
+    {
+        System.out.println("This is pawn 3");
+    }
+
+    @FXML
+    public void on_pawnfour_clicked()
+    {
+        System.out.println("This is pawn 4");
+    }
 }

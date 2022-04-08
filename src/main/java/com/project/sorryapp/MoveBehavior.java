@@ -38,3 +38,10 @@ class GatewayMove implements MoveBehavior{
         return false;
     }
 }
+
+class GoaltileMove implements MoveBehavior{
+    @Override
+    public boolean move_pawn(Pawn pawn, int distance){
+        return true;
+    }
+}

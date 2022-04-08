@@ -107,34 +107,51 @@ public class GameBuilder{
 
             Tile nextHolderTile ;
             GatewayTile gateTile;
+            Tile endSafeTile;
             switch(currTileIndex){
                 case 2:
                     nextHolderTile = crawler.get_next();
-                    buildSouthBoundRow(crawler,5);
+                    endSafeTile = buildSouthBoundRow(crawler,5);
                     gateTile = (GatewayTile)(nextHolderTile.get_prev());
                     gateTile.set_gateway_next(gateTile.get_next());
                     gateTile.set_next(nextHolderTile);
+                    endSafeTile = TileFactory.buildTile(endSafeTile,(int)(endSafeTile.getX() - endSafeTile.get_length()/4),(int)(endSafeTile.getY()+endSafeTile.get_length()));
+                    endSafeTile.setFill(Color.RED);
+                    endSafeTile.set_length(endSafeTile.get_length()*1.5);
+                    endSafeTile.set_moveBehavior(new GoaltileMove());
                     break;
                 case 17:
                     nextHolderTile = crawler.get_next();
-                    buildWestBoundRow(crawler,5);
+                    endSafeTile = buildWestBoundRow(crawler,5);
                     gateTile = (GatewayTile)(nextHolderTile.get_prev());
                     gateTile.set_gateway_next(gateTile.get_next());
                     gateTile.set_next(nextHolderTile);
+                    endSafeTile = TileFactory.buildTile(endSafeTile,(int)(endSafeTile.getX() - endSafeTile.get_length()*1.5),(int)(endSafeTile.getY() - endSafeTile.get_length()/4));
+                    endSafeTile.setFill(Color.BLUE);
+                    endSafeTile.set_length(endSafeTile.get_length()*1.5);
+                    endSafeTile.set_moveBehavior(new GoaltileMove());
                     break;
                 case 32:
                     nextHolderTile = crawler.get_next();
-                    buildNorthBoundRow(crawler,5);
+                    endSafeTile = buildNorthBoundRow(crawler,5);
                     gateTile = (GatewayTile)(nextHolderTile.get_prev());
                     gateTile.set_gateway_next(gateTile.get_next());
                     gateTile.set_next(nextHolderTile);
+                    endSafeTile = TileFactory.buildTile(endSafeTile,(int)(endSafeTile.getX() - crawler.get_length()/4),(int)(endSafeTile.getY()-endSafeTile.get_length()*1.5));
+                    endSafeTile.setFill(Color.YELLOW);
+                    endSafeTile.set_length(endSafeTile.get_length()*1.5);
+                    endSafeTile.set_moveBehavior(new GoaltileMove());
                     break;
                 case 47:
                     nextHolderTile = crawler.get_next();
-                    buildEastBoundRow(crawler,5);
+                    endSafeTile = buildEastBoundRow(crawler,5);
                     gateTile = (GatewayTile)(nextHolderTile.get_prev());
                     gateTile.set_gateway_next(gateTile.get_next());
                     gateTile.set_next(nextHolderTile);
+                    endSafeTile = TileFactory.buildTile(endSafeTile,(int)(endSafeTile.getX() + endSafeTile.get_length()),(int)(endSafeTile.getY()-endSafeTile.get_length()/4));
+                    endSafeTile.setFill(Color.GREEN);
+                    endSafeTile.set_length(endSafeTile.get_length()*1.5);
+                    endSafeTile.set_moveBehavior(new GoaltileMove());
                     break;
             }
         }

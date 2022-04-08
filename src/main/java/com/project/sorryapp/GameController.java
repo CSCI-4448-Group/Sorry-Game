@@ -19,7 +19,7 @@ public class GameController implements SceneLoader {
     PlayerPool playerPool_;
     Deck deck_;
 
-    Pawn dummyPawn_ = new Pawn(Color.RED);
+    Pawn dummyPawn_ = new Pawn(Color.YELLOW);
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model

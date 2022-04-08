@@ -33,6 +33,7 @@ public class Tile extends Rectangle{
     public void set_next(Tile nextTile){next_ = nextTile;}
     public void set_prev(Tile prevTile){prev_ = prevTile;}
     public void set_moveBehavior(MoveBehavior move){moveType_ = move;}
+    public void set_length(double size){this.setWidth(size);this.setHeight(size);}
     public void add_pawn(Pawn pawn){ currPawns_.add(pawn);}
     public void remove_pawn(Pawn pawn){currPawns_.remove(pawn);}
     public Tile get_next(){

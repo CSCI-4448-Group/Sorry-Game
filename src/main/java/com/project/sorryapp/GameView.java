@@ -27,10 +27,12 @@ public class GameView{
             }
             crawler = crawler.get_next();
         }
-        gameView_.getChildren().addAll(homeTiles); //Add all home tiles to the view
+        gameView_.getChildren().addAll(homeTiles); //Add all home tiles to the
+        homeTiles.forEach(tile -> {gameView_.getChildren().addAll(tile.get_pawns());
+            System.out.println(tile.get_pawns().size());});
 
         try {
-            Image image = new Image("https://www.pngkey.com/png/full/125-1257676_sorry-logo-png-transparent-sorry-game.png");
+            Image image = new Image(getClass().getResource("125-1257676_sorry-logo-png-transparent-sorry-game.png").toURI().toString());
             ImageView imageView1 = new ImageView(image);
             imageView1.setFitWidth(200);
             imageView1.setPreserveRatio(true);

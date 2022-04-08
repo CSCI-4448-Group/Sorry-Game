@@ -9,7 +9,8 @@ public class Pawn extends Circle {
 
     Pawn(Color color){
         color_ = color;
-        this.setRadius(10);
+        this.setRadius(7);
+        this.setStroke(Color.BLACK);
         switch(color_.toString()){
             case "0xff0000ff" -> this.setFill(Color.RED);
             case "0xffff00ff" -> this.setFill(Color.YELLOW);

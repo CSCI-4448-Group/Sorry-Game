@@ -22,13 +22,12 @@ public class GameController implements SceneLoader {
 
     Tile currTile_;
     public void initialize(){
-        playerPool_ = GameBuilder.initializePlayers(); //Build the players model
-        tracker = Tracker.getInstance(playerPool_);
-
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
         ArrayList<Tile> homeTiles = GameBuilder.intitializeHomeTiles(originTile); //Build the home tiles model
         GameBuilder.initializeSafeTiles(originTile);
+        playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
+        tracker = Tracker.getInstance(playerPool_);
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
 
         currTile_ = originTile;

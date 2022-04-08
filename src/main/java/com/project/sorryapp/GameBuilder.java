@@ -17,6 +17,9 @@ public class GameBuilder{
             connectPawnsHome(currHomeTile, currPlayer.get_pawns());
             pool.increment_iterator();
         }
+        while(pool.get_iterator() != 0){
+            pool.increment_iterator();
+        }
         return pool;
     }
 

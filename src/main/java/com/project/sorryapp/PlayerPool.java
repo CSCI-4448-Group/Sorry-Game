@@ -21,6 +21,7 @@ public class PlayerPool {
          players_.add(new Player(Color.BLUE));
          players_.add(new Player(Color.YELLOW));
          players_.add(new Player(Color.GREEN));
+
      }
 
      //Returns the current player pointed to by pool iterator

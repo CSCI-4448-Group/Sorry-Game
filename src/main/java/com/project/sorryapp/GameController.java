@@ -57,6 +57,7 @@ public class GameController implements SceneLoader {
     public void on_deck_clicked(){
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
+        deck_.get_deck().add(pulledCard);
         dummyPawn_.get_tile().perform_move(cardValue);
     }
 }

@@ -39,7 +39,7 @@ public class GameController implements SceneLoader {
         currTile_.setFill(Color.WHITE);
         currTile_ = currTile_.get_next();
         currTile_.setFill(Color.RED);
-        tracker.update("Tracker: Red,1,1,1,1");
+        tracker.update("tracker: red,1,1,1,1");
     }
 
     @FXML

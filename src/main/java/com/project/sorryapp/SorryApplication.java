@@ -12,7 +12,8 @@ public class SorryApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SorryApplication.class.getResource("home-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+
+        stage.setTitle("Sorry!");
         stage.setScene(scene);
         stage.show();
     }

@@ -28,9 +28,6 @@ public class GameController implements SceneLoader {
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
 
-
-
-
         dummyPawn_.set_tile(originTile);
         originTile.add_pawn(dummyPawn_);
         anchorPane.getChildren().add(dummyPawn_);
@@ -58,6 +55,40 @@ public class GameController implements SceneLoader {
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
         deck_.get_deck().add(pulledCard);
-        dummyPawn_.get_tile().perform_move(cardValue);
+
+        playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        playerPool_.increment_iterator();
+    }
+
+    @FXML
+    public int on_pawnOne_clicked()
+    {
+        int pawnToMove = 1;
+        System.out.println(pawnToMove);
+        return pawnToMove;
+    }
+
+    @FXML
+    public int on_pawnTwo_clicked()
+    {
+        int pawnToMove = 2;
+        System.out.println(pawnToMove);
+        return pawnToMove;
+    }
+
+    @FXML
+    public int on_pawnThree_clicked()
+    {
+        int pawnToMove = 3;
+        System.out.println(pawnToMove);
+        return pawnToMove;
+    }
+
+    @FXML
+    public int on_pawnFour_clicked()
+    {
+        int pawnToMove = 4;
+        System.out.println(pawnToMove);
+        return pawnToMove;
     }
 }

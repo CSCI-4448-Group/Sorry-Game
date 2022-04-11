@@ -19,7 +19,7 @@ public class GameController implements SceneLoader {
     PlayerPool playerPool_;
     Deck deck_;
 
-    Pawn dummyPawn_ = new Pawn(Color.YELLOW);
+    Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -54,9 +54,15 @@ public class GameController implements SceneLoader {
     public void on_deck_clicked(){
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
+        System.out.println("Logger: The card that was pulled has value = " + cardValue);
+
         deck_.get_deck().add(pulledCard);
 
         playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
+        {
+            System.out.println(pawn.getColor_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
         playerPool_.increment_iterator();
     }
 

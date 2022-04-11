@@ -11,7 +11,7 @@ public class Player implements Subject{
         color_ = color;
         pawns_ = new ArrayList<>();
         for(int i =0 ; i < 4; i++){
-            pawns_.add(new Pawn(color_));
+            pawns_.add(new Pawn(i, color_));
         }
     }
 

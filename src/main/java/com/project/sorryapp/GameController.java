@@ -19,7 +19,7 @@ public class GameController implements SceneLoader {
     PlayerPool playerPool_;
     Deck deck_;
 
-    Pawn dummyPawn_ = new Pawn(Color.YELLOW);
+    Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -27,9 +27,6 @@ public class GameController implements SceneLoader {
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
-
-
-
 
         dummyPawn_.set_tile(originTile);
         originTile.add_pawn(dummyPawn_);
@@ -57,7 +54,47 @@ public class GameController implements SceneLoader {
     public void on_deck_clicked(){
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
+        System.out.println("Logger: The card that was pulled has value = " + cardValue);
+
         deck_.get_deck().add(pulledCard);
-        dummyPawn_.get_tile().perform_move(cardValue);
+
+        playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
+        {
+            System.out.println(pawn.getColor_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
+        playerPool_.increment_iterator();
+    }
+
+    @FXML
+    public int on_pawnOne_clicked()
+    {
+        int pawnToMove = 1;
+        System.out.println(pawnToMove);
+        return pawnToMove;
+    }
+
+    @FXML
+    public int on_pawnTwo_clicked()
+    {
+        int pawnToMove = 2;
+        System.out.println(pawnToMove);
+        return pawnToMove;
+    }
+
+    @FXML
+    public int on_pawnThree_clicked()
+    {
+        int pawnToMove = 3;
+        System.out.println(pawnToMove);
+        return pawnToMove;
+    }
+
+    @FXML
+    public int on_pawnFour_clicked()
+    {
+        int pawnToMove = 4;
+        System.out.println(pawnToMove);
+        return pawnToMove;
     }
 }

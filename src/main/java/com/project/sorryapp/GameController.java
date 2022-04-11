@@ -12,13 +12,16 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-public class GameController implements SceneLoader {
+public class GameController implements SceneLoader, Subject {
     @FXML
     AnchorPane anchorPane;
     GameView gameView_;
-    PlayerPool playerPool_;
+    static PlayerPool playerPool_;
     Tracker tracker;
+    Logger logger;
     Deck deck_;
+    String announcement_;
+    private ArrayList<Observer> observersList_ = new ArrayList<Observer>();
 
     Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
     public void initialize(){
@@ -27,18 +30,40 @@ public class GameController implements SceneLoader {
         ArrayList<Tile> homeTiles = GameBuilder.intitializeHomeTiles(originTile); //Build the home tiles model
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
-        tracker = Tracker.getInstance(playerPool_);
-        gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
 
+        tracker = Tracker.getInstance(playerPool_);
+        tracker.registerPlayer(this);
+        logger = Logger.getInstance(playerPool_);
+        logger.registerPlayer(playerPool_,this);
+
+        gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
         dummyPawn_.set_tile(originTile);
         originTile.add_pawn(dummyPawn_);
         anchorPane.getChildren().add(dummyPawn_);
     }
 
+    @Override
+    public void registerObserver(Observer o) {
+        observersList_.add(o);
+    }
+
+    @Override
+    public void removeObserver() {
+        observersList_.clear();
+    }
+
+    @Override
+    public void notifyObservers(String announcement) {
+        for (Observer o : observersList_) {
+            o.update(announcement);
+        }
+    }
+
 //    //This is just for testing to make sure the whole board is connected
     @FXML
     public void on_next_clicked(){
-        tracker.update("tracker: red,1,1,1,1");
+        announcement_ = "tracker: red,1,1,1,1";
+        notifyObservers(announcement_);
         dummyPawn_.get_tile().perform_move(1);
     }
 
@@ -58,6 +83,10 @@ public class GameController implements SceneLoader {
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
+
+        announcement_ = "The card that was pulled has value = " + cardValue;
+        notifyObservers("logger: " + announcement_);
+        announcement_ = "";
 
         deck_.get_deck().add(pulledCard);
 

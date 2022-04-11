@@ -7,20 +7,27 @@ import java.io.IOException;  // Import the IOException class to handle errors
 
 public class Logger implements Observer {
     // Singleton instance of Logger. Eager instantiation
-    private static Logger loggerInstance = new Logger();
+    private static Logger loggerInstance;
+    private PlayerPool playerPool;
     private String announcement_; // Logger has an announcement String attribute (used to store incoming announcement
-    private int currTurn; // Track the current turn
+    private static int currTurn; // Track the current turn
 
     // Construct the Logger by registering it as an observer of clerk and getting the current day
-    private Logger() {}
+    private Logger(PlayerPool p) {
+        playerPool = p;
+    }
 
-    public void Logger_set(PlayerPool p, Subject player)
+    public void registerPlayer(PlayerPool p, Subject player)
     {
         player.registerObserver(this);
         currTurn = p.get_iterator();
     }
 
-    public static synchronized Logger getInstance() {
+    public static synchronized Logger getInstance(PlayerPool p) {
+        if (loggerInstance == null)
+        {
+            loggerInstance = new Logger(p);
+        }
         return loggerInstance;
     }
 

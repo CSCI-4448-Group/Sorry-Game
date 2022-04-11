@@ -1,17 +1,25 @@
 package com.project.sorryapp;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 
 public class DbRunner {
     Connection con;
     Statement statement;
+    Properties prop = new Properties();
 
     public DbRunner() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/sorryDB?useLegacyDatetimeCode=false&serverTimezone=MST", "root", "");
+            InputStream input = getClass().getResourceAsStream("/config.properties");
+            prop.load(input);
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/sorryDB?useLegacyDatetimeCode=false&serverTimezone=MST", prop.getProperty("username"), prop.getProperty("password"));
             statement = con.createStatement();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

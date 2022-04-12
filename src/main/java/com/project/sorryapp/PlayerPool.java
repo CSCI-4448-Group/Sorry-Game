@@ -17,10 +17,10 @@ public class PlayerPool {
 
      public void initializePlayers(){
          players_ = new ArrayList<>();
-         players_.add(new Player(Color.RED));
-         players_.add(new Player(Color.BLUE));
-         players_.add(new Player(Color.YELLOW));
-         players_.add(new Player(Color.GREEN));
+         players_.add(new Player(Color.RED, "red"));
+         players_.add(new Player(Color.BLUE, "blue"));
+         players_.add(new Player(Color.YELLOW, "yellow"));
+         players_.add(new Player(Color.GREEN, "green"));
 
      }
 

@@ -1,6 +1,7 @@
 package com.project.sorryapp;
 
 
+import java.io.File;
 import java.io.FileWriter;  // Import the File class
 import java.io.IOException;  // Import the IOException class to handle errors
 
@@ -10,8 +11,7 @@ public class Logger implements Observer {
     private static Logger loggerInstance;
     private PlayerPool playerPool;
     private String announcement_; // Logger has an announcement String attribute (used to store incoming announcement
-    private static int currTurn; // Track the current turn
-
+    private int gameid = 0;
     // Construct the Logger by registering it as an observer of clerk and getting the current day
     private Logger(PlayerPool p) {
         playerPool = p;
@@ -20,7 +20,6 @@ public class Logger implements Observer {
     public void registerPlayer(PlayerPool p, Subject player)
     {
         player.registerObserver(this);
-        currTurn = p.get_iterator();
     }
 
     public static synchronized Logger getInstance(PlayerPool p) {
@@ -32,11 +31,20 @@ public class Logger implements Observer {
     }
 
     //https://www.w3schools.com/java/java_files_create.asp
-    public void log(int turn) {
+    public void log(boolean clearLogFile) {
         // Create a new file writer to write logger messages to separate txt files in a different directory
         try {
+            File file = new File("./logger/Logger-" + gameid + ".txt");
             // Create new file writer object and write the split announcement
-            FileWriter myWriter = new FileWriter("../logger/Logger-" + turn + ".txt", true);
+            if (clearLogFile) {
+                FileWriter myWriter = new FileWriter(file, false);
+                myWriter.write("");
+                // Close the file writer after writing
+                myWriter.close();
+            }
+            file.createNewFile();
+            // Create new file writer object and write the split announcement
+            FileWriter myWriter = new FileWriter(file, true);
             myWriter.write("Logger wrote: " + announcement_ + "\n");
             // Close the file writer after writing
             myWriter.close();
@@ -57,6 +65,11 @@ public class Logger implements Observer {
         }
         // If the announcement came from the logger
         this.announcement_ = announcement.split("logger: ")[1]; // Split message on "logger: " message and take everything to the right to be an announcement
-        log(currTurn); // Call the log method with the current day
+        boolean clearLogFile = false;
+        if (gameid == 0) {
+            gameid = Integer.parseInt(DbRunner.getGameId());
+            clearLogFile = true;
+        }
+        log(clearLogFile);
     }
 }

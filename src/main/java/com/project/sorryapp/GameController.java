@@ -22,8 +22,8 @@ public class GameController implements SceneLoader, Subject {
     Deck deck_;
     String announcement_;
     private ArrayList<Observer> observersList_ = new ArrayList<Observer>();
-
     Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
+
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -84,16 +84,18 @@ public class GameController implements SceneLoader, Subject {
         int cardValue = pulledCard.get_card_value();
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
 
+        String name = playerPool_.get_curr_player().get_name();
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
-        announcement_ = "";
+        announcement_ = "tracker: " + name + "," + cardValue + ",0,0,0"; //0's are temporary, need to update with proper values later
+        notifyObservers(announcement_);
 
         deck_.get_deck().add(pulledCard);
 
         playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
-            System.out.println(pawn.getColor_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            System.out.println(playerPool_.get_curr_player().get_name() + " pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
         playerPool_.increment_iterator();
     }

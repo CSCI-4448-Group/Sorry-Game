@@ -11,7 +11,7 @@ public class Invoker {
         slot = command;
     }
 
-    public void press_button(Scanner reader) {
-        slot.execute(reader);
+    public void press_button(Pawn pawn, Scanner reader) {
+        slot.execute(pawn, reader);
     }
 }

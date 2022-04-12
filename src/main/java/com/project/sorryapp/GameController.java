@@ -19,7 +19,6 @@ public class GameController implements SceneLoader {
     PlayerPool playerPool_;
     Deck deck_;
 
-    Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -27,16 +26,12 @@ public class GameController implements SceneLoader {
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
-
-        dummyPawn_.set_tile(originTile);
-        originTile.add_pawn(dummyPawn_);
-        anchorPane.getChildren().add(dummyPawn_);
     }
 
 //    //This is just for testing to make sure the whole board is connected
     @FXML
     public void on_next_clicked(){
-        dummyPawn_.get_tile().perform_move(1);
+
     }
 
     @FXML
@@ -58,7 +53,10 @@ public class GameController implements SceneLoader {
 
         deck_.get_deck().add(pulledCard);
 
-        playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        //playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        UserPlayer user = new UserPlayer(playerPool_.get_curr_player().get_pawns().get(3).get_tile(), new Invoker());
+        user.begin_options(cardValue, playerPool_.get_curr_player().get_pawns().get(3));
+
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
             System.out.println(pawn.getColor_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());

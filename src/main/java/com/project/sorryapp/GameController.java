@@ -62,9 +62,7 @@ public class GameController implements SceneLoader, Subject {
 //    //This is just for testing to make sure the whole board is connected
     @FXML
     public void on_next_clicked(){
-        announcement_ = "tracker: red,1,1,1,1";
-        notifyObservers(announcement_);
-        dummyPawn_.get_tile().perform_move(1);
+
     }
 
     @FXML
@@ -96,7 +94,10 @@ public class GameController implements SceneLoader, Subject {
 
         deck_.get_deck().add(pulledCard);
 
-        playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        //playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
+        UserPlayer user = new UserPlayer(playerPool_.get_curr_player().get_pawns().get(3).get_tile(), new Invoker());
+        user.begin_options(cardValue, playerPool_.get_curr_player().get_pawns().get(3));
+
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
             System.out.println(playerPool_.get_curr_player().get_name() + " pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());

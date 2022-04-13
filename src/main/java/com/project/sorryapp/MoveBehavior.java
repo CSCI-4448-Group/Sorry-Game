@@ -45,3 +45,4 @@ class GoaltileMove implements MoveBehavior{
         return true;
     }
 }
+

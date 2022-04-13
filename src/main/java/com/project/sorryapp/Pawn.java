@@ -7,6 +7,7 @@ public class Pawn extends Circle {
     private int pawnNumber_;
     private Color color_;
     private Tile currTile_;
+    private Tile homeTile_;
 
     Pawn(int pawnNumber, Color color){
         pawnNumber_ = pawnNumber;

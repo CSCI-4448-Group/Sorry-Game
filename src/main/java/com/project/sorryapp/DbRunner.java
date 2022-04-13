@@ -93,8 +93,8 @@ public class DbRunner {
             int[] curRow = read(nameOfPlayer);
             String moved = String.valueOf(curRow[0] + numSpacesMoved);
             String sorries = String.valueOf(curRow[1] + numSorries);
-            String started = String.valueOf(curRow[2] + numPawnsStarted);
-            String home = String.valueOf(curRow[3] + numPawnsHome);
+            String started = String.valueOf(numPawnsStarted);
+            String home = String.valueOf(numPawnsHome);
             String sql = "update sorry_table set moved = " + moved +
                     ", sorries = " + sorries + ", started = " + started +
                     ", home = " + home + " where name = '" + nameOfPlayer +

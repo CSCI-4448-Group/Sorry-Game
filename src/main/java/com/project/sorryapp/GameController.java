@@ -77,14 +77,21 @@ public class GameController implements SceneLoader, Subject {
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
         Player player = playerPool_.get_curr_player();
         String name = player.get_name();
-        Tile curTile = player.get_pawns().get(3).get_tile();
+        int pawnsAtStart = 0;
 
+        ArrayList<Pawn> playerPawns = player.get_pawns();
+        for (int i = 0; i < playerPawns.size(); i++) {
+            Pawn curPawn = playerPawns.get(i);
+            if (curPawn.get_tile().equals(curPawn.getStartTile_())) {
+                pawnsAtStart++;
+            }
+        }
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
         if (cardValue == 0) {
-            announcement_ = "tracker: " + name + ",0,1,0,0"; //0's are temporary, need to update with proper values later
+            announcement_ = "tracker: " + name + ",0,1," + pawnsAtStart + ",0"; //0's are temporary, need to update with proper values later
         } else {
-            announcement_ = "tracker: " + name + "," + cardValue + ",0,0,0"; //0's are temporary, need to update with proper values later
+            announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsAtStart + ",0"; //0's are temporary, need to update with proper values later
         }
         notifyObservers(announcement_);
     }

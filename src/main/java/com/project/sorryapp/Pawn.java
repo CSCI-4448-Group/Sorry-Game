@@ -42,4 +42,6 @@ public class Pawn extends Circle {
     public Color getColor_() {
         return color_;
     }
+
+    public Tile getStartTile_() {return homeTile_;}
 }

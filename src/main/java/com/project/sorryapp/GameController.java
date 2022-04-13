@@ -18,14 +18,16 @@ public class GameController implements SceneLoader {
     GameView gameView_;
     PlayerPool playerPool_;
     Deck deck_;
+    ArrayList<Tile> startTiles_;
+    ArrayList<Tile> homeTiles_;
 
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
-        ArrayList<Tile> homeTiles = GameBuilder.intitializeHomeTiles(originTile); //Build the home tiles model
-        GameBuilder.initializeSafeTiles(originTile);
-        playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
-        gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
+        startTiles_ = GameBuilder.intitializeStartTiles(originTile); //Build the home tiles model
+        homeTiles_ = GameBuilder.initializeSafeTiles(originTile);
+        playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
+        gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
     }
 
 //    //This is just for testing to make sure the whole board is connected

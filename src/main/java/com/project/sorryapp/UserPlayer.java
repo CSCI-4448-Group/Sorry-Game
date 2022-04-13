@@ -11,14 +11,6 @@ public class UserPlayer {
         receiver_ = receiver;
     }
 
-    private void print_options() {
-        System.out.println("\nSelect pawn to move:");
-        System.out.println("1. Pawn 1");
-        System.out.println("2. Pawn 2");
-        System.out.println("3. Pawn 3");
-        System.out.println("4. Pawn 4");
-    }
-
     public void set_receiver(Tile receiver) {
         receiver_ = receiver;
     }

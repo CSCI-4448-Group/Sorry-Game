@@ -54,7 +54,7 @@ class fourCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(4);
+        pawn.get_tile().perform_move(-4);
     }
 }
 

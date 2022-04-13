@@ -54,12 +54,15 @@ public class GameController implements SceneLoader {
         deck_.get_deck().add(pulledCard);
 
         //playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
-        UserPlayer user = new UserPlayer(playerPool_.get_curr_player().get_pawns().get(3).get_tile(), new Invoker());
-        user.begin_options(cardValue, playerPool_.get_curr_player().get_pawns().get(3));
+        Tile currTile = playerPool_.get_curr_player().get_pawns().get(3).get_tile();
+        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(3);
+
+        UserPlayer user = new UserPlayer(currTile, new Invoker());
+        user.begin_options(cardValue, currPawn);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
-            System.out.println(pawn.getColor_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
         playerPool_.increment_iterator();
     }

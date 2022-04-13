@@ -3,13 +3,9 @@ package com.project.sorryapp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class GameController implements SceneLoader, Subject {
@@ -76,13 +72,13 @@ public class GameController implements SceneLoader, Subject {
         load_scene("home-view.fxml", thisStage);
     }
 
-    @FXML
-    public void on_deck_clicked(){
-        Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
+    private void announcementHelper(Card pulledCard) {
         int cardValue = pulledCard.get_card_value();
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
+        Player player = playerPool_.get_curr_player();
+        String name = player.get_name();
+        Tile curTile = player.get_pawns().get(3).get_tile();
 
-        String name = playerPool_.get_curr_player().get_name();
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
         if (cardValue == 0) {
@@ -91,6 +87,13 @@ public class GameController implements SceneLoader, Subject {
             announcement_ = "tracker: " + name + "," + cardValue + ",0,0,0"; //0's are temporary, need to update with proper values later
         }
         notifyObservers(announcement_);
+    }
+
+    @FXML
+    public void on_deck_clicked(){
+        Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
+        int cardValue = pulledCard.get_card_value();
+        announcementHelper(pulledCard);
 
         deck_.get_deck().add(pulledCard);
 

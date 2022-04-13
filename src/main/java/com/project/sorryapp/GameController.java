@@ -21,7 +21,7 @@ public class GameController implements SceneLoader, Subject {
     Logger logger;
     Deck deck_;
     String announcement_;
-    private ArrayList<Observer> observersList_ = new ArrayList<Observer>();
+    private static ArrayList<Observer> observersList_ = new ArrayList<Observer>();
     Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
 
     public void initialize(){
@@ -87,7 +87,11 @@ public class GameController implements SceneLoader, Subject {
         String name = playerPool_.get_curr_player().get_name();
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
-        announcement_ = "tracker: " + name + "," + cardValue + ",0,0,0"; //0's are temporary, need to update with proper values later
+        if (cardValue == 0) {
+            announcement_ = "tracker: " + name + ",0,1,0,0"; //0's are temporary, need to update with proper values later
+        } else {
+            announcement_ = "tracker: " + name + "," + cardValue + ",0,0,0"; //0's are temporary, need to update with proper values later
+        }
         notifyObservers(announcement_);
 
         deck_.get_deck().add(pulledCard);

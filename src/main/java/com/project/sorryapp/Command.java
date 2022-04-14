@@ -23,8 +23,7 @@ class oneCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(1);
-        //newMoveOne.move_pawn(pawn, 1);
+        get_receiver().perform_move(1);
     }
 }
 
@@ -34,7 +33,7 @@ class twoCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(2);
+        get_receiver().perform_move(2);
     }
 }
 
@@ -44,7 +43,7 @@ class threeCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(3);
+        get_receiver().perform_move(3);
     }
 }
 
@@ -54,7 +53,7 @@ class fourCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(-4);
+        get_receiver().perform_move(-4);
     }
 }
 
@@ -64,7 +63,7 @@ class fiveCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(5);
+        get_receiver().perform_move(5);
     }
 }
 
@@ -74,7 +73,7 @@ class sevenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(7);
+        get_receiver().perform_move(7);
     }
 }
 
@@ -84,7 +83,7 @@ class eightCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(8);
+        get_receiver().perform_move(8);
     }
 }
 
@@ -94,7 +93,7 @@ class tenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(10);
+        get_receiver().perform_move(10);
     }
 }
 
@@ -104,7 +103,7 @@ class elevenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(11);
+        get_receiver().perform_move(11);
     }
 }
 
@@ -114,7 +113,7 @@ class twelveCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(12);
+        get_receiver().perform_move(12);
     }
 }
 
@@ -124,7 +123,7 @@ class sorryCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(0);
+        get_receiver().perform_move(0);
     }
 }
 

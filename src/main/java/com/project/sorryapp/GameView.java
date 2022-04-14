@@ -2,6 +2,7 @@ package com.project.sorryapp;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -28,9 +29,14 @@ public class GameView{
             crawler = crawler.get_next();
         }
         gameView_.getChildren().addAll(homeTiles); //Add all home tiles to the
-        homeTiles.forEach(tile -> {gameView_.getChildren().addAll(tile.get_pawns());
-            System.out.println(tile.get_pawns().size());});
-
+        homeTiles.forEach(tile -> gameView_.getChildren().addAll(tile.get_pawns()));
+        for(Tile tile : homeTiles){
+            for(Pawn pawn : tile.get_pawns()){
+                pawn.get_pawn_text().setX(pawn.getCenterX()-pawn.getRadius()/2);
+                pawn.get_pawn_text().setY(pawn.getCenterY()+pawn.getRadius()/2);
+                gameView_.getChildren().add(pawn.get_pawn_text());
+            }
+        }
         try {
             Image image = new Image(getClass().getResource("125-1257676_sorry-logo-png-transparent-sorry-game.png").toURI().toString());
             ImageView imageView1 = new ImageView(image);

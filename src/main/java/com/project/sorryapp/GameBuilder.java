@@ -27,6 +27,7 @@ public class GameBuilder{
         for(int i = 0; i < pawns.size(); i++){
             pawns.get(i).set_tile(homeTile);
             homeTile.add_pawn(pawns.get(i));
+            pawns.get(i).set_start_tile(homeTile);
         }
         double radius = pawns.get(0).getRadius();
         pawns.get(0).setCenterX(pawns.get(0).getCenterX() + radius);
@@ -65,7 +66,7 @@ public class GameBuilder{
 
     //Iterate through the game board starting at the origin Tile
     //Initialize home tiles, connect to their respective perimeter tile
-    public static ArrayList<Tile> intitializeHomeTiles(Tile originTile) {
+    public static ArrayList<Tile> intitializeStartTiles(Tile originTile) {
         ArrayList<Tile> homeTiles = new ArrayList<>();
         int currTileIndex = 1;
         Tile crawler = originTile;
@@ -97,11 +98,11 @@ public class GameBuilder{
         return homeTiles;
     }
 
-    public static void initializeSafeTiles(Tile originTile){
+    public static ArrayList<Tile> initializeSafeTiles(Tile originTile){
         int currTileIndex = 1;
         Tile crawler = originTile;
         crawler = crawler.get_next(); //Set crawler to next at start so we dont immediatly false out of loop
-
+        ArrayList<Tile> safeTiles = new ArrayList<>();
         //Iterate through game board, building home tiles and assigning their neighbors at the specific...
         //...Index positions in switch case
         while(crawler != null && !originTile.equals(crawler)){
@@ -122,6 +123,7 @@ public class GameBuilder{
                     endSafeTile.setFill(Color.RED);
                     endSafeTile.set_length(endSafeTile.get_length()*1.5);
                     endSafeTile.set_moveBehavior(new GoaltileMove());
+                    safeTiles.add(endSafeTile);
                     break;
                 case 17:
                     nextHolderTile = crawler.get_next();
@@ -133,6 +135,7 @@ public class GameBuilder{
                     endSafeTile.setFill(Color.BLUE);
                     endSafeTile.set_length(endSafeTile.get_length()*1.5);
                     endSafeTile.set_moveBehavior(new GoaltileMove());
+                    safeTiles.add(endSafeTile);
                     break;
                 case 32:
                     nextHolderTile = crawler.get_next();
@@ -144,6 +147,7 @@ public class GameBuilder{
                     endSafeTile.setFill(Color.YELLOW);
                     endSafeTile.set_length(endSafeTile.get_length()*1.5);
                     endSafeTile.set_moveBehavior(new GoaltileMove());
+                    safeTiles.add(endSafeTile);
                     break;
                 case 47:
                     nextHolderTile = crawler.get_next();
@@ -155,9 +159,11 @@ public class GameBuilder{
                     endSafeTile.setFill(Color.GREEN);
                     endSafeTile.set_length(endSafeTile.get_length()*1.5);
                     endSafeTile.set_moveBehavior(new GoaltileMove());
+                    safeTiles.add(endSafeTile);
                     break;
             }
         }
+        return safeTiles;
     }
 
     private static Tile buildEastBoundRow(Tile originTile, int length){

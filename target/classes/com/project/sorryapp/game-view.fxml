@@ -9,10 +9,10 @@
       <Button layoutX="179.0" layoutY="25.0" mnemonicParsing="false" onAction="#on_prev_clicked" text="Prev" />
       <Button layoutX="323.0" layoutY="25.0" mnemonicParsing="false" onAction="#on_home_clicked" text="Home" />
       <Button layoutX="32.0" layoutY="250.0" mnemonicParsing="false" onAction="#on_deck_clicked" text="Draw Card" />
-      <Button layoutX="595.0" layoutY="208.0" mnemonicParsing="false" visible="true" onAction="#on_pawnTwo_clicked" text="Pawn 2" />
-      <Button layoutX="595.0" layoutY="166.0" mnemonicParsing="false" visible="true" onAction="#on_pawnOne_clicked" text="Pawn 1" />
-      <Button layoutX="595.0" layoutY="250.0" mnemonicParsing="false" visible="true" onAction="#on_pawnThree_clicked" text="Pawn 3" />
-      <Button layoutX="595.0" layoutY="291.0" mnemonicParsing="false" visible="true" onAction="#on_pawnFour_clicked" text="Pawn 4" />
+      <Button fx:id="pawn1" layoutX="595.0" layoutY="166.0" mnemonicParsing="false" onAction="#on_pawnOne_clicked" text="Pawn 1" />
+      <Button fx:id="pawn2" layoutX="595.0" layoutY="208.0" mnemonicParsing="false" onAction="#on_pawnTwo_clicked" text="Pawn 2" />
+      <Button fx:id="pawn3" layoutX="595.0" layoutY="250.0" mnemonicParsing="false" onAction="#on_pawnThree_clicked" text="Pawn 3" />
+      <Button fx:id="pawn4" layoutX="595.0" layoutY="291.0" mnemonicParsing="false" onAction="#on_pawnFour_clicked" text="Pawn 4" />
 
    </children>
 </AnchorPane>

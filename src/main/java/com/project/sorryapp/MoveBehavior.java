@@ -27,7 +27,6 @@ public interface MoveBehavior{
 class NormalMove implements MoveBehavior{
     @Override
     public boolean move_pawn(Pawn pawn, int distance) {
-<<<<<<< HEAD
         if (distance >= 0)
         {
             if(distance == 0) //Still need to check if we kick a pawn, if we land on a slide, etc.
@@ -37,7 +36,7 @@ class NormalMove implements MoveBehavior{
             nextTile.add_pawn(pawn); //Set the tiles pawn
             pawn.set_tile(nextTile); //Se the pawns tile
             currTile.remove_pawn(pawn);
-            return nextTile.perform_move(distance-1); //Recursively move the pawn
+            return nextTile.perform_move(pawn, distance-1); //Recursively move the pawn
         }
         else
         {
@@ -56,20 +55,8 @@ class NormalMove implements MoveBehavior{
             prevTile.add_pawn(pawn); //Set the tiles pawn
             pawn.set_tile(prevTile); //Set the pawns tile
             currTile.remove_pawn(pawn);
-            return prevTile.perform_move(distance+1); //Recursively move the pawn
+            return prevTile.perform_move(pawn, distance+1); //Recursively move the pawn
         }
-=======
-        if(distance == 0) { //Still need to check if we kick a pawn, if we land on a slide, etc.
-            check_kick(pawn);
-            return true;
-        }
-        Tile nextTile = pawn.get_tile().get_next(); //Get the next and current tile
-        Tile currTile = pawn.get_tile();
-        nextTile.add_pawn(pawn); //Set the tiles pawn
-        pawn.set_tile(nextTile); //Se the pawns tile
-        currTile.remove_pawn(pawn);
-        return nextTile.perform_move(pawn,distance-1); //Recursively move the pawn
->>>>>>> fdfda30e9d027d453ead7dd57aeec15db613d9f8
     }
 }
 

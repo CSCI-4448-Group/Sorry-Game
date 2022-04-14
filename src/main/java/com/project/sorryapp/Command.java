@@ -23,7 +23,7 @@ class oneCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(1);
+        pawn.get_tile().perform_move(pawn,1);
         //newMoveOne.move_pawn(pawn, 1);
     }
 }
@@ -34,7 +34,7 @@ class twoCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(2);
+        pawn.get_tile().perform_move(pawn,2);
     }
 }
 
@@ -44,7 +44,7 @@ class threeCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(3);
+        pawn.get_tile().perform_move(pawn,3);
     }
 }
 
@@ -54,7 +54,7 @@ class fourCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(4);
+        pawn.get_tile().perform_move(pawn,4);
     }
 }
 
@@ -64,7 +64,7 @@ class fiveCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(5);
+        pawn.get_tile().perform_move(pawn,5);
     }
 }
 
@@ -74,7 +74,7 @@ class sevenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(7);
+        pawn.get_tile().perform_move(pawn,7);
     }
 }
 
@@ -84,7 +84,7 @@ class eightCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(8);
+        pawn.get_tile().perform_move(pawn,8);
     }
 }
 
@@ -94,7 +94,7 @@ class tenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(10);
+        pawn.get_tile().perform_move(pawn,10);
     }
 }
 
@@ -104,7 +104,7 @@ class elevenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(11);
+        pawn.get_tile().perform_move(pawn,11);
     }
 }
 
@@ -114,7 +114,7 @@ class twelveCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(12);
+        pawn.get_tile().perform_move(pawn,12);
     }
 }
 
@@ -124,7 +124,7 @@ class sorryCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        pawn.get_tile().perform_move(0);
+        pawn.get_tile().perform_move(pawn,0);
     }
 }
 

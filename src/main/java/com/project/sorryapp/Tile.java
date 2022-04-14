@@ -42,9 +42,9 @@ public class Tile extends Rectangle{
     public Tile get_prev(){return prev_;}
     public ArrayList<Pawn> get_pawns(){return currPawns_;}
     public double get_length(){return getWidth();}
-    public boolean perform_move(int distance){
+    public boolean perform_move(Pawn pawn, int distance){
         try{
-            return moveType_.move_pawn(currPawns_.get(0), distance);
+            return moveType_.move_pawn(pawn, distance);
         }catch(Exception e){
             System.out.println("PAWNS: " + currPawns_.toString());
             System.out.println("DISTANCE: " + distance);

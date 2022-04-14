@@ -18,12 +18,13 @@ public class GameController implements SceneLoader, Subject {
     Deck deck_;
     String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<Observer>();
-    Pawn dummyPawn_ = new Pawn(0, Color.YELLOW);
+    ArrayList<Tile> startTiles_;
+    ArrayList<Tile> homeTiles_;
 
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
-        ArrayList<Tile> homeTiles = GameBuilder.intitializeHomeTiles(originTile); //Build the home tiles model
+        ArrayList<Tile> homeTiles = GameBuilder.intitializeStartTiles(originTile); //Build the home tiles model
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
 
@@ -33,9 +34,6 @@ public class GameController implements SceneLoader, Subject {
         logger.registerPlayer(playerPool_,this);
 
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
-        dummyPawn_.set_tile(originTile);
-        originTile.add_pawn(dummyPawn_);
-        anchorPane.getChildren().add(dummyPawn_);
     }
 
     @Override
@@ -77,21 +75,22 @@ public class GameController implements SceneLoader, Subject {
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
         Player player = playerPool_.get_curr_player();
         String name = player.get_name();
-        int pawnsAtStart = 0;
 
         ArrayList<Pawn> playerPawns = player.get_pawns();
+        int pawnsAtStart = 0;
         for (int i = 0; i < playerPawns.size(); i++) {
             Pawn curPawn = playerPawns.get(i);
             if (curPawn.get_tile().equals(curPawn.getStartTile_())) {
                 pawnsAtStart++;
             }
         }
+        int pawnsStarted = playerPawns.size() - pawnsAtStart;
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
         if (cardValue == 0) {
-            announcement_ = "tracker: " + name + ",0,1," + pawnsAtStart + ",0"; //0's are temporary, need to update with proper values later
+            announcement_ = "tracker: " + name + ",0,1," + pawnsStarted + ",0"; //0's are temporary, need to update with proper values later
         } else {
-            announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsAtStart + ",0"; //0's are temporary, need to update with proper values later
+            announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsStarted + ",0"; //0's are temporary, need to update with proper values later
         }
         notifyObservers(announcement_);
     }
@@ -100,7 +99,6 @@ public class GameController implements SceneLoader, Subject {
     public void on_deck_clicked(){
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
-        announcementHelper(pulledCard);
 
         deck_.get_deck().add(pulledCard);
 
@@ -108,6 +106,7 @@ public class GameController implements SceneLoader, Subject {
         UserPlayer user = new UserPlayer(playerPool_.get_curr_player().get_pawns().get(3).get_tile(), new Invoker());
         user.begin_options(cardValue, playerPool_.get_curr_player().get_pawns().get(3));
 
+        announcementHelper(pulledCard);
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
             System.out.println(playerPool_.get_curr_player().get_name() + " pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());

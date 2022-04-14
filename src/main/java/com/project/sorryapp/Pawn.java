@@ -7,7 +7,7 @@ public class Pawn extends Circle {
     private int pawnNumber_;
     private Color color_;
     private Tile currTile_;
-    private Tile homeTile_;
+    private Tile startTile_;
 
     Pawn(int pawnNumber, Color color){
         pawnNumber_ = pawnNumber;
@@ -27,6 +27,9 @@ public class Pawn extends Circle {
         currTile_ = tile;
         update_position();
     }
+    public void set_start_tile(Tile tile){
+        startTile_ = tile;
+    }
     public Tile get_tile(){return currTile_;}
 
     //Center the pawn inside the tile
@@ -43,5 +46,5 @@ public class Pawn extends Circle {
         return color_;
     }
 
-    public Tile getStartTile_() {return homeTile_;}
+    public Tile getStartTile_() {return startTile_;}
 }

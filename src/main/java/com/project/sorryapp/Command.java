@@ -53,7 +53,7 @@ class fourCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        get_receiver().perform_move(pawn,4);
+        get_receiver().perform_move(pawn,-4);
     }
 }
 
@@ -93,7 +93,7 @@ class tenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        get_receiver().perform_move(pawn,10);
+        get_receiver().perform_move(pawn,-10);
     }
 }
 

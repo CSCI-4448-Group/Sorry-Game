@@ -99,7 +99,7 @@ public class GameController implements SceneLoader {
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(cardValue, currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 1);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 0);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
@@ -118,7 +118,7 @@ public class GameController implements SceneLoader {
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(cardValue, currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 2);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 1);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
@@ -137,7 +137,7 @@ public class GameController implements SceneLoader {
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(cardValue, currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 3);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 2);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
@@ -156,7 +156,7 @@ public class GameController implements SceneLoader {
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(cardValue, currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 4);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 3);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {

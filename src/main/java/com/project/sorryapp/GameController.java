@@ -88,47 +88,6 @@ public class GameController implements SceneLoader {
 
         drawCardLabel.setText("Card Value: " + cardValue);
         toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
-//
-//        EventHandler pawnHandler1 = pawn1.getOnAction();
-//        EventHandler pawnHandler2 = pawn2.getOnAction();
-//        EventHandler pawnHandler3 = pawn3.getOnAction();
-//        EventHandler pawnHandler4 = pawn4.getOnAction();
-//
-//        int pawnToMove = 0;
-//
-//        if (pawnHandler1 != null)
-//        {
-//            pawnToMove = 0;
-//        }
-//        else if (pawnHandler2 != null)
-//        {
-//            pawnToMove = 1;
-//        }
-//        else if (pawnHandler3 != null)
-//        {
-//            pawnToMove = 2;
-//        }
-//        else if (pawnHandler4 != null)
-//        {
-//            pawnToMove = 3;
-//        }
-
-//        Random pawnChooser = new Random();
-//        pawnToMove = pawnChooser.nextInt(3);
-//
-//        Tile currTile = playerPool_.get_curr_player().get_pawns().get(pawnToMove).get_tile();
-//        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(pawnToMove);
-//
-//        UserPlayer user = new UserPlayer(currTile, new Invoker());
-//        user.begin_options(cardValue, currPawn);
-//
-//        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
-//
-//        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
-//        {
-//            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
-//        }
-//        playerPool_.increment_iterator();
     }
 
     @FXML

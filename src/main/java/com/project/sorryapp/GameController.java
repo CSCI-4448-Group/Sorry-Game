@@ -29,6 +29,7 @@ public class GameController implements SceneLoader {
     @FXML Button pawn4;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
+    @FXML Label toMove;
 
     public void onPawnButtonsVis()
     {
@@ -85,13 +86,8 @@ public class GameController implements SceneLoader {
 
         deck_.get_deck().add(pulledCard);
 
-//        EventHandler<ActionEvent> pawn1Handler = new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//
-//            }
-//        };
-//
+        drawCardLabel.setText("Card Value: " + cardValue);
+        toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
 //
 //        EventHandler pawnHandler1 = pawn1.getOnAction();
 //        EventHandler pawnHandler2 = pawn2.getOnAction();

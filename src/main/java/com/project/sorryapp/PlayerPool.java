@@ -1,8 +1,8 @@
 package com.project.sorryapp;
 
 //Possible issue: This class has two responsibilities that we may want to encapsulate
-                    //1.] Maintaining the pool of players
-                    //2.] Maintaining the iterator
+                    //1.Maintaining the pool of players
+                    //2.Maintaining the iterator
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ public class PlayerPool {
 
      public void initializePlayers(){
          players_ = new ArrayList<>();
-         players_.add(new Player(Color.RED));
-         players_.add(new Player(Color.BLUE));
-         players_.add(new Player(Color.YELLOW));
-         players_.add(new Player(Color.GREEN));
+         players_.add(new Player("Red", Color.RED));
+         players_.add(new Player("Blue", Color.BLUE));
+         players_.add(new Player("Yellow", Color.YELLOW));
+         players_.add(new Player("Green", Color.GREEN));
 
      }
 

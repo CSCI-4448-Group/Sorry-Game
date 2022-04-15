@@ -40,7 +40,6 @@ class NormalMove implements MoveBehavior{
         }
         else
         {
-            System.out.println("Testing negative distances: " + distance);
             if(distance == 0) //Still need to check if we kick a pawn, if we land on a slide, etc.
                 return true;
             Tile prevTile = pawn.get_tile().get_prev(); //Get the next and current tile

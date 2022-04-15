@@ -70,9 +70,7 @@ public class GameController implements SceneLoader {
 
     @FXML
     public void on_home_clicked(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage thisStage = (Stage)node.getScene().getWindow();
-        load_scene("home-view.fxml", thisStage);
+        load_scene_from_event("home-view.fxml",event);
     }
 
     @FXML

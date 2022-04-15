@@ -27,39 +27,79 @@ public interface MoveBehavior{
 class NormalMove implements MoveBehavior{
     @Override
     public boolean move_pawn(Pawn pawn, int distance) {
-        if(distance == 0) { //Still need to check if we kick a pawn, if we land on a slide, etc.
-            check_kick(pawn);
-            return true;
+        if (distance >= 0)
+        {
+            if(distance == 0) //Still need to check if we kick a pawn, if we land on a slide, etc.
+                return true;
+            Tile nextTile = pawn.get_tile().get_next(); //Get the next and current tile
+            Tile currTile = pawn.get_tile();
+            nextTile.add_pawn(pawn); //Set the tiles pawn
+            pawn.set_tile(nextTile); //Se the pawns tile
+            currTile.remove_pawn(pawn);
+            return nextTile.perform_move(pawn, distance-1); //Recursively move the pawn
         }
-        Tile nextTile = pawn.get_tile().get_next(); //Get the next and current tile
-        Tile currTile = pawn.get_tile();
-        nextTile.add_pawn(pawn); //Set the tiles pawn
-        pawn.set_tile(nextTile); //Se the pawns tile
-        currTile.remove_pawn(pawn);
-        return nextTile.perform_move(pawn,distance-1); //Recursively move the pawn
+        else
+        {
+            if(distance == 0) //Still need to check if we kick a pawn, if we land on a slide, etc.
+                return true;
+            Tile prevTile = pawn.get_tile().get_prev(); //Get the next and current tile
+            Tile currTile = pawn.get_tile();
+
+            if (prevTile == null)
+            {
+                System.out.println("Four or Ten Card Pulled. Backwards move from home tile not possible.");
+                return true;
+            }
+
+            prevTile.add_pawn(pawn); //Set the tiles pawn
+            pawn.set_tile(prevTile); //Set the pawns tile
+            currTile.remove_pawn(pawn);
+            return prevTile.perform_move(pawn, distance+1); //Recursively move the pawn
+        }
     }
 }
 
 class GatewayMove implements MoveBehavior{
     @Override
     public boolean move_pawn(Pawn pawn, int distance) {
-        if(distance == 0) {
-            check_kick(pawn);
-            return true;
+        if (distance >= 0)
+        {
+            if(distance == 0) {
+                check_kick(pawn);
+                return true;
+            }
+            if(pawn.getFill().equals(pawn.get_tile().getFill())){ //If the pawns color matches the gateways color
+                Tile nextTile = ((GatewayTile)pawn.get_tile()).get_gateway_next();
+                Tile currTile = pawn.get_tile();
+                nextTile.add_pawn(pawn);
+                pawn.set_tile(nextTile);
+                currTile.remove_pawn(pawn);
+                return nextTile.perform_move(pawn,distance-1);
+            }
+            else{ //This is kind of cheese, but if the pawn doesnt go into the gated safezone, just let a normal move behavior handle the move
+                MoveBehavior normalMove = new NormalMove();
+                normalMove.move_pawn(pawn, distance);
+                return false;
+            }
         }
-        if(pawn.getFill().equals(pawn.get_tile().getFill())){ //If the pawns color matches the gateways color
-            Tile nextTile = ((GatewayTile)pawn.get_tile()).get_gateway_next();
-            Tile currTile = pawn.get_tile();
-            nextTile.add_pawn(pawn);
-            pawn.set_tile(nextTile);
-            currTile.remove_pawn(pawn);
-            return nextTile.perform_move(pawn,distance-1);
+        else {
+            if (distance == 0) {
+                check_kick(pawn);
+                return true;
+            }
+            if (pawn.getFill().equals(pawn.get_tile().getFill())) { //If the pawns color matches the gateways color
+                Tile nextTile = ((GatewayTile) pawn.get_tile()).get_gateway_next();
+                Tile currTile = pawn.get_tile();
+                nextTile.add_pawn(pawn);
+                pawn.set_tile(nextTile);
+                currTile.remove_pawn(pawn);
+                return nextTile.perform_move(pawn, distance + 1);
+            } else { //This is kind of cheese, but if the pawn doesnt go into the gated safezone, just let a normal move behavior handle the move
+                MoveBehavior normalMove = new NormalMove();
+                normalMove.move_pawn(pawn, distance);
+                return false;
+            }
         }
-        else{ //This is kind of cheese, but if the pawn doesnt go into the gated safezone, just let a normal move behavior handle the move
-            MoveBehavior normalMove = new NormalMove();
-            normalMove.move_pawn(pawn, distance);
-        }
-        return false;
     }
 }
 

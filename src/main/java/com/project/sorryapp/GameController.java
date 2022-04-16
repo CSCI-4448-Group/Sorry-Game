@@ -15,11 +15,12 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
+    boolean track_and_use_db = true; // True to connect and use MySQL database (see config file), false otherwise
     Deck deck_;
     String announcement_;
-    private static ArrayList<Observer> observersList_ = new ArrayList<Observer>();
-    ArrayList<Tile> startTiles_;
-    ArrayList<Tile> homeTiles_;
+    private static ArrayList<Observer> observersList_ = new ArrayList<>();
+//    ArrayList<Tile> startTiles_;
+//    ArrayList<Tile> homeTiles_;
 
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
@@ -28,10 +29,12 @@ public class GameController implements SceneLoader, Subject {
         GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(homeTiles); //Build the players model
 
-        tracker = Tracker.getInstance(playerPool_);
-        tracker.registerPlayer(this);
-        logger = Logger.getInstance(playerPool_);
-        logger.registerPlayer(playerPool_,this);
+        if (track_and_use_db) {
+            tracker = Tracker.getInstance(playerPool_);
+            tracker.registerPlayer(this);
+            logger = Logger.getInstance(playerPool_);
+            logger.registerPlayer(playerPool_, this);
+        }
 
         gameView_ = new GameView(anchorPane, originTile, homeTiles); //Draw the board to the view
     }

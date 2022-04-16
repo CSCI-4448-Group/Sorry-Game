@@ -18,22 +18,16 @@ import java.io.FileInputStream;
 public class HomeController implements SceneLoader{
     @FXML
     public void on_rules_clicked(ActionEvent event){
-        Node node = (Node)event.getSource();
-        Stage thisStage = (Stage)node.getScene().getWindow();
-        load_scene("rules-view.fxml", thisStage);
+        load_scene_from_event("rules-view.fxml", event);
     }
 
     @FXML
     public void on_leaderboard_clicked(ActionEvent event){
-        Node node = (Node)event.getSource();
-        Stage thisStage = (Stage)node.getScene().getWindow();
-        load_scene("leaderboard-view.fxml", thisStage);
+        load_scene_from_event("leaderboard-view.fxml", event);
     }
 
     @FXML
-    public void on_newgame_clicked(ActionEvent event) throws Exception {
-        Node node = (Node)event.getSource();
-        Stage thisStage = (Stage)node.getScene().getWindow();
-        load_scene("game-view.fxml", thisStage);
+    public void on_newgame_clicked(ActionEvent event){
+        load_scene_from_event("game-view.fxml", event);
     }
 }

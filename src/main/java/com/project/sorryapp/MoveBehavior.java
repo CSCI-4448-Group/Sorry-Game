@@ -72,12 +72,12 @@ class GatewayMove extends MoveBehavior{
             MoveBehavior normalMove = new NormalMove();
             return normalMove.move_pawn(pawn, distance);
         }
-            Tile nextTile = ((GatewayTile)pawn.get_tile()).get_gateway_next();
-            Tile currTile = pawn.get_tile();
-            nextTile.add_pawn(pawn);
-            pawn.set_tile(nextTile);
-            currTile.remove_pawn(pawn);
-            return nextTile.perform_move(pawn,distance-1);
+        Tile nextTile = ((GatewayTile)pawn.get_tile()).get_gateway_next();
+        Tile currTile = pawn.get_tile();
+        nextTile.add_pawn(pawn);
+        pawn.set_tile(nextTile);
+        currTile.remove_pawn(pawn);
+        return nextTile.perform_move(pawn,distance-1);
     }
 
     public boolean backward_move(Pawn pawn, int distance){

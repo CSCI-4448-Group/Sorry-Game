@@ -6,18 +6,16 @@ public class Player{
     private String colorString_;
     private Color color_;
     private ArrayList<Pawn> pawns_;
-    private String name_;
 
-    Player(Color color, String name){
+    Player(String playerColor, Color color){
+        colorString_ = playerColor;
         color_ = color;
         pawns_ = new ArrayList<>();
         for(int i =0 ; i < 4; i++){
             pawns_.add(new Pawn(i, color_));
         }
-        name_ = name;
     }
-    public Color get_color() {return color_;}
-    public String get_name() {return name_;}
+
     public String getColorString() { return colorString_;}
     public ArrayList<Pawn> get_pawns(){return pawns_;}
 }

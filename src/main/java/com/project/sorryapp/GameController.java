@@ -106,9 +106,8 @@ public class GameController implements SceneLoader, Subject {
 
     private void announcementHelper(Card pulledCard) {
         int cardValue = pulledCard.get_card_value();
-        System.out.println("Logger: The card that was pulled has value = " + cardValue);
         Player player = playerPool_.get_curr_player();
-        String name = player.get_name();
+        String name = player.getColorString();
 
         ArrayList<Pawn> playerPawns = player.get_pawns();
         int pawnsAtStart = 0;

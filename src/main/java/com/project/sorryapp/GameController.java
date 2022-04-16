@@ -1,12 +1,15 @@
 package com.project.sorryapp;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameController implements SceneLoader, Subject {
     @FXML
@@ -15,12 +18,38 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
-    boolean track_and_use_db = true; // True to connect and use MySQL database (see config file), false otherwise
+    boolean track_and_use_db = false; // True to connect and use MySQL database (see config file), false otherwise
     Deck deck_;
     String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<>();
-//    ArrayList<Tile> startTiles_;
-//    ArrayList<Tile> homeTiles_;
+    ArrayList<Tile> startTiles_;
+    ArrayList<Tile> homeTiles_;
+    public int cardValue;
+
+    //https://edencoding.com/javafx-button-events-and-how-to-use-them/
+    @FXML Button pawn1;
+    @FXML Button pawn2;
+    @FXML Button pawn3;
+    @FXML Button pawn4;
+    @FXML Button drawCard;
+    @FXML Label drawCardLabel;
+    @FXML Label toMove;
+
+    public void onPawnButtonsVis()
+    {
+        pawn1.setVisible(true);
+        pawn2.setVisible(true);
+        pawn3.setVisible(true);
+        pawn4.setVisible(true);
+    }
+
+    public void offPawnButtonVis()
+    {
+        pawn1.setVisible(false);
+        pawn2.setVisible(false);
+        pawn3.setVisible(false);
+        pawn4.setVisible(false);
+    }
 
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
@@ -56,6 +85,10 @@ public class GameController implements SceneLoader, Subject {
         }
     }
 
+    public int getCardValue() {return cardValue;}
+
+    public void setCardValue(int newCardValue) {cardValue = newCardValue;}
+
 //    //This is just for testing to make sure the whole board is connected
     @FXML
     public void on_next_clicked(){
@@ -68,9 +101,7 @@ public class GameController implements SceneLoader, Subject {
 
     @FXML
     public void on_home_clicked(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage thisStage = (Stage)node.getScene().getWindow();
-        load_scene("home-view.fxml", thisStage);
+        load_scene_from_event("home-view.fxml",event);
     }
 
     private void announcementHelper(Card pulledCard) {
@@ -99,53 +130,100 @@ public class GameController implements SceneLoader, Subject {
     }
 
     @FXML
-    public void on_deck_clicked(){
+    public void on_deck_clicked(ActionEvent event)
+    {
+        onPawnButtonsVis();
+
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         int cardValue = pulledCard.get_card_value();
+        setCardValue(pulledCard.get_card_value());
+        System.out.println("Logger: The card that was pulled has value = " + cardValue);
 
         deck_.get_deck().add(pulledCard);
 
-        //playerPool_.get_curr_player().get_pawns().get(3).get_tile().perform_move(cardValue);
-        UserPlayer user = new UserPlayer(playerPool_.get_curr_player().get_pawns().get(3).get_tile(), new Invoker());
-        user.begin_options(cardValue, playerPool_.get_curr_player().get_pawns().get(3));
-
         announcementHelper(pulledCard);
+
+        drawCardLabel.setText("Card Value: " + cardValue);
+        toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
+    }
+
+    @FXML
+    public void on_pawnOne_clicked()
+    {
+        int pawnToMove = 0;
+        Tile currTile = playerPool_.get_curr_player().get_pawns().get(0).get_tile();
+        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(0);
+
+        UserPlayer user = new UserPlayer(currTile, new Invoker());
+        user.begin_options(getCardValue(), currPawn);
+
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
-            System.out.println(playerPool_.get_curr_player().get_name() + " pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
         playerPool_.increment_iterator();
+        offPawnButtonVis();
     }
 
     @FXML
-    public int on_pawnOne_clicked()
+    public void on_pawnTwo_clicked()
     {
         int pawnToMove = 1;
-        System.out.println(pawnToMove);
-        return pawnToMove;
+        Tile currTile = playerPool_.get_curr_player().get_pawns().get(1).get_tile();
+        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(1);
+
+        UserPlayer user = new UserPlayer(currTile, new Invoker());
+        user.begin_options(getCardValue(), currPawn);
+
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+
+        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
+        {
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
+        playerPool_.increment_iterator();
+        offPawnButtonVis();
     }
 
     @FXML
-    public int on_pawnTwo_clicked()
+    public void on_pawnThree_clicked()
     {
         int pawnToMove = 2;
-        System.out.println(pawnToMove);
-        return pawnToMove;
+        Tile currTile = playerPool_.get_curr_player().get_pawns().get(2).get_tile();
+        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(2);
+
+        UserPlayer user = new UserPlayer(currTile, new Invoker());
+        user.begin_options(getCardValue(), currPawn);
+
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+
+        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
+        {
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
+        playerPool_.increment_iterator();
+        offPawnButtonVis();
     }
 
     @FXML
-    public int on_pawnThree_clicked()
+    public void on_pawnFour_clicked()
     {
         int pawnToMove = 3;
-        System.out.println(pawnToMove);
-        return pawnToMove;
-    }
+        Tile currTile = playerPool_.get_curr_player().get_pawns().get(3).get_tile();
+        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(3);
 
-    @FXML
-    public int on_pawnFour_clicked()
-    {
-        int pawnToMove = 4;
-        System.out.println(pawnToMove);
-        return pawnToMove;
+        UserPlayer user = new UserPlayer(currTile, new Invoker());
+        user.begin_options(getCardValue(), currPawn);
+
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+
+        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
+        {
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
+        playerPool_.increment_iterator();
+        offPawnButtonVis();
     }
 }

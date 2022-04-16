@@ -2,7 +2,8 @@ package com.project.sorryapp;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-public class Player {
+public class Player{
+    private String colorString_;
     private Color color_;
     private ArrayList<Pawn> pawns_;
     private String name_;
@@ -15,9 +16,8 @@ public class Player {
         }
         name_ = name;
     }
-
     public Color get_color() {return color_;}
     public String get_name() {return name_;}
-
+    public String getColorString() { return colorString_;}
     public ArrayList<Pawn> get_pawns(){return pawns_;}
 }

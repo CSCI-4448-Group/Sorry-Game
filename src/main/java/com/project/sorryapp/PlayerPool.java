@@ -1,8 +1,8 @@
 package com.project.sorryapp;
 
 //Possible issue: This class has two responsibilities that we may want to encapsulate
-                    //1.] Maintaining the pool of players
-                    //2.] Maintaining the iterator
+                    //1.Maintaining the pool of players
+                    //2.Maintaining the iterator
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

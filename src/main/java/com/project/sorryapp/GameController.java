@@ -50,7 +50,7 @@ public class GameController implements SceneLoader {
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
-        startTiles_ = GameBuilder.intitializeStartTiles(originTile); //Build the home tiles model
+        startTiles_ = GameBuilder.initializeStartTiles(originTile); //Build the home tiles model
         homeTiles_ = GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view

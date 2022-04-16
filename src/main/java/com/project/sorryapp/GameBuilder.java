@@ -57,7 +57,7 @@ public class GameBuilder{
 
     //Initialize start tiles, connecting their next to appropriate perimeter
     //tile on board
-    public static ArrayList<Tile> intitializeStartTiles(Tile originTile) {
+    public static ArrayList<Tile> initializeStartTiles(Tile originTile) {
         return BoardBuilder.buildStartTiles(originTile);
     }
 

@@ -20,7 +20,7 @@ public class GameController implements SceneLoader {
     Deck deck_;
     ArrayList<Tile> startTiles_;
     ArrayList<Tile> homeTiles_;
-    int cardValue;
+    public int cardValue;
 
     //https://edencoding.com/javafx-button-events-and-how-to-use-them/
     @FXML Button pawn1;
@@ -58,6 +58,10 @@ public class GameController implements SceneLoader {
         offPawnButtonVis();
     }
 
+    public int getCardValue() {return cardValue;}
+
+    public void setCardValue(int newCardValue) {cardValue = newCardValue;}
+
 //    //This is just for testing to make sure the whole board is connected
     @FXML
     public void on_next_clicked(){
@@ -79,7 +83,7 @@ public class GameController implements SceneLoader {
         onPawnButtonsVis();
 
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
-        cardValue = pulledCard.get_card_value();
+        setCardValue(pulledCard.get_card_value());
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
 
         deck_.get_deck().add(pulledCard);
@@ -91,13 +95,14 @@ public class GameController implements SceneLoader {
     @FXML
     public void on_pawnOne_clicked()
     {
+        int pawnToMove = 0;
         Tile currTile = playerPool_.get_curr_player().get_pawns().get(0).get_tile();
         Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(0);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(cardValue, currPawn);
+        user.begin_options(getCardValue(), currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 0);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
@@ -110,13 +115,14 @@ public class GameController implements SceneLoader {
     @FXML
     public void on_pawnTwo_clicked()
     {
+        int pawnToMove = 1;
         Tile currTile = playerPool_.get_curr_player().get_pawns().get(1).get_tile();
         Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(1);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(cardValue, currPawn);
+        user.begin_options(getCardValue(), currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 1);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
@@ -129,13 +135,14 @@ public class GameController implements SceneLoader {
     @FXML
     public void on_pawnThree_clicked()
     {
+        int pawnToMove = 2;
         Tile currTile = playerPool_.get_curr_player().get_pawns().get(2).get_tile();
         Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(2);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(cardValue, currPawn);
+        user.begin_options(getCardValue(), currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 2);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {
@@ -148,13 +155,14 @@ public class GameController implements SceneLoader {
     @FXML
     public void on_pawnFour_clicked()
     {
+        int pawnToMove = 3;
         Tile currTile = playerPool_.get_curr_player().get_pawns().get(3).get_tile();
         Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(3);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(cardValue, currPawn);
+        user.begin_options(getCardValue(), currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + 3);
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
 
         for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
         {

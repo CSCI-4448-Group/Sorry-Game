@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public abstract class MoveBehavior{
     final boolean move_pawn(Pawn pawn, int distance){ //Template method
-        System.out.println("DISTANCE IS : " + distance);
         if(distance == 0){
             if(check_kick(pawn)){
                 kick_pawns(pawn);

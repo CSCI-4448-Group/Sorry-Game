@@ -27,9 +27,11 @@ public class GameController implements SceneLoader {
     @FXML Button pawn2;
     @FXML Button pawn3;
     @FXML Button pawn4;
+    @FXML Button tenCardBackward;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
+
 
     public void onPawnButtonsVis()
     {
@@ -47,6 +49,16 @@ public class GameController implements SceneLoader {
         pawn4.setVisible(false);
     }
 
+    public void onTenCardButtonVis()
+    {
+        tenCardBackward.setVisible(true);
+    }
+
+    public void offTenCardButtonVis()
+    {
+        tenCardBackward.setVisible(false);
+    }
+
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -56,6 +68,7 @@ public class GameController implements SceneLoader {
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
 
         offPawnButtonVis();
+        offTenCardButtonVis();
     }
 
     public int getCardValue() {return cardValue;}
@@ -84,12 +97,25 @@ public class GameController implements SceneLoader {
 
         Card pulledCard = deck_.get_next_card(deck_.getRandomNumber());
         setCardValue(pulledCard.get_card_value());
+
+        switch (pulledCard.get_card_value())
+        {
+            case 10:
+                onTenCardButtonVis();
+        }
+
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
 
         deck_.get_deck().add(pulledCard);
 
         drawCardLabel.setText("Card Value: " + cardValue);
         toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
+    }
+
+    @FXML void on_tenbackward_clicked()
+    {
+        setCardValue(-1);
+        offTenCardButtonVis();
     }
 
     @FXML
@@ -110,6 +136,7 @@ public class GameController implements SceneLoader {
         }
         playerPool_.increment_iterator();
         offPawnButtonVis();
+        offTenCardButtonVis();
     }
 
     @FXML
@@ -130,6 +157,7 @@ public class GameController implements SceneLoader {
         }
         playerPool_.increment_iterator();
         offPawnButtonVis();
+        offTenCardButtonVis();
     }
 
     @FXML
@@ -150,6 +178,7 @@ public class GameController implements SceneLoader {
         }
         playerPool_.increment_iterator();
         offPawnButtonVis();
+        offTenCardButtonVis();
     }
 
     @FXML
@@ -170,5 +199,6 @@ public class GameController implements SceneLoader {
         }
         playerPool_.increment_iterator();
         offPawnButtonVis();
+        offTenCardButtonVis();
     }
 }

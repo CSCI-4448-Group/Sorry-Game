@@ -82,6 +82,22 @@ public class GameController implements SceneLoader {
         offSevenCardButtonVis();
     }
 
+    public void pawnMove(Player player, int pawnToMove)
+    {
+        Tile currTile = player.get_pawns().get(pawnToMove).get_tile();
+        Pawn currPawn = player.get_pawns().get(pawnToMove);
+
+        UserPlayer user = new UserPlayer(currTile, new Invoker());
+        user.begin_options(getCardValue(), currPawn);
+
+        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+
+        for (Pawn pawn : player.get_pawns())
+        {
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
+    }
+
     public int getCardValue() {return cardValue;}
 
     public void setCardValue(int newCardValue) {cardValue = newCardValue;}
@@ -147,18 +163,7 @@ public class GameController implements SceneLoader {
     public void on_pawnOne_clicked()
     {
         int pawnToMove = 0;
-        Tile currTile = playerPool_.get_curr_player().get_pawns().get(0).get_tile();
-        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(0);
-
-        UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(getCardValue(), currPawn);
-
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
-
-        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
-        {
-            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
-        }
+        pawnMove(playerPool_.get_curr_player(), pawnToMove);
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
@@ -169,18 +174,7 @@ public class GameController implements SceneLoader {
     public void on_pawnTwo_clicked()
     {
         int pawnToMove = 1;
-        Tile currTile = playerPool_.get_curr_player().get_pawns().get(1).get_tile();
-        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(1);
-
-        UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(getCardValue(), currPawn);
-
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
-
-        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
-        {
-            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
-        }
+        pawnMove(playerPool_.get_curr_player(), pawnToMove);
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
@@ -191,18 +185,7 @@ public class GameController implements SceneLoader {
     public void on_pawnThree_clicked()
     {
         int pawnToMove = 2;
-        Tile currTile = playerPool_.get_curr_player().get_pawns().get(2).get_tile();
-        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(2);
-
-        UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(getCardValue(), currPawn);
-
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
-
-        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
-        {
-            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
-        }
+        pawnMove(playerPool_.get_curr_player(), pawnToMove);
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
@@ -213,18 +196,7 @@ public class GameController implements SceneLoader {
     public void on_pawnFour_clicked()
     {
         int pawnToMove = 3;
-        Tile currTile = playerPool_.get_curr_player().get_pawns().get(3).get_tile();
-        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(3);
-
-        UserPlayer user = new UserPlayer(currTile, new Invoker());
-        user.begin_options(getCardValue(), currPawn);
-
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
-
-        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
-        {
-            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
-        }
+        pawnMove(playerPool_.get_curr_player(), pawnToMove);
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();

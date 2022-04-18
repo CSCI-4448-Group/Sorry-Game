@@ -18,6 +18,10 @@ public class UserPlayer {
     public void begin_options(int cardValue, Pawn pawn) {
         boolean running = true;
         switch(cardValue) {
+            case -4:
+                invoker_.set_slot(new fourSplitCommand(receiver_));
+                invoker_.press_button(pawn);
+                break;
             case -1:
                 invoker_.set_slot(new negOneCardCommand(receiver_));
                 invoker_.press_button(pawn);

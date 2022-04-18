@@ -32,11 +32,11 @@ public class SevenCard extends Card
         System.out.println("Pawn " + currPawn.getPawnNumber_() + " will move " + splitMove + " spaces.");
         System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
 
-        UserPlayer pawn1 = new UserPlayer(currTile, new Invoker());
-        UserPlayer pawn2 = new UserPlayer(randomTile, new Invoker());
+        UserPlayer receiver = new UserPlayer(currTile, new Invoker());
+        //UserPlayer pawn2 = new UserPlayer(randomTile, new Invoker());
 
-        pawn1.begin_options(splitMove, currPawn);
-        pawn2.begin_options(otherSplitMove, randomPawn);
+        receiver.begin_options(splitMove, currPawn);
+        receiver.begin_options(otherSplitMove, randomPawn);
 
         for (Pawn pawn : player.get_pawns())
         {

@@ -17,12 +17,24 @@ public abstract class Command {
         public abstract void execute(Pawn pawn);
 }
 
+class negOneCardCommand extends Command {
+    public negOneCardCommand(Tile receiver) {
+        set_receiver(receiver);
+    }
+    public void execute(Pawn pawn)
+    {
+        //if (get_receiver() instanceof homeTile)
+        get_receiver().perform_move(pawn,-1);
+    }
+}
+
 class oneCardCommand extends Command {
     public oneCardCommand(Tile receiver) {
         set_receiver(receiver);
     }
     public void execute(Pawn pawn)
     {
+        //if (get_receiver() instanceof homeTile)
         get_receiver().perform_move(pawn,1);
     }
 }
@@ -67,6 +79,16 @@ class fiveCardCommand extends Command {
     }
 }
 
+class sixSplitCardCommand extends Command {
+    public sixSplitCardCommand(Tile receiver) {
+        set_receiver(receiver);
+    }
+    public void execute(Pawn pawn)
+    {
+        get_receiver().perform_move(pawn,6);
+    }
+}
+
 class sevenCardCommand extends Command {
     public sevenCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -93,7 +115,7 @@ class tenCardCommand extends Command {
     }
     public void execute(Pawn pawn)
     {
-        get_receiver().perform_move(pawn,-10);
+        get_receiver().perform_move(pawn,10);
     }
 }
 

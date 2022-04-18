@@ -28,10 +28,10 @@ public class GameController implements SceneLoader {
     @FXML Button pawn3;
     @FXML Button pawn4;
     @FXML Button tenCardBackward;
+    @FXML Button sevenCardSplit;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
-
 
     public void onPawnButtonsVis()
     {
@@ -59,6 +59,16 @@ public class GameController implements SceneLoader {
         tenCardBackward.setVisible(false);
     }
 
+    public void onSevenCardButtonVis()
+    {
+        sevenCardSplit.setVisible(true);
+    }
+
+    public void offSevenCardButtonVis()
+    {
+        sevenCardSplit.setVisible(false);
+    }
+
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -69,6 +79,7 @@ public class GameController implements SceneLoader {
 
         offPawnButtonVis();
         offTenCardButtonVis();
+        offSevenCardButtonVis();
     }
 
     public int getCardValue() {return cardValue;}
@@ -100,8 +111,12 @@ public class GameController implements SceneLoader {
 
         switch (pulledCard.get_card_value())
         {
+            case 7:
+                onSevenCardButtonVis();
+                break;
             case 10:
                 onTenCardButtonVis();
+                break;
         }
 
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
@@ -116,6 +131,44 @@ public class GameController implements SceneLoader {
     {
         setCardValue(-1);
         offTenCardButtonVis();
+    }
+
+    @FXML void on_sevensplit_clicked()
+    {
+        Random splitRandom = new Random();
+        int splitMove = splitRandom.nextInt(1, 7);
+        int otherSplitMove = 7 - splitMove;
+
+        Random randomPawnRand = new Random();
+        int randomPawnIndex = randomPawnRand.nextInt(4);
+        while (randomPawnIndex == 0)
+        {
+            randomPawnIndex = randomPawnRand.nextInt(4);
+        }
+
+        Tile currTile = playerPool_.get_curr_player().get_pawns().get(0).get_tile();
+        Pawn currPawn = playerPool_.get_curr_player().get_pawns().get(0);
+        Pawn randomPawn = playerPool_.get_curr_player().get_pawns().get(randomPawnIndex);
+        Tile randomTile = randomPawn.get_tile();
+
+        System.out.println("============Split Move===============");
+        System.out.println("Pawn " + currPawn.getPawnNumber_() + " will move " + splitMove + " spaces.");
+        System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
+
+        UserPlayer pawn1 = new UserPlayer(currTile, new Invoker());
+        UserPlayer pawn2 = new UserPlayer(randomTile, new Invoker());
+
+        pawn1.begin_options(splitMove, currPawn);
+        pawn2.begin_options(otherSplitMove, randomPawn);
+
+        for (Pawn pawn : playerPool_.get_curr_player().get_pawns())
+        {
+            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+        }
+        playerPool_.increment_iterator();
+        offPawnButtonVis();
+        offTenCardButtonVis();
+        offSevenCardButtonVis();
     }
 
     @FXML
@@ -137,6 +190,7 @@ public class GameController implements SceneLoader {
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
+        offSevenCardButtonVis();
     }
 
     @FXML
@@ -158,6 +212,7 @@ public class GameController implements SceneLoader {
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
+        offSevenCardButtonVis();
     }
 
     @FXML
@@ -179,6 +234,7 @@ public class GameController implements SceneLoader {
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
+        offSevenCardButtonVis();
     }
 
     @FXML
@@ -200,5 +256,6 @@ public class GameController implements SceneLoader {
         playerPool_.increment_iterator();
         offPawnButtonVis();
         offTenCardButtonVis();
+        offSevenCardButtonVis();
     }
 }

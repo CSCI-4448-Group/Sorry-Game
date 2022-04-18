@@ -46,6 +46,10 @@ public class UserPlayer {
                 invoker_.set_slot(new fiveCardCommand(receiver_));
                 invoker_.press_button(pawn);
                 break;
+            case 6:
+                invoker_.set_slot(new sixSplitCardCommand(receiver_));
+                invoker_.press_button(pawn);
+                break;
             case 7:
                 invoker_.set_slot(new sevenCardCommand(receiver_));
                 invoker_.press_button(pawn);

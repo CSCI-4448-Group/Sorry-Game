@@ -33,7 +33,15 @@ public class SevenCard extends Card
         System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
 
         UserPlayer receiver = new UserPlayer(currTile, new Invoker());
-        //UserPlayer pawn2 = new UserPlayer(randomTile, new Invoker());
+
+        if (splitMove == 4)
+        {
+            splitMove = -4;
+        }
+        else if (otherSplitMove == 4) // Needed because default 4 action is to always move backwards 4 spaces
+        {
+            otherSplitMove = -4;
+        }
 
         receiver.begin_options(splitMove, currPawn);
         receiver.begin_options(otherSplitMove, randomPawn);

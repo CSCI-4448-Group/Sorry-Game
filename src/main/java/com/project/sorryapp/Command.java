@@ -59,6 +59,16 @@ class threeCardCommand extends Command {
     }
 }
 
+class fourSplitCommand extends Command {
+    public fourSplitCommand(Tile receiver) {
+        set_receiver(receiver);
+    }
+    public void execute(Pawn pawn)
+    {
+        get_receiver().perform_move(pawn,4);
+    }
+}
+
 class fourCardCommand extends Command {
     public fourCardCommand(Tile receiver) {
         set_receiver(receiver);

@@ -1,5 +1,6 @@
 package com.project.sorryapp;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class SevenCard extends Card
@@ -12,63 +13,57 @@ public class SevenCard extends Card
 
     public void split(Player player)
     {
-        Random splitRandom = new Random();
-        int splitMove = splitRandom.nextInt(1, 7);
-        int otherSplitMove = 7 - splitMove;
-
-        Random randomPawnRand = new Random();
-        int randomPawnIndex = randomPawnRand.nextInt(4);
-        while (randomPawnIndex == 0)
+        if (player.get_out_pawns().size() < 2)
         {
-            randomPawnIndex = randomPawnRand.nextInt(4);
-        }
-
-        Pawn currPawn = player.get_pawns().get(0);
-        Tile currTile = currPawn.get_tile();
-        Pawn randomPawn = player.get_pawns().get(randomPawnIndex);
-        Tile randomTile = randomPawn.get_tile();
-
-        if (player.get_out_pawns().size() >= 2)
-        {
-            int randomOutPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
-            while (randomOutPawnIndex == 0)
-            {
-                randomOutPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
-            }
-
-            currPawn = player.get_out_pawns().get(0);
-            currTile = currPawn.get_tile();
-            randomPawn = player.get_out_pawns().get(randomOutPawnIndex);
-            randomTile = randomPawn.get_tile();
-        }
-
-        if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
-        {
-            System.out.println("Logger: Unable to split move while one pawn is home");
+            System.out.println("Logger: Seven card split problem. Unable to split move while one pawn is home");
             return;
         }
-
-        System.out.println("============Split Move===============");
-        System.out.println("Pawn " + currPawn.getPawnNumber_() + " will move " + splitMove + " spaces.");
-        System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
-
-        UserPlayer receiver = new UserPlayer(currTile, new Invoker());
-
-        if (splitMove == 4)
+        else
         {
-            splitMove = -4;
-        }
-        else if (otherSplitMove == 4) // Needed because default 4 action is to always move backwards 4 spaces
-        {
-            otherSplitMove = -4;
-        }
+            Random splitRandom = new Random();
+            int splitMove = splitRandom.nextInt(1, 7);
+            int otherSplitMove = 7 - splitMove;
 
-        receiver.begin_options(splitMove, currPawn);
-        receiver.begin_options(otherSplitMove, randomPawn);
+            Random randomPawnRand = new Random();
+            int randomPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+            while (randomPawnIndex == 0)
+            {
+                randomPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+            }
 
-        for (Pawn pawn : player.get_pawns())
-        {
-            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            Pawn currPawn = player.get_out_pawns().get(0);
+            Tile currTile = currPawn.get_tile();
+            Pawn randomPawn = player.get_out_pawns().get(randomPawnIndex);
+            Tile randomTile = randomPawn.get_tile();
+
+            if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
+            {
+                System.out.println("Logger: Unable to split move while one pawn is home");
+                return;
+            }
+
+            System.out.println("============Split Move===============");
+            System.out.println("Pawn " + currPawn.getPawnNumber_() + " will move " + splitMove + " spaces.");
+            System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
+
+            UserPlayer receiver = new UserPlayer(currTile, new Invoker());
+
+            if (splitMove == 4)
+            {
+                splitMove = -4;
+            }
+            else if (otherSplitMove == 4) // Needed because default 4 action is to always move backwards 4 spaces
+            {
+                otherSplitMove = -4;
+            }
+
+            receiver.begin_options(splitMove, currPawn);
+            receiver.begin_options(otherSplitMove, randomPawn);
+
+            for (Pawn pawn : player.get_pawns())
+            {
+                System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            }
         }
     }
 }

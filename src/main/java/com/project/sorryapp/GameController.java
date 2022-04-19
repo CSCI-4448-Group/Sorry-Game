@@ -190,7 +190,6 @@ public class GameController implements SceneLoader {
     {
         int pawnToMove = 0;
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
-
     }
 
     @FXML

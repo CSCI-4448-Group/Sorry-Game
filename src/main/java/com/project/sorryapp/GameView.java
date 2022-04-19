@@ -29,13 +29,11 @@ public class GameView{
             crawler = crawler.get_next();
         }
         gameView_.getChildren().addAll(homeTiles); //Add all home tiles to the
-        homeTiles.forEach(tile -> gameView_.getChildren().addAll(tile.get_pawns()));
         homeTiles.forEach(tile -> {
-            tile.get_pawns().forEach(pawn -> {
-                pawn.get_pawn_text().setX(pawn.getCenterX()-pawn.getRadius()/2);
-                pawn.get_pawn_text().setY(pawn.getCenterY()+pawn.getRadius()/2);
-                gameView_.getChildren().add(pawn.get_pawn_text());
-            });
+            gameView_.getChildren().addAll(tile.get_pawns());
+            align_start_pawns(tile);
+            tile.get_pawns().forEach(pawn -> gameView_.getChildren().add(pawn.get_pawn_text()));
+
         });
         try {
             Image image = new Image(getClass().getResource("125-1257676_sorry-logo-png-transparent-sorry-game.png").toURI().toString());
@@ -51,6 +49,27 @@ public class GameView{
         catch(Exception e){
             System.out.println("Could not load image file");
             e.printStackTrace();
+        }
+    }
+
+    public static void align_start_pawns(Tile startTile){
+        if(startTile.get_pawns().size() == 0){
+            return;
+        }
+        double originX = startTile.getX() + startTile.get_length()/2;
+        double originY = startTile.getY() + startTile.get_length()/2;
+        ArrayList<Pawn> pawns = startTile.get_pawns();
+
+        double radius = pawns.get(0).getRadius();
+        switch(pawns.size()){ //intentional fall through of switch cases
+            case 4:
+                pawns.get(3).update_position(originX + radius, originY + radius);
+            case 3:
+                pawns.get(2).update_position(originX + radius, originY - radius);
+            case 2:
+                pawns.get(1).update_position(originX - radius, originY + radius);
+            case 1:
+                pawns.get(0).update_position(originX - radius, originY - radius);
         }
     }
 }

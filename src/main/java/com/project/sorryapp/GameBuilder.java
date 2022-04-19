@@ -29,18 +29,6 @@ public class GameBuilder{
             homeTile.add_pawn(pawns.get(i));
             pawns.get(i).set_start_tile(homeTile);
         }
-        double radius = pawns.get(0).getRadius();
-        pawns.get(0).setCenterX(pawns.get(0).getCenterX() + radius);
-        pawns.get(0).setCenterY(pawns.get(0).getCenterY() + radius);
-
-        pawns.get(1).setCenterX(pawns.get(1).getCenterX() + radius);
-        pawns.get(1).setCenterY(pawns.get(1).getCenterY() - radius);
-
-        pawns.get(2).setCenterX(pawns.get(2).getCenterX() - radius);
-        pawns.get(2).setCenterY(pawns.get(2).getCenterY() + radius);
-
-        pawns.get(3).setCenterX(pawns.get(3).getCenterX() - radius);
-        pawns.get(3).setCenterY(pawns.get(3).getCenterY() - radius);
     }
 
     // Initialize the deck for the game

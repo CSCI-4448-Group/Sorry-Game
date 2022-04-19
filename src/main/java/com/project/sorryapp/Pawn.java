@@ -27,7 +27,7 @@ public class Pawn extends Circle {
     //set the pawns tile and update its position
     public void set_tile(Tile tile){
         currTile_ = tile;
-        update_position();
+        update_position(currTile_.getX() + currTile_.get_length()/2, currTile_.getY() + currTile_.get_length()/2);
     }
     public void set_start_tile(Tile tile){
         startTile_ = tile;
@@ -36,9 +36,9 @@ public class Pawn extends Circle {
     public Tile get_start_tile(){return startTile_;}
 
     //Center the pawn inside the tile
-    public void update_position(){
-        this.setCenterX(currTile_.getX() + currTile_.getWidth()/2);
-        this.setCenterY(currTile_.getY() + currTile_.getHeight()/2);
+    public void update_position(double x, double y){
+        this.setCenterX(x);
+        this.setCenterY(y);
         this.get_pawn_text().setX(this.getCenterX() - this.getRadius()/2);
         this.get_pawn_text().setY(this.getCenterY() + this.getRadius()/2);
     }
@@ -51,24 +51,7 @@ public class Pawn extends Circle {
     public void send_home(){ //Works in the model, bugged in the view (overlap of pawns)
         this.set_tile(startTile_);
         startTile_.add_pawn(this);
-        switch (startTile_.get_pawns().size()){
-            case 1 -> {
-                setCenterX(getCenterX() + getRadius());
-                setCenterY(getCenterY() + getRadius());
-            }
-            case 2 -> {
-                setCenterX(getCenterX() + getRadius());
-                setCenterY(getCenterY() - getRadius());
-            }
-            case 3 -> {
-                setCenterX(getCenterX() - getRadius());
-                setCenterY(getCenterY() + getRadius());
-            }
-            case 4 -> {
-                setCenterX(getCenterX() - getRadius());
-                setCenterY(getCenterY() - getRadius());
-            }
-        }
+        GameView.align_start_pawns(startTile_);
     }
 
     public Color getColor_() {

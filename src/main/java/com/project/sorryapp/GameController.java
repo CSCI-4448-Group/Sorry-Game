@@ -76,10 +76,7 @@ public class GameController implements SceneLoader {
         homeTiles_ = GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
-
-        offPawnButtonVis();
-        offTenCardButtonVis();
-        offSevenCardButtonVis();
+        disable_ui();
     }
 
     public boolean escapeFromHome(Tile currTile, Pawn currPawn)
@@ -128,16 +125,6 @@ public class GameController implements SceneLoader {
 
     public void setCardValue(int newCardValue) {cardValue = newCardValue;}
 
-//    //This is just for testing to make sure the whole board is connected
-    @FXML
-    public void on_next_clicked(){
-
-    }
-
-    @FXML
-    public void on_prev_clicked(){
-    }
-
     @FXML
     public void on_home_clicked(ActionEvent event) {
         load_scene_from_event("home-view.fxml",event);
@@ -180,46 +167,40 @@ public class GameController implements SceneLoader {
         SevenCard sevenSplit = new SevenCard();
         sevenSplit.split(playerPool_.get_curr_player());
         playerPool_.increment_iterator();
-        offPawnButtonVis();
-        offTenCardButtonVis();
-        offSevenCardButtonVis();
+        disable_ui();
     }
 
     @FXML
     public void on_pawnOne_clicked()
     {
-        int pawnToMove = 0;
-        pawnMove(playerPool_.get_curr_player(), pawnToMove);
+        pawn_click_helper(0);
     }
 
     @FXML
     public void on_pawnTwo_clicked()
     {
-        int pawnToMove = 1;
-        pawnMove(playerPool_.get_curr_player(), pawnToMove);
-        playerPool_.increment_iterator();
-        offPawnButtonVis();
-        offTenCardButtonVis();
-        offSevenCardButtonVis();
+        pawn_click_helper(1);
     }
 
     @FXML
     public void on_pawnThree_clicked()
     {
-        int pawnToMove = 2;
-        pawnMove(playerPool_.get_curr_player(), pawnToMove);
-        playerPool_.increment_iterator();
-        offPawnButtonVis();
-        offTenCardButtonVis();
-        offSevenCardButtonVis();
+        pawn_click_helper(2);
     }
 
     @FXML
     public void on_pawnFour_clicked()
     {
-        int pawnToMove = 3;
+        pawn_click_helper(3);
+    }
+
+    private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
         playerPool_.increment_iterator();
+        disable_ui();
+    }
+
+    private void disable_ui(){
         offPawnButtonVis();
         offTenCardButtonVis();
         offSevenCardButtonVis();

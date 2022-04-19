@@ -28,6 +28,12 @@ public class SevenCard extends Card
         Pawn randomPawn = player.get_pawns().get(randomPawnIndex);
         Tile randomTile = randomPawn.get_tile();
 
+        if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
+        {
+            System.out.println("Logger: Unable to split move while one pawn is home");
+            return;
+        }
+
         System.out.println("============Split Move===============");
         System.out.println("Pawn " + currPawn.getPawnNumber_() + " will move " + splitMove + " spaces.");
         System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");

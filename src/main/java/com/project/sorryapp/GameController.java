@@ -82,18 +82,29 @@ public class GameController implements SceneLoader {
         offSevenCardButtonVis();
     }
 
+    public boolean escapeFromHome(Tile currTile, Pawn currPawn)
+    {
+        if (currTile.equals(currPawn.get_start_tile()))
+        {
+            if (getCardValue() != 1 && getCardValue() != 2)
+            {
+                System.out.println("Logger: Unable to move. Need to draw 1 or 2 card to move out of home");
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void pawnMove(Player player, int pawnToMove)
     {
         Pawn currPawn = player.get_pawns().get(pawnToMove);
         Tile currTile = currPawn.get_tile();
 
-        if (currTile.equals(currPawn.get_start_tile()))
+        boolean canLeaveHome = escapeFromHome(currTile, currPawn);
+
+        if (canLeaveHome == false)
         {
-            if (getCardValue() != 1 && getCardValue() != 2)
-            {
-                System.out.println("Unable to move. Need to draw 1 or 2 card to move out of home");
-                return;
-            }
+            return;
         }
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());

@@ -21,7 +21,7 @@ public class Pawn extends Circle {
             case "0x0000ffff" -> this.setFill(Color.BLUE);
             case "0x008000ff" -> this.setFill(Color.GREEN);
         }
-        numText_ = new Text(Integer.toString(pawnNumber_));
+        numText_ = new Text(Integer.toString(pawnNumber_+1));
     }
 
     //set the pawns tile and update its position

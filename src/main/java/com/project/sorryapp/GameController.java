@@ -92,6 +92,11 @@ public class GameController implements SceneLoader {
                 return false;
             }
         }
+        ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
+        if (!outPawns.contains(currPawn))
+        {
+            outPawns.add(currPawn);
+        }
         return true;
     }
 
@@ -116,6 +121,7 @@ public class GameController implements SceneLoader {
         {
             System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
+
     }
 
     public int getCardValue() {return cardValue;}
@@ -184,10 +190,7 @@ public class GameController implements SceneLoader {
     {
         int pawnToMove = 0;
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
-        playerPool_.increment_iterator();
-        offPawnButtonVis();
-        offTenCardButtonVis();
-        offSevenCardButtonVis();
+
     }
 
     @FXML

@@ -23,10 +23,24 @@ public class SevenCard extends Card
             randomPawnIndex = randomPawnRand.nextInt(4);
         }
 
-        Tile currTile = player.get_pawns().get(0).get_tile();
         Pawn currPawn = player.get_pawns().get(0);
+        Tile currTile = currPawn.get_tile();
         Pawn randomPawn = player.get_pawns().get(randomPawnIndex);
         Tile randomTile = randomPawn.get_tile();
+
+        if (player.get_out_pawns().size() >= 2)
+        {
+            int randomOutPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+            while (randomOutPawnIndex == 0)
+            {
+                randomOutPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+            }
+
+            currPawn = player.get_out_pawns().get(0);
+            currTile = currPawn.get_tile();
+            randomPawn = player.get_out_pawns().get(randomOutPawnIndex);
+            randomTile = randomPawn.get_tile();
+        }
 
         if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
         {

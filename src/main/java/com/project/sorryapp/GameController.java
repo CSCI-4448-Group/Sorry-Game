@@ -18,13 +18,17 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
-    boolean track_and_use_db = true; // True to connect and use MySQL database (see config file in resources folder), false otherwise
+    public static boolean track_and_use_db = false; // True to connect and use MySQL database (see config file in resources folder), false otherwise
     Deck deck_;
     String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<>();
     ArrayList<Tile> startTiles_;
     ArrayList<Tile> homeTiles_;
     public int cardValue;
+
+    public static boolean getTrackAndUseDB() {
+        return track_and_use_db;
+    }
 
     //https://edencoding.com/javafx-button-events-and-how-to-use-them/
     @FXML Button pawn1;

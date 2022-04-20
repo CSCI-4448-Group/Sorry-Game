@@ -10,10 +10,14 @@
    <children>
       <Button layoutX="49.0" layoutY="40.0" mnemonicParsing="false" onAction="#on_home_clicked" text="Home" />
       <Label layoutX="217.0" layoutY="45.0" text="Leaderboard for previous games" />
-      <TableView layoutX="195.0" layoutY="84.0" prefHeight="284.0" prefWidth="220.0">
+      <TableView fx:id="leaderboard_table" layoutX="83.0" layoutY="84.0" prefHeight="284.0" prefWidth="440.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="col_gameid" prefWidth="53.0" text="Game" />
+          <TableColumn fx:id="col_name" prefWidth="67.0" text="Player" />
+            <TableColumn fx:id="col_moved" prefWidth="75.0" text="Moved" />
+            <TableColumn fx:id="col_sorries" prefWidth="83.0" text="Sorries" />
+            <TableColumn fx:id="col_started" prefWidth="81.0" text="Started" />
+            <TableColumn fx:id="col_home" prefWidth="79.0" text="Home" />
         </columns>
       </TableView>
    </children>

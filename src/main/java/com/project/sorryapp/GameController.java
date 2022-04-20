@@ -83,9 +83,9 @@ public class GameController implements SceneLoader {
     {
         if (currTile.equals(currPawn.get_start_tile()))
         {
-            if (getCardValue() != 1 && getCardValue() != 2)
+            if (getCardValue() != 1 && getCardValue() != 2) // In preparation for Sorry! Card
             {
-                System.out.println("Logger: Unable to move. Need to draw 1 or 2 card to move out of home");
+                System.out.println("Logger: Unable to move. Need to draw Sorry!, 1 or 2 card to move out of home");
                 return false;
             }
         }
@@ -109,16 +109,38 @@ public class GameController implements SceneLoader {
             return;
         }
 
+        player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
 
-        System.out.println("The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+        System.out.println("Logger: The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
 
         for (Pawn pawn : player.get_pawns())
         {
-            System.out.println(pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
 
+    }
+
+    public void checkGameOver()
+    {
+        int pawnsHomeCounter = 0;
+        for (Pawn p : playerPool_.get_curr_player().get_out_pawns())
+        {
+            if (p.get_tile().get_next() == null)
+            {
+                pawnsHomeCounter += 1;
+            }
+        }
+        System.out.println("Pawn home counter is: " + pawnsHomeCounter);
+        if (pawnsHomeCounter == 4)
+        {
+            System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");
+            System.out.println("Logger: Please return the home screen");
+            disable_ui_game_over();
+
+        }
     }
 
     public int getCardValue() {return cardValue;}
@@ -154,11 +176,13 @@ public class GameController implements SceneLoader {
 
         drawCardLabel.setText("Card Value: " + cardValue);
         toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
+        drawCard.setVisible(false);
     }
 
     @FXML void on_tenbackward_clicked()
     {
         setCardValue(-1);
+        checkGameOver();
         offTenCardButtonVis();
     }
 
@@ -166,41 +190,57 @@ public class GameController implements SceneLoader {
     {
         SevenCard sevenSplit = new SevenCard();
         sevenSplit.split(playerPool_.get_curr_player());
+        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
+        drawCard.setVisible(true);
     }
 
     @FXML
     public void on_pawnOne_clicked()
     {
         pawn_click_helper(0);
+        drawCard.setVisible(true);
     }
 
     @FXML
     public void on_pawnTwo_clicked()
     {
         pawn_click_helper(1);
+        drawCard.setVisible(true);
     }
 
     @FXML
     public void on_pawnThree_clicked()
     {
         pawn_click_helper(2);
+        drawCard.setVisible(true);
     }
 
     @FXML
     public void on_pawnFour_clicked()
     {
         pawn_click_helper(3);
+        drawCard.setVisible(true);
     }
 
     private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
+        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
     }
 
     private void disable_ui(){
+        offPawnButtonVis();
+        offTenCardButtonVis();
+        offSevenCardButtonVis();
+    }
+
+    private void disable_ui_game_over(){
+        drawCard.setVisible(false);
+        drawCardLabel.setVisible(false);
+        toMove.setVisible(false);
         offPawnButtonVis();
         offTenCardButtonVis();
         offSevenCardButtonVis();

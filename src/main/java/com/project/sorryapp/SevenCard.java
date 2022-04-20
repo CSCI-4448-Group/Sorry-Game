@@ -20,24 +20,35 @@ public class SevenCard extends Card
         }
         else
         {
+            for (Pawn p : player.get_out_pawns())
+            {
+                if (p.get_tile().get_next() == null)
+                {
+                    player.get_out_pawns().remove(p);
+                }
+            }
+
             Random splitRandom = new Random();
             int splitMove = splitRandom.nextInt(1, 7);
             int otherSplitMove = 7 - splitMove;
 
             Random randomPawnRand = new Random();
             int randomPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+
+            Pawn currPawn = player.get_out_pawns().get(0);
+            Tile currTile = currPawn.get_tile();
+
             while (randomPawnIndex == 0)
             {
                 randomPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
             }
 
-            Pawn currPawn = player.get_out_pawns().get(0);
-            Tile currTile = currPawn.get_tile();
             Pawn randomPawn = player.get_out_pawns().get(randomPawnIndex);
             Tile randomTile = randomPawn.get_tile();
 
             if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
             {
+                System.out.println(randomPawnIndex);
                 System.out.println("Logger: Unable to split move while one pawn is home");
                 return;
             }

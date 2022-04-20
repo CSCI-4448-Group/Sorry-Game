@@ -3,42 +3,42 @@ package com.project.sorryapp;
 import java.util.ArrayList;
 
 public abstract class MoveBehavior{
+
+    //return true if pawns are kicked home
+    //return false if not
     final boolean move_pawn(Pawn pawn, int distance){ //Template method
         if(distance == 0){
-            if(check_kick(pawn)){
-                kick_pawns(pawn);
-            }
+            return end_move(pawn);
         }
-        else if(distance > 0){
+        if(distance > 0){
             forward_move(pawn,distance);
         }
         else{
             backward_move(pawn, distance);
         }
-        return true;
+        return false;
     }
-
-    public boolean check_kick(Pawn safePawn){ //optional method
-        return safePawn.get_tile().get_pawns().size() > 1;
+    public boolean end_move(Pawn pawn){
+        if(pawn.get_tile().get_pawns().size() <= 1){
+            return false;
+        }
+        ArrayList<Pawn> currPawns = pawn.get_tile().get_pawns();
+        ArrayList<Pawn> removePawns = new ArrayList<>();
+        for(int i = 0; i < currPawns.size(); i++){
+            if(!pawn.equals(currPawns.get(i))){
+                removePawns.add(currPawns.get(i));
+            }
+        }
+        pawn.get_tile().get_pawns().removeAll(removePawns);
+        for(int i = 0; i < removePawns.size(); i++){
+            removePawns.get(i).send_home();
+        }
+        return true;
     }
 
     public abstract boolean forward_move(Pawn pawn, int distance); //abstract method
 
     public abstract boolean backward_move(Pawn pawn, int distance); //abstract method
-
-    public void kick_pawns(Pawn safePawn){ //optional method
-        ArrayList<Pawn> currPawns = safePawn.get_tile().get_pawns();
-        ArrayList<Pawn> removePawns = new ArrayList<>();
-        for(int i = 0; i < currPawns.size(); i++){
-            if(!safePawn.equals(currPawns.get(i))){
-                removePawns.add(currPawns.get(i));
-            }
-        }
-        safePawn.get_tile().get_pawns().removeAll(removePawns);
-        for(int i = 0; i < removePawns.size(); i++){
-            removePawns.get(i).send_home();
-        }
-    }
 }
 
 class NormalMove extends MoveBehavior{
@@ -102,4 +102,34 @@ class GoaltileMove extends MoveBehavior{
         return false;
     }
 }
+
+class SlideMove extends MoveBehavior{
+    //Need some way for the movement to know that we have reached the end of the slide and need to stop moving
+    //Only thing that identifies tile type is its move behavior right
+
+
+//    @Override
+//    public boolean end_move(Pawn pawn) {
+//         if(this is the start slide tile){
+//              while(color of tile is != white){
+//                  move pawn forward 1 with slide behavior (overload forward move)
+//              }
+//         }
+//    }
+
+    @Override
+    public boolean forward_move(Pawn pawn, int distance) {
+        System.out.println("I AM SLIDE TILE MOVE FORWARD");
+        NormalMove move = new NormalMove();
+        return  move.move_pawn(pawn, distance);
+    }
+
+    @Override
+    public boolean backward_move(Pawn pawn, int distance) {
+        System.out.println(" I AM SLIDE TILE MOVE BACKWARD");
+        NormalMove move = new NormalMove();
+        return  move.move_pawn(pawn, distance);
+    }
+}
+
 

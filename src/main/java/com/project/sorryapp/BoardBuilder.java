@@ -8,10 +8,12 @@ public class BoardBuilder{
     public static Tile buildPerimeter(double beginX, double beginY){
         Tile originTile = TileFactory.buildTile(null,(int)beginX/4,(int)beginY/6); //Initialize origin tile (top left corner tile)
         Tile currTile = originTile;
-        currTile = buildEastBoundRow(currTile, 15,1, Color.RED);
+
+        currTile = buildEastBoundRow(currTile, 15, 1, Color.RED);
         currTile = buildSouthBoundRow(currTile,15,1, Color.BLUE);
         currTile = buildWestBoundRow(currTile,15,1, Color.YELLOW);
         currTile = buildNorthBoundRow(currTile, 14,1, Color.GREEN);
+
         currTile.set_next(originTile); //Connect the first tile and the last tile
         originTile.set_prev(currTile);
         return originTile;
@@ -118,24 +120,39 @@ public class BoardBuilder{
     }
 
 
+    //NOTE: None of these functions have safeties in place, (i.e. if position > length etc.)
+    //They rely on being called perfectly
     private static Tile buildEastBoundRow(Tile originTile, int length){
         Tile currTile = originTile;
         for(int i = 0; i < length; i++){
             currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
         }
+        System.out.println("i have built" + length);
         return currTile;
     }
     private static Tile buildEastBoundRow(Tile originTile, int length, int gatePosition, Color gateColor){
         Tile currTile = originTile;
-        for(int i = 0; i < length; i++){
-            if(i==gatePosition){
-                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY(), gateColor);
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
-        }
+        currTile = buildEastBoundRow(currTile, gatePosition);
+        currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY(), gateColor);
+        currTile = buildEastBoundRow(currTile, length - gatePosition-1);
         return currTile;
     }
+
+//    private static Tile buildEastBoundRow(Tile originTile, int length, int slideStartPosition,int slideLength, Color slideColor){
+//        Tile currTile = originTile;
+//        for(int i = 0; i< length; i++){
+//            if(i == slideStartPosition){
+//                currTile = TileFactory.buildSlideTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY(), slideColor);
+//                for(int j = 1; j < slideLength; j++){
+//                    currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY(),slideColor);
+//                    i++;
+//                }
+//                continue;
+//            }
+//            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()+currTile.get_length()), (int)currTile.getY());
+//        }
+//        return currTile;
+//    }
 
     private static Tile buildSouthBoundRow(Tile originTile, int length){
         Tile currTile = originTile;
@@ -147,13 +164,9 @@ public class BoardBuilder{
 
     private static Tile buildSouthBoundRow(Tile originTile, int length, int gatePosition, Color gateColor) {
         Tile currTile = originTile;
-        for (int i = 0; i < length; i++) {
-            if (i==gatePosition) {
-                currTile = TileFactory.buildGateTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()), gateColor);
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()));
-        }
+        currTile = buildSouthBoundRow(currTile, gatePosition);
+        currTile = TileFactory.buildGateTile(currTile, (int) currTile.getX(), (int) (currTile.getY() + currTile.get_length()), gateColor);
+        currTile = buildSouthBoundRow(currTile, length - gatePosition-1);
         return currTile;
     }
 
@@ -167,13 +180,9 @@ public class BoardBuilder{
 
     private static Tile buildWestBoundRow(Tile originTile, int length, int gatePosition, Color gateColor){
         Tile currTile = originTile;
-        for(int i = 0; i < length; i++){ //Build bottom row
-            if(i==gatePosition){
-                currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY(), gateColor);
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY());
-        }
+        currTile = buildWestBoundRow(currTile, gatePosition);
+        currTile = TileFactory.buildGateTile(currTile, (int)(currTile.getX()-currTile.get_length()),(int)currTile.getY(), gateColor);
+        currTile = buildWestBoundRow(currTile, length - gatePosition-1);
         return currTile;
     }
 
@@ -186,13 +195,9 @@ public class BoardBuilder{
     }
     private static Tile buildNorthBoundRow(Tile originTile, int length, int gatePosition, Color gateColor){
         Tile currTile = originTile;
-        for(int i = 0; i < length; i++){ //Build left col
-            if(i==gatePosition){
-                currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()), gateColor);
-                continue;
-            }
-            currTile = TileFactory.buildTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()));
-        }
+        currTile = buildNorthBoundRow(currTile, gatePosition);
+        currTile = TileFactory.buildGateTile(currTile, (int)currTile.getX(), (int)(currTile.getY()-currTile.get_length()), gateColor);
+        currTile = buildNorthBoundRow(currTile, length - gatePosition-1);
         return currTile;
     }
 }

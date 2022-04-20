@@ -20,11 +20,12 @@ public class SevenCard extends Card
         }
         else
         {
-            for (Pawn p : player.get_out_pawns())
+            ArrayList<Pawn> current_out_pawns = player.get_out_pawns();
+            for (Pawn p : current_out_pawns)
             {
                 if (p.get_tile().get_next() == null)
                 {
-                    player.get_out_pawns().remove(p);
+                   current_out_pawns.remove(p);
                 }
             }
 
@@ -33,17 +34,17 @@ public class SevenCard extends Card
             int otherSplitMove = 7 - splitMove;
 
             Random randomPawnRand = new Random();
-            int randomPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+            int randomPawnIndex = randomPawnRand.nextInt(current_out_pawns.size());
 
-            Pawn currPawn = player.get_out_pawns().get(0);
+            Pawn currPawn = current_out_pawns.get(0);
             Tile currTile = currPawn.get_tile();
 
             while (randomPawnIndex == 0)
             {
-                randomPawnIndex = randomPawnRand.nextInt(player.get_out_pawns().size());
+                randomPawnIndex = randomPawnRand.nextInt(current_out_pawns.size());
             }
 
-            Pawn randomPawn = player.get_out_pawns().get(randomPawnIndex);
+            Pawn randomPawn = current_out_pawns.get(randomPawnIndex);
             Tile randomTile = randomPawn.get_tile();
 
             if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))

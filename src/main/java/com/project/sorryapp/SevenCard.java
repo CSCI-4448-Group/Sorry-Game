@@ -36,18 +36,23 @@ public class SevenCard extends Card
             Random randomPawnRand = new Random();
             int randomPawnIndex = randomPawnRand.nextInt(current_out_pawns.size());
 
-            Pawn currPawn = current_out_pawns.get(0);
+            Pawn currPawn = current_out_pawns.get(randomPawnIndex);
             Tile currTile = currPawn.get_tile();
 
-            while (randomPawnIndex == 0)
+            int randomPawnIndex2 = randomPawnRand.nextInt(current_out_pawns.size());
+
+
+
+            while (randomPawnIndex2 == randomPawnIndex)
             {
-                randomPawnIndex = randomPawnRand.nextInt(current_out_pawns.size());
+                randomPawnIndex2 = randomPawnRand.nextInt(current_out_pawns.size());
             }
 
-            Pawn randomPawn = current_out_pawns.get(randomPawnIndex);
-            Tile randomTile = randomPawn.get_tile();
+            Pawn currPawn2 = current_out_pawns.get(randomPawnIndex2);
 
-            if (randomTile.equals(randomPawn.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
+            Tile randomTile = currPawn2.get_tile();
+
+            if (randomTile.equals(currPawn2.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
             {
                 System.out.println(randomPawnIndex);
                 System.out.println("Logger: Unable to split move while one pawn is home");
@@ -56,7 +61,7 @@ public class SevenCard extends Card
 
             System.out.println("============Split Move===============");
             System.out.println("Pawn " + currPawn.getPawnNumber_() + " will move " + splitMove + " spaces.");
-            System.out.println("Pawn " + randomPawn.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
+            System.out.println("Pawn " + currPawn2.getPawnNumber_() + " will move " + otherSplitMove  + " spaces.");
 
             UserPlayer receiver = new UserPlayer(currTile, new Invoker());
 
@@ -70,7 +75,7 @@ public class SevenCard extends Card
             }
 
             receiver.begin_options(splitMove, currPawn);
-            receiver.begin_options(otherSplitMove, randomPawn);
+            receiver.begin_options(otherSplitMove, currPawn2);
 
             for (Pawn pawn : player.get_pawns())
             {

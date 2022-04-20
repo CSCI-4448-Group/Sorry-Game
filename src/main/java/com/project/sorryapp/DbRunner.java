@@ -19,6 +19,9 @@ public class DbRunner {
             InputStream input = getClass().getResourceAsStream("/config.properties");
             prop.load(input);
             con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/sorryDB?useLegacyDatetimeCode=false&serverTimezone=MST", prop.getProperty("username"), prop.getProperty("password"));
+//            con = DriverManager.getConnection("jdbc:mysql://babe89fbfa2e27:8af88127@us-cdbr-east-05.cleardb.net/heroku_5fc792b3df72f87?reconnect=true");
+
+
             statement = con.createStatement();
             gameid = getSqlGameId();
         } catch (SQLException | IOException e) {

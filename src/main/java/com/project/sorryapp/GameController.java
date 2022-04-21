@@ -18,9 +18,9 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
-    public static boolean track_and_use_db = false; // True to connect and use MySQL database (see config file in resources folder), false otherwise
+    public static boolean track_and_use_db = true; // True to connect and use MySQL database (see config file in resources folder), false otherwise
     Deck deck_;
-    String announcement_;
+    static String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<>();
     ArrayList<Tile> startTiles_;
     ArrayList<Tile> homeTiles_;
@@ -118,7 +118,9 @@ public class GameController implements SceneLoader, Subject {
         {
             if (getCardValue() != 1 && getCardValue() != 2) // In preparation for Sorry! Card
             {
-                System.out.println("Logger: Unable to move. Need to draw Sorry!, 1 or 2 card to move out of home");
+                announcement_ = "logger: Unable to move. Need to draw Sorry!, 1 or 2 card to move out of home";
+                System.out.println(announcement_);
+                notifyObservers(announcement_);
                 return false;
             }
         }
@@ -147,17 +149,17 @@ public class GameController implements SceneLoader, Subject {
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
 
-        System.out.println("Logger: The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
+        announcementHelper(getCardValue());
+//        System.out.println("logger: The pawn to move is " + currPawn.getColorString_() + " " + pawnToMove);
 
         for (Pawn pawn : player.get_pawns())
         {
-            System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            System.out.println("logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
 
     }
 
-    public void checkGameOver()
-    {
+    public int getPawnsHome() {
         int pawnsHomeCounter = 0;
         for (Pawn p : playerPool_.get_curr_player().get_out_pawns())
         {
@@ -166,11 +168,23 @@ public class GameController implements SceneLoader, Subject {
                 pawnsHomeCounter += 1;
             }
         }
+        return pawnsHomeCounter;
+    }
+
+    public void checkGameOver()
+    {
+        int pawnsHomeCounter = getPawnsHome();
+
         System.out.println("Pawn home counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
-            System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");
-            System.out.println("Logger: Please return the home screen");
+            announcement_ = "logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.";
+            notifyObservers(announcement_);
+            System.out.println(announcement_);
+
+            announcement_ = "logger: Please return the home screen";
+            notifyObservers(announcement_);
+            System.out.println(announcement_);
             disable_ui_game_over();
 
         }
@@ -185,8 +199,7 @@ public class GameController implements SceneLoader, Subject {
         load_scene_from_event("home-view.fxml",event);
     }
 
-    private void announcementHelper(Card pulledCard) {
-        int cardValue = pulledCard.get_card_value();
+    public void announcementHelper(int cardValue) {
         Player player = playerPool_.get_curr_player();
         String name = player.getColorString();
 
@@ -199,12 +212,13 @@ public class GameController implements SceneLoader, Subject {
             }
         }
         int pawnsStarted = playerPawns.size() - pawnsAtStart;
+        int pawnsHome = getPawnsHome();
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
         if (cardValue == 0) {
-            announcement_ = "tracker: " + name + ",0,1," + pawnsStarted + ",0"; //0's are temporary, need to update with proper values later
+            announcement_ = "tracker: " + name + ",0,1," + pawnsStarted + "," + pawnsHome; //0's are temporary, need to update with proper values later
         } else {
-            announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsStarted + ",0"; //0's are temporary, need to update with proper values later
+            announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsStarted + "," + pawnsHome; //0's are temporary, need to update with proper values later
         }
         notifyObservers(announcement_);
     }
@@ -228,11 +242,14 @@ public class GameController implements SceneLoader, Subject {
                 break;
         }
 
-        System.out.println("Logger: The card that was pulled has value = " + cardValue);
+
+//        announcement_ = "logger: The card that was pulled has value = " + cardValue;
+//        System.out.println(announcement_);
+//        notifyObservers(announcement_);
 
         deck_.get_deck().add(pulledCard);
 
-        announcementHelper(pulledCard);
+//        announcementHelper(cardValue);
 
         drawCardLabel.setText("Card Value: " + cardValue);
         toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());

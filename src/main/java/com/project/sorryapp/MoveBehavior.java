@@ -34,6 +34,7 @@ public abstract class MoveBehavior{
         for (Pawn removePawn : removePawns) {
             removePawn.send_home();
         }
+        System.out.println("Logger: You just got sorried! punk.");
         return true;
     }
 

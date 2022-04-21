@@ -63,8 +63,12 @@ public class ElevenCard extends Card
             return;
         }
 
-        currPawn.set_tile(victimTile);
-        opponentVictim.set_tile(currTile);
+        if (currPawn.get_tile().get_next() != null && opponentVictim.get_tile().get_next() != null)
+        {
+            currPawn.set_tile(victimTile);
+            opponentVictim.set_tile(currTile);
+        }
+
 
         System.out.println("Logger: ============Swap Move===============");
         System.out.println("Logger: Pawn " + currPawn.getColorString_() + currPawn.getPawnNumber_() + " swapped with " + opponentVictim.getColorString_() + opponentVictim.getPawnNumber_());

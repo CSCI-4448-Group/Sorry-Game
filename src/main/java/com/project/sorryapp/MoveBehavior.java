@@ -1,5 +1,7 @@
 package com.project.sorryapp;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 public abstract class MoveBehavior{
@@ -11,12 +13,11 @@ public abstract class MoveBehavior{
             return end_move(pawn);
         }
         if(distance > 0){
-            forward_move(pawn,distance);
+            return forward_move(pawn,distance);
         }
         else{
-            backward_move(pawn, distance);
+            return backward_move(pawn, distance);
         }
-        return false;
     }
     public boolean end_move(Pawn pawn){
         if(pawn.get_tile().get_pawns().size() <= 1){
@@ -24,14 +25,14 @@ public abstract class MoveBehavior{
         }
         ArrayList<Pawn> currPawns = pawn.get_tile().get_pawns();
         ArrayList<Pawn> removePawns = new ArrayList<>();
-        for(int i = 0; i < currPawns.size(); i++){
-            if(!pawn.equals(currPawns.get(i))){
-                removePawns.add(currPawns.get(i));
+        for (Pawn currPawn : currPawns) {
+            if (!pawn.equals(currPawn)) {
+                removePawns.add(currPawn);
             }
         }
         pawn.get_tile().get_pawns().removeAll(removePawns);
-        for(int i = 0; i < removePawns.size(); i++){
-            removePawns.get(i).send_home();
+        for (Pawn removePawn : removePawns) {
+            removePawn.send_home();
         }
         return true;
     }
@@ -104,29 +105,35 @@ class GoaltileMove extends MoveBehavior{
 }
 
 class SlideMove extends MoveBehavior{
-    //Need some way for the movement to know that we have reached the end of the slide and need to stop moving
-    //Only thing that identifies tile type is its move behavior right
-
-
-//    @Override
-//    public boolean end_move(Pawn pawn) {
-//         if(this is the start slide tile){
-//              while(color of tile is != white){
-//                  move pawn forward 1 with slide behavior (overload forward move)
-//              }
-//         }
-//    }
+    @Override
+    public boolean end_move(Pawn pawn){
+        if(pawn.getFill() == pawn.get_tile().getFill()){
+            NormalMove newMove = new NormalMove();
+            newMove.move_pawn(pawn,0);
+            return true;
+        }
+        Tile crawler = pawn.get_tile();
+        int slideLength = 0;
+        while(crawler != null && crawler.getFill() != Color.WHITE){
+            slideLength++;
+            crawler = crawler.get_next();
+        }
+        NormalMove newMove = new NormalMove();
+        for(int i = 1; i < slideLength; i++){
+            newMove.move_pawn(pawn, 0);
+            newMove.move_pawn(pawn, 1);
+        }
+        return false;
+    }
 
     @Override
     public boolean forward_move(Pawn pawn, int distance) {
-        System.out.println("I AM SLIDE TILE MOVE FORWARD");
         NormalMove move = new NormalMove();
         return  move.move_pawn(pawn, distance);
     }
 
     @Override
     public boolean backward_move(Pawn pawn, int distance) {
-        System.out.println(" I AM SLIDE TILE MOVE BACKWARD");
         NormalMove move = new NormalMove();
         return  move.move_pawn(pawn, distance);
     }

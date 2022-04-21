@@ -2,7 +2,7 @@ package com.project.sorryapp;
 
 import javafx.scene.paint.Color;
 enum Direction{
-    NORTH, SOUTH, EAST, WEST;
+    NORTH, SOUTH, EAST, WEST
 }
 
 class RowBuilder{
@@ -12,7 +12,7 @@ class RowBuilder{
     private int rowLength_ = 0;
     private int gatePos_ = -1;
     private int slidePos_ = -1;
-    private int slideLen_ = -1;;
+    private int slideLen_ = -1;
 
     public RowBuilder setOrigin(Tile tile){
         originTile_ = tile;
@@ -29,28 +29,16 @@ class RowBuilder{
     }
 
     public RowBuilder setLength(int length){
-        if(length <= 0){
-            rowLength_ = 0;
-            return this;
-        }
         rowLength_ = length;
         return this;
     }
 
     public RowBuilder setGatePosition(int pos){
-        if(pos > rowLength_){
-            gatePos_ = -1;
-            return this;
-        }
         gatePos_ = pos;
         return this;
     }
 
     public RowBuilder setSlideLength(int length){
-        if(slidePos_ == -1 || slidePos_ + slideLen_ >= rowLength_ ) {
-            slideLen_ = 0;
-            return this;
-        }
         slideLen_ = length;
         return this;
     }
@@ -102,24 +90,34 @@ class RowBuilder{
     private void insert_slide_helper(){
         Tile crawler = originTile_;
         int index = 0;
-        while(crawler != null && index != slidePos_){
+        while(crawler != null && index < slidePos_){
             crawler = crawler.get_next();
             index++;
         }
-        crawler.set_moveBehavior(new SlideMove());
-        crawler.setFill(color_);
-        slideLen_--;
-        int endIndex = index + slideLen_;
-        while(crawler.get_next() != null && index != endIndex){
+        try {
+            crawler.set_moveBehavior(new SlideMove());
+            crawler.setFill(color_);
             crawler = crawler.get_next();
-            crawler.setFill(Color.RED);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Error inserting slide");
+            System.out.println("Index : " + index);
+            System.out.println("Origin Tile : " + originTile_);
+            return;
+        }
+
+        int tempSlideLen_= slideLen_ - 1;
+        index = 0;
+        while(crawler != null && index < tempSlideLen_){
+            crawler.setFill(color_);
+            crawler = crawler.get_next();
             index++;
         }
     }
     private void insert_gate_helper(){
         Tile crawler = originTile_;
         int index = 0;
-        while (crawler != null && index != gatePos_){
+        while (crawler != null && index < gatePos_){
             crawler = crawler.get_next();
             index++;
         }
@@ -130,6 +128,7 @@ class RowBuilder{
             crawler.set_next(tempNext);
             tempNext.set_prev(crawler);
         }catch (Exception exception){
+            exception.printStackTrace();
             System.out.println("Exception caught in boardBuilder.build() gate tile building.");
             System.out.println("Crawler : " + crawler);
             System.out.println("index : " + index);

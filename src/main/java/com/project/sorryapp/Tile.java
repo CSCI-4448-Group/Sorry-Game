@@ -14,7 +14,7 @@ public class Tile extends Rectangle{
     private ArrayList<Pawn> currPawns_ = new ArrayList<>();
     private MoveBehavior moveType_ = new NormalMove();
 
-    Tile(int x, int y, double length, Color color){
+    Tile(double x, double y, double length, Color color){
         this.setX(x);
         this.setY(y);
         this.setWidth(length);
@@ -22,7 +22,7 @@ public class Tile extends Rectangle{
         this.setFill(color);
         this.setStroke(Color.BLACK);
     }
-    Tile(int x, int y, double length){
+    Tile(double x, double y, double length){
         this.setX(x);
         this.setY(y);
         this.setWidth(length);

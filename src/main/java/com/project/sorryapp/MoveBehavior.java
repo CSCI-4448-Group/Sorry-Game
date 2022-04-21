@@ -1,45 +1,46 @@
 package com.project.sorryapp;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 public abstract class MoveBehavior{
+
+    //return true if pawns are kicked home
+    //return false if not
     final boolean move_pawn(Pawn pawn, int distance){ //Template method
         if(distance == 0){
-            if(check_kick(pawn)){
-                kick_pawns(pawn);
-            }
+            return end_move(pawn);
         }
-        else if(distance > 0){
-            forward_move(pawn,distance);
+        if(distance > 0){
+            return forward_move(pawn,distance);
         }
         else{
-            backward_move(pawn, distance);
+            return backward_move(pawn, distance);
         }
-        return true;
     }
-
-    public boolean check_kick(Pawn safePawn){ //optional method
-        return safePawn.get_tile().get_pawns().size() > 1;
+    public boolean end_move(Pawn pawn){
+        if(pawn.get_tile().get_pawns().size() <= 1){
+            return false;
+        }
+        ArrayList<Pawn> currPawns = pawn.get_tile().get_pawns();
+        ArrayList<Pawn> removePawns = new ArrayList<>();
+        for (Pawn currPawn : currPawns) {
+            if (!pawn.equals(currPawn)) {
+                removePawns.add(currPawn);
+            }
+        }
+        pawn.get_tile().get_pawns().removeAll(removePawns);
+        for (Pawn removePawn : removePawns) {
+            removePawn.send_home();
+        }
+        System.out.println("Logger: You just got sorried! punk.");
+        return true;
     }
 
     public abstract boolean forward_move(Pawn pawn, int distance); //abstract method
 
     public abstract boolean backward_move(Pawn pawn, int distance); //abstract method
-
-    public void kick_pawns(Pawn safePawn){ //optional method
-        ArrayList<Pawn> currPawns = safePawn.get_tile().get_pawns();
-        ArrayList<Pawn> removePawns = new ArrayList<>();
-        for(int i = 0; i < currPawns.size(); i++){
-            if(!safePawn.equals(currPawns.get(i))){
-                removePawns.add(currPawns.get(i));
-            }
-        }
-        safePawn.get_tile().get_pawns().removeAll(removePawns);
-        for(int i = 0; i < removePawns.size(); i++){
-            removePawns.get(i).send_home();
-        }
-        System.out.println("Logger: You just got sorried! punk.");
-    }
 }
 
 class NormalMove extends MoveBehavior{
@@ -103,4 +104,40 @@ class GoaltileMove extends MoveBehavior{
         return false;
     }
 }
+
+class SlideMove extends MoveBehavior{
+    @Override
+    public boolean end_move(Pawn pawn){
+        if(pawn.getFill() == pawn.get_tile().getFill()){
+            NormalMove newMove = new NormalMove();
+            newMove.move_pawn(pawn,0);
+            return true;
+        }
+        Tile crawler = pawn.get_tile();
+        int slideLength = 0;
+        while(crawler != null && crawler.getFill() != Color.WHITE){
+            slideLength++;
+            crawler = crawler.get_next();
+        }
+        NormalMove newMove = new NormalMove();
+        for(int i = 1; i < slideLength; i++){
+            newMove.move_pawn(pawn, 0);
+            newMove.move_pawn(pawn, 1);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean forward_move(Pawn pawn, int distance) {
+        NormalMove move = new NormalMove();
+        return  move.move_pawn(pawn, distance);
+    }
+
+    @Override
+    public boolean backward_move(Pawn pawn, int distance) {
+        NormalMove move = new NormalMove();
+        return  move.move_pawn(pawn, distance);
+    }
+}
+
 

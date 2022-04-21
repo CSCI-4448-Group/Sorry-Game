@@ -44,13 +44,16 @@ public class ElevenCard extends Card
             }
         }
 
-        Random swapRandom = new Random();
+        Random victimRandom = new Random();
+        Random currentRandom = new Random();
 
-        int opponentVictimIndex = swapRandom.nextInt(victimPawns.size());
+        int opponentVictimIndex = victimRandom.nextInt(victimPawns.size());
+        System.out.println(opponentVictimIndex);
         Pawn opponentVictim = victimPawns.get(opponentVictimIndex);
         Tile victimTile = opponentVictim.get_tile();
 
-        int currPawnIndex = swapRandom.nextInt(current_out_pawns.size());
+        int currPawnIndex = currentRandom.nextInt(current_out_pawns.size());
+        System.out.println(currPawnIndex);
         Pawn currPawn = playerPool.get_curr_player().get_out_pawns().get(currPawnIndex);
         Tile currTile = currPawn.get_tile();
 

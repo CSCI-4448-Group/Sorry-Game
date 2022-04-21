@@ -38,7 +38,7 @@ class RowBuilder{
     }
 
     public RowBuilder setGatePosition(int pos){
-        if(pos >= rowLength_){
+        if(pos > rowLength_){
             gatePos_ = -1;
             return this;
         }
@@ -67,60 +67,59 @@ class RowBuilder{
         switch (direction_){
             case NORTH -> {
                 Tile currTile = buildNorthBoundRow(originTile_, rowLength_);
-                if(gatePos_ != -1){
-                    insert_gate_helper();
-                }
-                if(slidePos_ != -1){
-                    insert_slide_helper();
-                }
+                check_insertions();
                 return currTile;
             }
             case SOUTH -> {
                 Tile currTile = buildSouthBoundRow(originTile_, rowLength_);
-                if(gatePos_ != -1){
-                    insert_gate_helper();
-                }
+                check_insertions();
                 return currTile;
             }
 
             case EAST -> {
                 Tile currTile = buildEastBoundRow(originTile_, rowLength_);
-                if(gatePos_ != -1){
-                    insert_gate_helper();
-                }
+                check_insertions();
                 return currTile;
             }
             case WEST -> {
                 Tile currTile = buildWestBoundRow(originTile_, rowLength_);
-                if(gatePos_ != -1){
-                    insert_gate_helper();
-                }
+                check_insertions();
                 return currTile;
             }
         }
         return null;
     }
 
+    private void check_insertions(){
+        if(slidePos_ != -1 && slideLen_ != 0){
+            insert_slide_helper();
+        }
+        if(gatePos_ != -1){
+            insert_gate_helper();
+        }
+    }
+
     private void insert_slide_helper(){
         Tile crawler = originTile_;
         int index = 0;
-        while(index != slidePos_){
+        while(crawler != null && index != slidePos_){
             crawler = crawler.get_next();
             index++;
         }
         crawler.set_moveBehavior(new SlideMove());
         crawler.setFill(color_);
-        index = 1;
-        while(index != slideLen_){
+        slideLen_--;
+        int endIndex = index + slideLen_;
+        while(crawler.get_next() != null && index != endIndex){
             crawler = crawler.get_next();
-            crawler.setFill(color_);
+            crawler.setFill(Color.RED);
             index++;
         }
     }
     private void insert_gate_helper(){
         Tile crawler = originTile_;
         int index = 0;
-        while (index != gatePos_){
+        while (crawler != null && index != gatePos_){
             crawler = crawler.get_next();
             index++;
         }

@@ -2,9 +2,9 @@ package com.project.sorryapp;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 
-import java.io.FileInputStream;
+
+
 import java.util.ArrayList;
 
 public class GameView{

@@ -2,20 +2,22 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.sorryapp.GameController">
    <children>
       <Button layoutX="32.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_home_clicked" text="Home" />
       <Button fx:id="drawCard" layoutX="32.0" layoutY="250.0" mnemonicParsing="false" onAction="#on_deck_clicked" text="Draw Card" />
-      <Button fx:id="pawn1" layoutX="595.0" layoutY="166.0" mnemonicParsing="false" onAction="#on_pawnOne_clicked" text="Pawn 1" />
-      <Button fx:id="pawn2" layoutX="595.0" layoutY="208.0" mnemonicParsing="false" onAction="#on_pawnTwo_clicked" text="Pawn 2" />
-      <Button fx:id="pawn3" layoutX="595.0" layoutY="250.0" mnemonicParsing="false" onAction="#on_pawnThree_clicked" text="Pawn 3" />
-      <Button fx:id="pawn4" layoutX="595.0" layoutY="291.0" mnemonicParsing="false" onAction="#on_pawnFour_clicked" text="Pawn 4" />
+      <Button fx:id="pawn1" layoutX="611.0" layoutY="166.0" mnemonicParsing="false" onAction="#on_pawnOne_clicked" text="Pawn 1" />
+      <Button fx:id="pawn2" layoutX="611.0" layoutY="208.0" mnemonicParsing="false" onAction="#on_pawnTwo_clicked" text="Pawn 2" />
+      <Button fx:id="pawn3" layoutX="611.0" layoutY="250.0" mnemonicParsing="false" onAction="#on_pawnThree_clicked" text="Pawn 3" />
+      <Button fx:id="pawn4" layoutX="611.0" layoutY="291.0" mnemonicParsing="false" onAction="#on_pawnFour_clicked" text="Pawn 4" />
       <Button fx:id="tenCardBackward" layoutX="416.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_tenbackward_clicked" text="10 Card: Press to Move Backwards One Space" />
       <Button fx:id="sevenCardSplit" layoutX="521.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_sevensplit_clicked" text="7 Card: Press to Split Move" />
-      <Label fx:id="drawCardLabel" layoutX="32.0" layoutY="304.0" text="Card Value: " />
-      <Label fx:id="toMove" layoutX="32.0" layoutY="334.0" text="Player to Move: " />
+      <Label fx:id="drawCardLabel" layoutX="14.0" layoutY="308.0" text="Card Value: " />
+      <Label fx:id="toMove" layoutX="15.0" layoutY="334.0" text="Player to Move: " />
       <Button fx:id="elevenCardSwap" layoutX="323.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_elevenswap_clicked" text="11 Card: Press to Swap Your Pawn WIth One of Your Opponents" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="429.0" layoutX="149.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="449.0" />
 
 
    </children>

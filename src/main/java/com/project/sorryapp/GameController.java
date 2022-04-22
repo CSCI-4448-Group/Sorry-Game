@@ -29,6 +29,7 @@ public class GameController implements SceneLoader {
     @FXML Button pawn4;
     @FXML Button tenCardBackward;
     @FXML Button sevenCardSplit;
+    @FXML Button elevenCardSwap;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
@@ -67,6 +68,16 @@ public class GameController implements SceneLoader {
     public void offSevenCardButtonVis()
     {
         sevenCardSplit.setVisible(false);
+    }
+
+    public void onElevenCardButtonVis()
+    {
+        elevenCardSwap.setVisible(true);
+    }
+
+    public void offElevenCardButtonVis()
+    {
+        elevenCardSwap.setVisible(false);
     }
 
     public void initialize(){
@@ -133,7 +144,7 @@ public class GameController implements SceneLoader {
                 pawnsHomeCounter += 1;
             }
         }
-        System.out.println("Pawn home counter is: " + pawnsHomeCounter);
+        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn home counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
             System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");
@@ -168,6 +179,9 @@ public class GameController implements SceneLoader {
             case 10:
                 onTenCardButtonVis();
                 break;
+            case 11:
+                onElevenCardButtonVis();
+                break;
         }
 
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
@@ -179,17 +193,30 @@ public class GameController implements SceneLoader {
         drawCard.setVisible(false);
     }
 
-    @FXML void on_tenbackward_clicked()
+    @FXML
+    public void on_tenbackward_clicked()
     {
         setCardValue(-1);
         checkGameOver();
         offTenCardButtonVis();
     }
 
-    @FXML void on_sevensplit_clicked()
+    @FXML
+    public void on_sevensplit_clicked()
     {
         SevenCard sevenSplit = new SevenCard();
         sevenSplit.split(playerPool_.get_curr_player());
+        checkGameOver();
+        playerPool_.increment_iterator();
+        disable_ui();
+        drawCard.setVisible(true);
+    }
+
+    @FXML
+    public void on_elevenswap_clicked()
+    {
+        ElevenCard elevenSplit = new ElevenCard();
+        elevenSplit.swap(playerPool_);
         checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
@@ -235,6 +262,7 @@ public class GameController implements SceneLoader {
         offPawnButtonVis();
         offTenCardButtonVis();
         offSevenCardButtonVis();
+        offElevenCardButtonVis();
     }
 
     private void disable_ui_game_over(){
@@ -244,5 +272,6 @@ public class GameController implements SceneLoader {
         offPawnButtonVis();
         offTenCardButtonVis();
         offSevenCardButtonVis();
+        offElevenCardButtonVis();
     }
 }

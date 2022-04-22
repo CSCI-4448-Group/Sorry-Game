@@ -7,7 +7,12 @@ public class TileFactory{
     //Sets prev_ field of tile to prevTile.
     //Sets next_ field of prevTile to new tile
     public static Tile buildTile(Tile prevTile, double x, double y){
-        Tile newTile = new Tile(x,y,25, Color.WHITE);
+        boolean vuln = true;
+        if ((prevTile != null && !prevTile.getVulnerable()) || prevTile instanceof GatewayTile) {
+            vuln = false;
+            System.out.println(x + " " + y);
+        }
+        Tile newTile = new Tile(x,y,25, Color.WHITE, vuln);
         newTile.set_prev(prevTile);
         if(prevTile != null){
             prevTile.set_next(newTile);
@@ -15,7 +20,7 @@ public class TileFactory{
         return newTile;
     }
     public static Tile buildTile(Tile prevTile, double x, double y, Color color){
-        Tile newTile = new Tile(x,y,25, color);
+        Tile newTile = new Tile(x,y,25, color, true);
         newTile.set_prev(prevTile);
         if(prevTile != null){
             prevTile.set_next(newTile);
@@ -26,7 +31,7 @@ public class TileFactory{
     //Build a new tile setting x and y to arguments.
     //Sets next_ field of new tile to nextTile
     public static Tile buildStartTile(Tile nextTile, double x, double y, Color color){
-        Tile homeTile = new Tile(x,y,25*1.5, color);
+        Tile homeTile = new Tile(x,y,25*1.5, color, false);
         homeTile.set_next(nextTile);
         homeTile.set_prev(null);
         return homeTile;
@@ -42,7 +47,7 @@ public class TileFactory{
     }
 
     public static Tile buildSlideTile(Tile prevTile, double x, double y, Color color){
-        Tile newTile = new Tile(x,y,25,color);
+        Tile newTile = new Tile(x,y,25,color, true);
         newTile.set_prev(prevTile);
         newTile.set_moveBehavior(new SlideMove());
         if(prevTile != null){
@@ -52,7 +57,7 @@ public class TileFactory{
     }
 
     public static Tile buildHomeTile(Tile prevTile, double x, double y, Color color){
-        Tile newTile = new Tile(x,y,25,color);
+        Tile newTile = new Tile(x,y,25,color, false);
         newTile.set_prev(prevTile);
         if(prevTile != null){
             prevTile.set_next(newTile);

@@ -18,7 +18,7 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
-    public static boolean track_and_use_db = true; // True to connect and use MySQL database (see config file in resources folder), false otherwise
+    public static boolean track_and_use_db = false; // True to connect and use MySQL database (see config file in resources folder), false otherwise
     Deck deck_;
     static String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<>();
@@ -37,6 +37,7 @@ public class GameController implements SceneLoader, Subject {
     @FXML Button pawn4;
     @FXML Button tenCardBackward;
     @FXML Button sevenCardSplit;
+    @FXML Button elevenCardSwap;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
@@ -75,6 +76,16 @@ public class GameController implements SceneLoader, Subject {
     public void offSevenCardButtonVis()
     {
         sevenCardSplit.setVisible(false);
+    }
+
+    public void onElevenCardButtonVis()
+    {
+        elevenCardSwap.setVisible(true);
+    }
+
+    public void offElevenCardButtonVis()
+    {
+        elevenCardSwap.setVisible(false);
     }
 
     public void initialize(){
@@ -176,6 +187,7 @@ public class GameController implements SceneLoader, Subject {
         int pawnsHomeCounter = getPawnsHome();
 
         System.out.println("Pawn home counter is: " + pawnsHomeCounter);
+        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn home counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
             announcement_ = "logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.";
@@ -240,6 +252,9 @@ public class GameController implements SceneLoader, Subject {
             case 10:
                 onTenCardButtonVis();
                 break;
+            case 11:
+                onElevenCardButtonVis();
+                break;
         }
 
 
@@ -256,17 +271,30 @@ public class GameController implements SceneLoader, Subject {
         drawCard.setVisible(false);
     }
 
-    @FXML void on_tenbackward_clicked()
+    @FXML
+    public void on_tenbackward_clicked()
     {
         setCardValue(-1);
         checkGameOver();
         offTenCardButtonVis();
     }
 
-    @FXML void on_sevensplit_clicked()
+    @FXML
+    public void on_sevensplit_clicked()
     {
         SevenCard sevenSplit = new SevenCard();
         sevenSplit.split(playerPool_.get_curr_player());
+        checkGameOver();
+        playerPool_.increment_iterator();
+        disable_ui();
+        drawCard.setVisible(true);
+    }
+
+    @FXML
+    public void on_elevenswap_clicked()
+    {
+        ElevenCard elevenSplit = new ElevenCard();
+        elevenSplit.swap(playerPool_);
         checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
@@ -312,6 +340,7 @@ public class GameController implements SceneLoader, Subject {
         offPawnButtonVis();
         offTenCardButtonVis();
         offSevenCardButtonVis();
+        offElevenCardButtonVis();
     }
 
     private void disable_ui_game_over(){
@@ -321,5 +350,6 @@ public class GameController implements SceneLoader, Subject {
         offPawnButtonVis();
         offTenCardButtonVis();
         offSevenCardButtonVis();
+        offElevenCardButtonVis();
     }
 }

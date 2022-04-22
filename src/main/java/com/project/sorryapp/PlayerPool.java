@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 public class PlayerPool {
     int iterator_;
+
     ArrayList<Player> players_;
 
      PlayerPool(){
@@ -35,5 +36,9 @@ public class PlayerPool {
      }
 
      public int get_iterator() { return iterator_; }
+
+    public ArrayList<Player> getPlayers_() {
+        return players_;
+    }
 
 }

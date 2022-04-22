@@ -13,16 +13,26 @@ public class Tile extends Rectangle{
     private Tile prev_;
     private ArrayList<Pawn> currPawns_ = new ArrayList<>();
     private MoveBehavior moveType_ = new NormalMove();
+    private boolean vulnerable = false;
 
-    Tile(int x, int y, double length, Color color){
+
+    Tile(double x, double y, double length, Color color, boolean vulnerable){
         this.setX(x);
         this.setY(y);
         this.setWidth(length);
         this.setHeight(length);
         this.setFill(color);
         this.setStroke(Color.BLACK);
+        this.setVulnerable(vulnerable);
     }
-    Tile(int x, int y, double length){
+
+    private void setVulnerable(boolean vulnerable) {
+        this.vulnerable = vulnerable;
+    }
+
+    public boolean getVulnerable() {return vulnerable;}
+
+    Tile(double x, double y, double length){
         this.setX(x);
         this.setY(y);
         this.setWidth(length);

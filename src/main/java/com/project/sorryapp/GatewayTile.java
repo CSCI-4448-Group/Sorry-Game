@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 public class GatewayTile extends Tile{
     private Tile gatewayNext_;
 
-    GatewayTile(int x, int y, double length, Color color){
-        super(x,y,length,color);
+    GatewayTile(double x, double y, double length, Color color){
+        super(x,y,length,color, true);
         this.set_moveBehavior(new GatewayMove());
     }
 

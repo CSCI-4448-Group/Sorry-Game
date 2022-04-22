@@ -25,14 +25,12 @@ public class SorryCard extends Card
             }
         }
 
-        ArrayList<Pawn> current_out_pawns = playerPool.get_curr_player().get_home_pawns();
-        ArrayList<Pawn> home_pawns = new ArrayList<>();
-        for (Pawn p : current_out_pawns)
+        ArrayList<Pawn> current_home_pawns = playerPool.get_curr_player().get_home_pawns();
+        ArrayList<Pawn> home_pawns = current_home_pawns;
+
+        for (int i = 0; i < home_pawns.size(); i++)
         {
-            if (p.get_tile().getVulnerable())
-            {
-                home_pawns.add(p);
-            }
+            System.out.println(home_pawns.get(i).getPawnNumber_());
         }
 
         if (home_pawns.size() < 1 || victimPawns.size() < 1) {
@@ -51,7 +49,7 @@ public class SorryCard extends Card
         Pawn currPawn = home_pawns.get(currPawnIndex);
         Tile currTile = currPawn.get_tile();
 
-        if (victimTile.equals(opponentVictim.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
+        if (victimTile.equals(opponentVictim.get_start_tile()))
         {
             System.out.println("Logger: Unable to split move while one pawn is home");
             return;

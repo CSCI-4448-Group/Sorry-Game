@@ -99,9 +99,6 @@ public class GameController implements SceneLoader {
         playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
 
-        ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
-        homePawns = playerPool_.get_curr_player().get_pawns();
-
         disable_ui();
     }
 
@@ -121,7 +118,7 @@ public class GameController implements SceneLoader {
         if (!outPawns.contains(currPawn))
         {
             outPawns.add(currPawn);
-            homePawns.remove(currPawn);
+            //homePawns.remove(currPawn);
         }
         return true;
     }

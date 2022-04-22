@@ -18,6 +18,10 @@ public class Player{
         for(int i =0 ; i < 4; i++){
             pawns_.add(new Pawn(i, color_));
         }
+        for (int i = 0; i < 4; i++)
+        {
+            homePawns_.add(pawns_.get(i));
+        }
     }
 
     public String getColorString() { return colorString_;}

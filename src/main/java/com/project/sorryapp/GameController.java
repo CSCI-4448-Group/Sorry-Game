@@ -30,6 +30,7 @@ public class GameController implements SceneLoader {
     @FXML Button tenCardBackward;
     @FXML Button sevenCardSplit;
     @FXML Button elevenCardSwap;
+    @FXML Button sorryCardSorry;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
@@ -78,6 +79,16 @@ public class GameController implements SceneLoader {
     public void offElevenCardButtonVis()
     {
         elevenCardSwap.setVisible(false);
+    }
+
+    public void onSorryCardButtonVis()
+    {
+        sorryCardSorry.setVisible(true);
+    }
+
+    public void offSorryCardButtonVis()
+    {
+        sorryCardSorry.setVisible(false);
     }
 
     public void initialize(){
@@ -173,6 +184,9 @@ public class GameController implements SceneLoader {
 
         switch (pulledCard.get_card_value())
         {
+            case 0:
+                onSorryCardButtonVis();
+                break;
             case 7:
                 onSevenCardButtonVis();
                 break;
@@ -224,6 +238,17 @@ public class GameController implements SceneLoader {
     }
 
     @FXML
+    public void on_sorry_clicked()
+    {
+        SorryCard sorryCard = new SorryCard();
+        sorryCard.sorry(playerPool_);
+        checkGameOver();
+        playerPool_.increment_iterator();
+        disable_ui();
+        drawCard.setVisible(true);
+    }
+
+    @FXML
     public void on_pawnOne_clicked()
     {
         pawn_click_helper(0);
@@ -263,6 +288,7 @@ public class GameController implements SceneLoader {
         offTenCardButtonVis();
         offSevenCardButtonVis();
         offElevenCardButtonVis();
+        offSorryCardButtonVis();
     }
 
     private void disable_ui_game_over(){
@@ -273,5 +299,6 @@ public class GameController implements SceneLoader {
         offTenCardButtonVis();
         offSevenCardButtonVis();
         offElevenCardButtonVis();
+        offSorryCardButtonVis();
     }
 }

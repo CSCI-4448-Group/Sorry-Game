@@ -13,19 +13,14 @@ public class ElevenCard extends Card
 
     public void swap(PlayerPool playerPool)
     {
-        ArrayList<Pawn> victimPawns = new ArrayList<Pawn>();
+        ArrayList<Pawn> victimPawns = new ArrayList<>();
         for (Player player : playerPool.getPlayers_())
         {
-            if (player.get_out_pawns().size() < 1)
-            {
-                System.out.println("Logger: Eleven card swap problem. Unable to swap move while one pawn is home");
-                return;
-            }
-            else
-            {
-                for (Pawn p : player.get_out_pawns())
-                {
-                    victimPawns.add(p);
+            if (player != playerPool.get_curr_player()) {
+                for (Pawn p : player.get_out_pawns()) {
+                    if (p.get_tile().getVulnerable()) {
+                        victimPawns.add(p);
+                    }
                 }
             }
         }
@@ -36,12 +31,19 @@ public class ElevenCard extends Card
         }
 
         ArrayList<Pawn> current_out_pawns = playerPool.get_curr_player().get_out_pawns();
+        ArrayList<Pawn> available_pawns = new ArrayList<>();
         for (Pawn p : current_out_pawns)
         {
-            if (p.get_tile().get_next() == null)
+            if (p.get_tile().getVulnerable())
             {
-                current_out_pawns.remove(p);
+                available_pawns.add(p);
+                System.out.println(p.getColorString_() + " " + p.getPawnNumber_());
             }
+        }
+
+        if (available_pawns.size() < 1) {
+            System.out.println("No pawns swappable.");
+            return;
         }
 
         Random victimRandom = new Random();
@@ -52,9 +54,9 @@ public class ElevenCard extends Card
         Pawn opponentVictim = victimPawns.get(opponentVictimIndex);
         Tile victimTile = opponentVictim.get_tile();
 
-        int currPawnIndex = currentRandom.nextInt(current_out_pawns.size());
+        int currPawnIndex = currentRandom.nextInt(available_pawns.size());
         System.out.println(currPawnIndex);
-        Pawn currPawn = playerPool.get_curr_player().get_out_pawns().get(currPawnIndex);
+        Pawn currPawn = available_pawns.get(currPawnIndex);
         Tile currTile = currPawn.get_tile();
 
         if (victimTile.equals(opponentVictim.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))

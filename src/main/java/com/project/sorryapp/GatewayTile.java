@@ -6,7 +6,7 @@ public class GatewayTile extends Tile{
     private Tile gatewayNext_;
 
     GatewayTile(double x, double y, double length, Color color){
-        super(x,y,length,color);
+        super(x,y,length,color, true);
         this.set_moveBehavior(new GatewayMove());
     }
 

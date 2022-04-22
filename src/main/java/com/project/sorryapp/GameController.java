@@ -144,7 +144,7 @@ public class GameController implements SceneLoader {
                 pawnsHomeCounter += 1;
             }
         }
-        System.out.println("Pawn home counter is: " + pawnsHomeCounter);
+        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn home counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
             System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");

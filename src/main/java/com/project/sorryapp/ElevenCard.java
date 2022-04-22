@@ -25,11 +25,6 @@ public class ElevenCard extends Card
             }
         }
 
-        for (int i = 0; i < victimPawns.size(); i++)
-        {
-            System.out.println(victimPawns.get(i).getColorString_());
-        }
-
         ArrayList<Pawn> current_out_pawns = playerPool.get_curr_player().get_out_pawns();
         ArrayList<Pawn> available_pawns = new ArrayList<>();
         for (Pawn p : current_out_pawns)
@@ -37,12 +32,11 @@ public class ElevenCard extends Card
             if (p.get_tile().getVulnerable())
             {
                 available_pawns.add(p);
-                System.out.println(p.getColorString_() + " " + p.getPawnNumber_());
             }
         }
 
         if (available_pawns.size() < 1) {
-            System.out.println("No pawns swappable.");
+            System.out.println("Logger: No pawns swappable.");
             return;
         }
 
@@ -73,8 +67,8 @@ public class ElevenCard extends Card
 
 
         System.out.println("Logger: ============Swap Move===============");
-        System.out.println("Logger: Pawn " + currPawn.getColorString_() + currPawn.getPawnNumber_() + " swapped with " + opponentVictim.getColorString_() + opponentVictim.getPawnNumber_());
-        System.out.println("Logger: Pawn " + opponentVictim.getColorString_() + opponentVictim.getPawnNumber_() + " swapped with " + currPawn.getColorString_()  + currPawn.getPawnNumber_());
+        System.out.println("Logger: Pawn " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_() + " swapped with " + opponentVictim.getColorString_() + " " + opponentVictim.getPawnNumber_());
+        System.out.println("Logger: Pawn " + opponentVictim.getColorString_() + " " +  opponentVictim.getPawnNumber_() + " swapped with " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_());
 
         for (Pawn pawn : playerPool.get_curr_player().get_pawns())
         {

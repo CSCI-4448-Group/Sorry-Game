@@ -25,17 +25,17 @@ public class SorryCard extends Card
             }
         }
 
-        ArrayList<Pawn> current_out_pawns = playerPool.get_curr_player().get_out_pawns();
-        ArrayList<Pawn> available_pawns = new ArrayList<>();
+        ArrayList<Pawn> current_out_pawns = playerPool.get_curr_player().get_home_pawns();
+        ArrayList<Pawn> home_pawns = new ArrayList<>();
         for (Pawn p : current_out_pawns)
         {
             if (p.get_tile().getVulnerable())
             {
-                available_pawns.add(p);
+                home_pawns.add(p);
             }
         }
 
-        if (available_pawns.size() < 1) {
+        if (home_pawns.size() < 1 || victimPawns.size() < 1) {
             System.out.println("Logger: No pawns swappable.");
             return;
         }
@@ -44,13 +44,11 @@ public class SorryCard extends Card
         Random currentRandom = new Random();
 
         int opponentVictimIndex = victimRandom.nextInt(victimPawns.size());
-        System.out.println(opponentVictimIndex);
         Pawn opponentVictim = victimPawns.get(opponentVictimIndex);
         Tile victimTile = opponentVictim.get_tile();
 
-        int currPawnIndex = currentRandom.nextInt(available_pawns.size());
-        System.out.println(currPawnIndex);
-        Pawn currPawn = available_pawns.get(currPawnIndex);
+        int currPawnIndex = currentRandom.nextInt(home_pawns.size());
+        Pawn currPawn = home_pawns.get(currPawnIndex);
         Tile currTile = currPawn.get_tile();
 
         if (victimTile.equals(opponentVictim.get_start_tile()) || currTile.equals(currPawn.get_start_tile()))
@@ -62,13 +60,14 @@ public class SorryCard extends Card
         if (currPawn.get_tile().get_next() != null && opponentVictim.get_tile().get_next() != null)
         {
             currPawn.set_tile(victimTile);
-            opponentVictim.set_tile(currTile);
+            opponentVictim.set_tile(opponentVictim.get_start_tile()); // Key difference between eleven card swap and sorry swap
         }
 
 
-        System.out.println("Logger: ============Swap Move===============");
+        System.out.println("Logger: ============Sorry! Move===============");
         System.out.println("Logger: Pawn " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_() + " swapped with " + opponentVictim.getColorString_() + " " + opponentVictim.getPawnNumber_());
         System.out.println("Logger: Pawn " + opponentVictim.getColorString_() + " " +  opponentVictim.getPawnNumber_() + " swapped with " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_());
+        System.out.println("Logger: You just got sorried! punk.");
 
         for (Pawn pawn : playerPool.get_curr_player().get_pawns())
         {

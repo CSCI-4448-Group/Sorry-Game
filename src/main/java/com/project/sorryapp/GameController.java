@@ -98,6 +98,10 @@ public class GameController implements SceneLoader {
         homeTiles_ = GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
+
+        ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
+        homePawns = playerPool_.get_curr_player().get_pawns();
+
         disable_ui();
     }
 
@@ -105,16 +109,19 @@ public class GameController implements SceneLoader {
     {
         if (currTile.equals(currPawn.get_start_tile()))
         {
-            if (getCardValue() != 1 && getCardValue() != 2) // In preparation for Sorry! Card
+            if (getCardValue() != 1 && getCardValue() != 2 && getCardValue() != 0) // In preparation for Sorry! Card
             {
                 System.out.println("Logger: Unable to move. Need to draw Sorry!, 1 or 2 card to move out of home");
                 return false;
             }
         }
         ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
+        ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
+
         if (!outPawns.contains(currPawn))
         {
             outPawns.add(currPawn);
+            homePawns.remove(currPawn);
         }
         return true;
     }
@@ -132,6 +139,10 @@ public class GameController implements SceneLoader {
         }
 
         player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+        if (currPawn.get_tile().get_prev() == null)
+        {
+            player.get_home_pawns().add(currPawn);
+        }
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);

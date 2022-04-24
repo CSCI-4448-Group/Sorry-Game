@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+// https://www.baeldung.com/java-command-pattern
 public abstract class Command {
         private Tile receiver_;
 

@@ -40,6 +40,7 @@ public class ElevenCard extends Card
             return;
         }
 
+        //https://www.geeksforgeeks.org/java-util-random-nextint-java/
         Random victimRandom = new Random();
         Random currentRandom = new Random();
 

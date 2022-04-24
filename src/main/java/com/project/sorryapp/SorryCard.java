@@ -25,8 +25,14 @@ public class SorryCard extends Card
             }
         }
 
-        ArrayList<Pawn> current_home_pawns = playerPool.get_curr_player().get_home_pawns();
-        ArrayList<Pawn> home_pawns = current_home_pawns;
+        ArrayList<Pawn> current_home_pawns = playerPool.get_curr_player().get_pawns();
+
+        ArrayList<Pawn> home_pawns = new ArrayList<>();
+        for (Pawn p : current_home_pawns) {
+            if (p.get_tile().get_prev() == null) {
+                home_pawns.add(p);
+            }
+        }
 
         for (int i = 0; i < home_pawns.size(); i++)
         {

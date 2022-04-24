@@ -30,7 +30,7 @@ public class SorryCard extends Card
 
         for (int i = 0; i < home_pawns.size(); i++)
         {
-            System.out.println(home_pawns.get(i).getPawnNumber_());
+            System.out.println("Before swap: " + home_pawns.get(i).getPawnNumber_());
         }
 
         if (home_pawns.size() < 1 || victimPawns.size() < 1) {
@@ -66,6 +66,13 @@ public class SorryCard extends Card
         System.out.println("Logger: Pawn " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_() + " swapped with " + opponentVictim.getColorString_() + " " + opponentVictim.getPawnNumber_());
         System.out.println("Logger: Pawn " + opponentVictim.getColorString_() + " " +  opponentVictim.getPawnNumber_() + " swapped with " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_());
         System.out.println("Logger: You just got sorried! punk.");
+
+        playerPool.get_curr_player().get_home_pawns().removeIf(p -> p.get_tile() != p.get_start_tile());
+
+        for (int i = 0; i < home_pawns.size(); i++)
+        {
+            System.out.println("After swap: " + home_pawns.get(i).getPawnNumber_());
+        }
 
         for (Pawn pawn : playerPool.get_curr_player().get_pawns())
         {

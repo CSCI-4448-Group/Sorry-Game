@@ -16,7 +16,7 @@ public class Player{
         outPawns_ = new ArrayList<>();
         homePawns_ = new ArrayList<>();
         for(int i =0 ; i < 4; i++){
-            pawns_.add(new Pawn(i, color_));
+            pawns_.add(new Pawn(this, i, color_));
         }
         for (int i = 0; i < 4; i++)
         {
@@ -27,5 +27,10 @@ public class Player{
     public String getColorString() { return colorString_;}
     public ArrayList<Pawn> get_pawns(){return pawns_;}
     public ArrayList<Pawn> get_out_pawns(){return outPawns_;}
+    public void add_out_pawn(Pawn pawn){outPawns_.add(pawn);}
+    public void remove_out_pawn(Pawn pawn){outPawns_.remove(pawn);}
+
     public ArrayList<Pawn> get_home_pawns() {return homePawns_;}
+    public void add_home_pawn(Pawn pawn){homePawns_.add(pawn);}
+    public void remove_home_pawn(Pawn pawn){homePawns_.removeIf(p -> p.get_tile() != p.get_start_tile());}
 }

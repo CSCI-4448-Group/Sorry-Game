@@ -5,12 +5,15 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 public class Pawn extends Circle {
+
+    private Player player_;
     private int pawnNumber_;
     private Color color_;
     private Tile currTile_;
     private Tile startTile_;
     private Text numText_;
-    Pawn(int pawnNumber, Color color){
+    Pawn(Player player, int pawnNumber, Color color){
+        player_ = player;
         pawnNumber_ = pawnNumber;
         color_ = color;
         this.setRadius(7);
@@ -69,4 +72,11 @@ public class Pawn extends Circle {
         return colorString;
     }
 
+    public Player getPlayer_() {
+        return player_;
+    }
+
+    public void setPlayer_(Player player_) {
+        this.player_ = player_;
+    }
 }

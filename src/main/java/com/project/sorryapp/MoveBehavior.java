@@ -33,6 +33,7 @@ public abstract class MoveBehavior{
         pawn.get_tile().get_pawns().removeAll(removePawns);
         for (Pawn removePawn : removePawns) {
             removePawn.send_home();
+            removePawn.getPlayer_().remove_out_pawn(removePawn);
         }
         System.out.println("Logger: You just got sorried! punk.");
         return true;
@@ -127,6 +128,7 @@ class SlideMove extends MoveBehavior{
             newMove.move_pawn(pawn, 0);
             newMove.move_pawn(pawn, 1);
         }
+        System.out.println("Logger: A slide was used.");
         return false;
     }
 

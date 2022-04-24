@@ -115,15 +115,22 @@ public class GameController implements SceneLoader {
         ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
         ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
 
+        for (int i = 0; i < outPawns.size(); i++)
+        {
+            System.out.println("Before Debug Sorry Move: " + outPawns.get(i));
+        }
+
         if (!outPawns.contains(currPawn))
         {
-            outPawns.add(currPawn);
+            playerPool_.get_curr_player().add_out_pawn(currPawn);
             //homePawns.remove(currPawn);
         }
-        if (!homePawns.contains(currPawn))
+
+        for (int i = 0; i < outPawns.size(); i++)
         {
-            homePawns.add(currPawn);
+            System.out.println("After Debug Sorry Move: " + outPawns.get(i));
         }
+
         return true;
     }
 
@@ -139,8 +146,8 @@ public class GameController implements SceneLoader {
             return;
         }
 
-        player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
-        player.get_home_pawns().removeIf(p -> p.get_tile() != p.get_start_tile());
+        // player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+        player.remove_home_pawn(currPawn);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
@@ -164,7 +171,7 @@ public class GameController implements SceneLoader {
                 pawnsHomeCounter += 1;
             }
         }
-        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn home counter is: " + pawnsHomeCounter);
+        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn goal counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
             System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");
@@ -205,6 +212,11 @@ public class GameController implements SceneLoader {
             case 11:
                 onElevenCardButtonVis();
                 break;
+        }
+
+        for (int i = 0; i < playerPool_.get_curr_player().get_out_pawns().size(); i++)
+        {
+            System.out.println("Out Pawns Sanity Check: " + playerPool_.get_curr_player().get_out_pawns().get(i).getColorString_() + " " + playerPool_.get_curr_player().get_out_pawns().get(i).getPawnNumber_());
         }
 
         System.out.println("Logger: The card that was pulled has value = " + cardValue);

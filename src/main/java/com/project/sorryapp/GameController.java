@@ -120,6 +120,10 @@ public class GameController implements SceneLoader {
             outPawns.add(currPawn);
             //homePawns.remove(currPawn);
         }
+        if (!homePawns.contains(currPawn))
+        {
+            homePawns.add(currPawn);
+        }
         return true;
     }
 
@@ -136,10 +140,7 @@ public class GameController implements SceneLoader {
         }
 
         player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
-        if (currPawn.get_tile().get_prev() == null)
-        {
-            player.get_home_pawns().add(currPawn);
-        }
+        player.get_out_pawns().removeIf(p -> p.get_tile() == p.get_start_tile());
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
@@ -254,6 +255,7 @@ public class GameController implements SceneLoader {
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
+
     }
 
     @FXML

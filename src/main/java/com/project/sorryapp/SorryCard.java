@@ -69,7 +69,7 @@ public class SorryCard extends Card
 
         for (Pawn pawn : playerPool.get_curr_player().get_pawns())
         {
-            System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: " + pawn.get_tile());
         }
     }
 }

@@ -140,7 +140,7 @@ public class GameController implements SceneLoader {
         }
 
         player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
-        player.get_out_pawns().removeIf(p -> p.get_tile() == p.get_start_tile());
+        player.get_home_pawns().removeIf(p -> p.get_tile() != p.get_start_tile());
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);

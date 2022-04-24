@@ -97,6 +97,10 @@ class GatewayMove extends MoveBehavior{
 }
 
 class GoaltileMove extends MoveBehavior{
+    public boolean end_move(Pawn pawn, int distance){
+        return false;
+    }
+
     public boolean forward_move(Pawn pawn, int distance){
         return false;
     }

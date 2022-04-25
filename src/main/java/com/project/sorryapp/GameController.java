@@ -215,8 +215,8 @@ public class GameController implements SceneLoader, Subject {
             announcement_ = "logger: Please return the home screen";
             notifyObservers(announcement_);
             System.out.println(announcement_);
+            drawCard.setVisible(false);
             disable_ui_game_over();
-
         }
     }
 
@@ -293,8 +293,8 @@ public class GameController implements SceneLoader, Subject {
     public void on_tenbackward_clicked()
     {
         setCardValue(-1);
-        checkGameOver();
         offTenCardButtonVis();
+        checkGameOver();
     }
 
     @FXML
@@ -302,10 +302,10 @@ public class GameController implements SceneLoader, Subject {
     {
         SevenCard sevenSplit = new SevenCard();
         sevenSplit.split(playerPool_.get_curr_player());
-        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -313,10 +313,10 @@ public class GameController implements SceneLoader, Subject {
     {
         ElevenCard elevenSplit = new ElevenCard();
         elevenSplit.swap(playerPool_);
-        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -345,7 +345,7 @@ public class GameController implements SceneLoader, Subject {
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
-
+        checkGameOver();
     }
 
     @FXML
@@ -354,7 +354,6 @@ public class GameController implements SceneLoader, Subject {
         pawn_click_helper(0);
         drawCard.setVisible(true);
         checkGameOver();
-        disable_ui();
     }
 
     @FXML
@@ -363,7 +362,6 @@ public class GameController implements SceneLoader, Subject {
         pawn_click_helper(1);
         drawCard.setVisible(true);
         checkGameOver();
-        disable_ui();
     }
 
     @FXML
@@ -372,7 +370,6 @@ public class GameController implements SceneLoader, Subject {
         pawn_click_helper(2);
         drawCard.setVisible(true);
         checkGameOver();
-        disable_ui();
     }
 
     @FXML
@@ -381,11 +378,12 @@ public class GameController implements SceneLoader, Subject {
         pawn_click_helper(3);
         drawCard.setVisible(true);
         checkGameOver();
-        disable_ui();
     }
 
     private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
+        //checkGameOver();
+
         playerPool_.increment_iterator();
     }
 

@@ -164,10 +164,10 @@ public class GameController implements SceneLoader {
         System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn goal counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
+            drawCard.setVisible(false);
             System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");
             System.out.println("Logger: Please return the home screen");
             disable_ui_game_over();
-
         }
     }
 
@@ -217,8 +217,8 @@ public class GameController implements SceneLoader {
     public void on_tenbackward_clicked()
     {
         setCardValue(-1);
-        checkGameOver();
         offTenCardButtonVis();
+        checkGameOver();
     }
 
     @FXML
@@ -226,10 +226,10 @@ public class GameController implements SceneLoader {
     {
         SevenCard sevenSplit = new SevenCard();
         sevenSplit.split(playerPool_.get_curr_player());
-        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -237,10 +237,10 @@ public class GameController implements SceneLoader {
     {
         ElevenCard elevenSplit = new ElevenCard();
         elevenSplit.swap(playerPool_);
-        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -248,11 +248,10 @@ public class GameController implements SceneLoader {
     {
         SorryCard sorryCard = new SorryCard();
         sorryCard.sorry(playerPool_);
-        checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
-
+        checkGameOver();
     }
 
     @FXML
@@ -260,6 +259,7 @@ public class GameController implements SceneLoader {
     {
         pawn_click_helper(0);
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -267,6 +267,7 @@ public class GameController implements SceneLoader {
     {
         pawn_click_helper(1);
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -274,6 +275,7 @@ public class GameController implements SceneLoader {
     {
         pawn_click_helper(2);
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     @FXML
@@ -281,11 +283,12 @@ public class GameController implements SceneLoader {
     {
         pawn_click_helper(3);
         drawCard.setVisible(true);
+        checkGameOver();
     }
 
     private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
-        checkGameOver();
+        //checkGameOver();
         playerPool_.increment_iterator();
         disable_ui();
     }

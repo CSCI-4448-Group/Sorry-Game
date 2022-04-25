@@ -107,7 +107,7 @@ public class GameController implements SceneLoader {
     {
         if (currTile.equals(currPawn.get_start_tile()))
         {
-            if (getCardValue() != 1 && getCardValue() != 2 && getCardValue() != 0) // In preparation for Sorry! Card
+            if (getCardValue() != 1 && getCardValue() != 2) // In preparation for Sorry! Card
             {
                 System.out.println("Logger: Unable to move. Need to draw Sorry!, 1 or 2 card to move out of home");
                 return false;

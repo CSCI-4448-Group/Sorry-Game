@@ -2,6 +2,8 @@ package com.project.sorryapp;
 
 import java.util.Scanner;
 
+
+// https://www.baeldung.com/java-command-pattern
 public class UserPlayer {
     private Invoker invoker_;
     private Tile receiver_;

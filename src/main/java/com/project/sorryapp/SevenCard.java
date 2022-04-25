@@ -29,6 +29,7 @@ public class SevenCard extends Card
                 }
             }
 
+            //https://www.geeksforgeeks.org/java-util-random-nextint-java/
             Random splitRandom = new Random();
             int splitMove = splitRandom.nextInt(1, 7);
             int otherSplitMove = 7 - splitMove;

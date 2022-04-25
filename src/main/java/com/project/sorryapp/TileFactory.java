@@ -10,7 +10,6 @@ public class TileFactory{
         boolean vuln = true;
         if ((prevTile != null && !prevTile.getVulnerable()) || prevTile instanceof GatewayTile) {
             vuln = false;
-            System.out.println(x + " " + y);
         }
         Tile newTile = new Tile(x,y,25, Color.WHITE, vuln);
         newTile.set_prev(prevTile);

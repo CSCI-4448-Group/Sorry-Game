@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
+// https://www.swtestacademy.com/javafx-tutorial/
 public class GameController implements SceneLoader {
     @FXML
     AnchorPane anchorPane;
@@ -30,6 +31,7 @@ public class GameController implements SceneLoader {
     @FXML Button tenCardBackward;
     @FXML Button sevenCardSplit;
     @FXML Button elevenCardSwap;
+    @FXML Button sorryCardSorry;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
@@ -80,6 +82,16 @@ public class GameController implements SceneLoader {
         elevenCardSwap.setVisible(false);
     }
 
+    public void onSorryCardButtonVis()
+    {
+        sorryCardSorry.setVisible(true);
+    }
+
+    public void offSorryCardButtonVis()
+    {
+        sorryCardSorry.setVisible(false);
+    }
+
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -87,6 +99,7 @@ public class GameController implements SceneLoader {
         homeTiles_ = GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
+
         disable_ui();
     }
 
@@ -101,10 +114,14 @@ public class GameController implements SceneLoader {
             }
         }
         ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
+        ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
+
         if (!outPawns.contains(currPawn))
         {
-            outPawns.add(currPawn);
+            playerPool_.get_curr_player().add_out_pawn(currPawn);
+            //homePawns.remove(currPawn);
         }
+
         return true;
     }
 
@@ -120,7 +137,8 @@ public class GameController implements SceneLoader {
             return;
         }
 
-        player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+        // player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+        player.remove_home_pawn(currPawn);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
@@ -131,7 +149,6 @@ public class GameController implements SceneLoader {
         {
             System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
-
     }
 
     public void checkGameOver()
@@ -144,7 +161,7 @@ public class GameController implements SceneLoader {
                 pawnsHomeCounter += 1;
             }
         }
-        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn home counter is: " + pawnsHomeCounter);
+        System.out.println("Logger: " + playerPool_.get_curr_player().getColorString() + " Pawn goal counter is: " + pawnsHomeCounter);
         if (pawnsHomeCounter == 4)
         {
             System.out.println("Logger: Game Over! Player " + playerPool_.get_curr_player().getColorString() + " has won the game.");
@@ -173,6 +190,9 @@ public class GameController implements SceneLoader {
 
         switch (pulledCard.get_card_value())
         {
+            case 0:
+                onSorryCardButtonVis();
+                break;
             case 7:
                 onSevenCardButtonVis();
                 break;
@@ -224,6 +244,18 @@ public class GameController implements SceneLoader {
     }
 
     @FXML
+    public void on_sorry_clicked()
+    {
+        SorryCard sorryCard = new SorryCard();
+        sorryCard.sorry(playerPool_);
+        checkGameOver();
+        playerPool_.increment_iterator();
+        disable_ui();
+        drawCard.setVisible(true);
+
+    }
+
+    @FXML
     public void on_pawnOne_clicked()
     {
         pawn_click_helper(0);
@@ -263,6 +295,7 @@ public class GameController implements SceneLoader {
         offTenCardButtonVis();
         offSevenCardButtonVis();
         offElevenCardButtonVis();
+        offSorryCardButtonVis();
     }
 
     private void disable_ui_game_over(){
@@ -273,5 +306,6 @@ public class GameController implements SceneLoader {
         offTenCardButtonVis();
         offSevenCardButtonVis();
         offElevenCardButtonVis();
+        offSorryCardButtonVis();
     }
 }

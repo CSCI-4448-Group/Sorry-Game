@@ -34,7 +34,7 @@ public class Logger implements Observer {
     public void log(boolean clearLogFile) {
         // Create a new file writer to write logger messages to separate txt files in a different directory
         try {
-            File file = new File("./logger/Logger-" + gameid + ".txt");
+            File file = new File("./logger/Game-" + gameid + "-log.txt");
             // Create new file writer object and write the split announcement
             if (clearLogFile) {
                 FileWriter myWriter = new FileWriter(file, false);
@@ -45,7 +45,7 @@ public class Logger implements Observer {
             file.createNewFile();
             // Create new file writer object and write the split announcement
             FileWriter myWriter = new FileWriter(file, true);
-            myWriter.write("Logger wrote: " + announcement_ + "\n");
+            myWriter.write(announcement_ + "\n");
             // Close the file writer after writing
             myWriter.close();
             //System.out.println("Successfully wrote to the file.");

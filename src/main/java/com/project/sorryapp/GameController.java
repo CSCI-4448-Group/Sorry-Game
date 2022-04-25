@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
+// https://www.swtestacademy.com/javafx-tutorial/
 public class GameController implements SceneLoader {
     @FXML
     AnchorPane anchorPane;
@@ -115,20 +116,10 @@ public class GameController implements SceneLoader {
         ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
         ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
 
-        for (int i = 0; i < outPawns.size(); i++)
-        {
-            System.out.println("Before Debug Sorry Move: " + outPawns.get(i));
-        }
-
         if (!outPawns.contains(currPawn))
         {
             playerPool_.get_curr_player().add_out_pawn(currPawn);
             //homePawns.remove(currPawn);
-        }
-
-        for (int i = 0; i < outPawns.size(); i++)
-        {
-            System.out.println("After Debug Sorry Move: " + outPawns.get(i));
         }
 
         return true;
@@ -158,7 +149,6 @@ public class GameController implements SceneLoader {
         {
             System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
         }
-
     }
 
     public void checkGameOver()
@@ -212,11 +202,6 @@ public class GameController implements SceneLoader {
             case 11:
                 onElevenCardButtonVis();
                 break;
-        }
-
-        for (int i = 0; i < playerPool_.get_curr_player().get_out_pawns().size(); i++)
-        {
-            System.out.println("Out Pawns Sanity Check: " + playerPool_.get_curr_player().get_out_pawns().get(i).getColorString_() + " " + playerPool_.get_curr_player().get_out_pawns().get(i).getPawnNumber_());
         }
 
         System.out.println("Logger: The card that was pulled has value = " + cardValue);

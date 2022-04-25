@@ -14,9 +14,10 @@
       <Button fx:id="pawn4" layoutX="611.0" layoutY="291.0" mnemonicParsing="false" onAction="#on_pawnFour_clicked" text="Pawn 4" />
       <Button fx:id="tenCardBackward" layoutX="416.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_tenbackward_clicked" text="10 Card: Press to Move Backwards One Space" />
       <Button fx:id="sevenCardSplit" layoutX="521.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_sevensplit_clicked" text="7 Card: Press to Split Move" />
+      <Button fx:id="elevenCardSwap" layoutX="323.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_elevenswap_clicked" text="11 Card: Press to Swap Your Pawn With One of Your Opponents" />
+      <Button fx:id="sorryCardSorry" layoutX="294.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_sorry_clicked" text="Sorry Card: You have the opportunity to Sorry! one of your opponents" />
       <Label fx:id="drawCardLabel" layoutX="14.0" layoutY="308.0" text="Card Value: " />
       <Label fx:id="toMove" layoutX="15.0" layoutY="334.0" text="Player to Move: " />
-      <Button fx:id="elevenCardSwap" layoutX="323.0" layoutY="26.0" mnemonicParsing="false" onAction="#on_elevenswap_clicked" text="11 Card: Press to Swap Your Pawn WIth One of Your Opponents" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="429.0" layoutX="149.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="449.0" />
 
 

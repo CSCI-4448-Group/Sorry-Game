@@ -20,15 +20,17 @@ public class SevenCard extends Card
         }
         else
         {
-            ArrayList<Pawn> current_out_pawns = player.get_out_pawns();
-            for (Pawn p : current_out_pawns)
+            ArrayList<Pawn> out_pawns = player.get_out_pawns();
+            ArrayList<Pawn> current_out_pawns = new ArrayList<>();
+            for (Pawn p : out_pawns)
             {
-                if (p.get_tile().get_next() == null)
+                if (p.get_tile().get_next() != null)
                 {
-                   current_out_pawns.remove(p);
+                   current_out_pawns.add(p);
                 }
             }
 
+            //https://www.geeksforgeeks.org/java-util-random-nextint-java/
             Random splitRandom = new Random();
             int splitMove = splitRandom.nextInt(1, 7);
             int otherSplitMove = 7 - splitMove;

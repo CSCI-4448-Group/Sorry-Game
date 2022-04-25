@@ -40,16 +40,15 @@ public class ElevenCard extends Card
             return;
         }
 
+        //https://www.geeksforgeeks.org/java-util-random-nextint-java/
         Random victimRandom = new Random();
         Random currentRandom = new Random();
 
         int opponentVictimIndex = victimRandom.nextInt(victimPawns.size());
-        System.out.println(opponentVictimIndex);
         Pawn opponentVictim = victimPawns.get(opponentVictimIndex);
         Tile victimTile = opponentVictim.get_tile();
 
         int currPawnIndex = currentRandom.nextInt(available_pawns.size());
-        System.out.println(currPawnIndex);
         Pawn currPawn = available_pawns.get(currPawnIndex);
         Tile currTile = currPawn.get_tile();
 
@@ -61,8 +60,14 @@ public class ElevenCard extends Card
 
         if (currPawn.get_tile().get_next() != null && opponentVictim.get_tile().get_next() != null)
         {
+            currPawn.get_tile().add_pawn(opponentVictim);
+            currPawn.get_tile().remove_pawn(currPawn);
             currPawn.set_tile(victimTile);
+
+            opponentVictim.get_tile().add_pawn(currPawn);
+            opponentVictim.get_tile().remove_pawn(opponentVictim);
             opponentVictim.set_tile(currTile);
+
         }
 
 

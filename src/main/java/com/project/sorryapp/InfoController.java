@@ -46,7 +46,6 @@ public class InfoController implements SceneLoader, Initializable {
             try {
                 ResultSet rs = con.createStatement().executeQuery("Select * from sorry_table");
                 while (rs.next()) {
-                    System.out.println(rs.getString("name"));
                     oblist.add(new LeaderboardModel(rs.getString("gameid"),
                             rs.getString("name"),
                             rs.getString("moved"),

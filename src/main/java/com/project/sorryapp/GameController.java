@@ -18,7 +18,7 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
-    public static boolean track_and_use_db = false; // True to connect and use MySQL database (see config file in resources folder), false otherwise
+    public static boolean track_and_use_db = true; // True to connect and use MySQL database (see config file in resources folder), false otherwise
     Deck deck_;
     static String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<>();
@@ -38,6 +38,7 @@ public class GameController implements SceneLoader, Subject {
     @FXML Button tenCardBackward;
     @FXML Button sevenCardSplit;
     @FXML Button elevenCardSwap;
+    @FXML Button sorryCardSorry;
     @FXML Button drawCard;
     @FXML Label drawCardLabel;
     @FXML Label toMove;
@@ -88,6 +89,16 @@ public class GameController implements SceneLoader, Subject {
         elevenCardSwap.setVisible(false);
     }
 
+    public void onSorryCardButtonVis()
+    {
+        sorryCardSorry.setVisible(true);
+    }
+
+    public void offSorryCardButtonVis()
+    {
+        sorryCardSorry.setVisible(false);
+    }
+
     public void initialize(){
         deck_ = GameBuilder.initializeDeck(); // Build the deck for the game
         Tile originTile = GameBuilder.initializePerimeter(anchorPane.getPrefWidth(), anchorPane.getPrefHeight()); //Build the outer perimiter board model
@@ -103,6 +114,7 @@ public class GameController implements SceneLoader, Subject {
         homeTiles_ = GameBuilder.initializeSafeTiles(originTile);
         playerPool_ = GameBuilder.initializePlayers(startTiles_); //Build the players model
         gameView_ = new GameView(anchorPane, originTile, startTiles_); //Draw the board to the view
+
         disable_ui();
     }
 
@@ -136,10 +148,14 @@ public class GameController implements SceneLoader, Subject {
             }
         }
         ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
+        ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
+
         if (!outPawns.contains(currPawn))
         {
-            outPawns.add(currPawn);
+            playerPool_.get_curr_player().add_out_pawn(currPawn);
+            //homePawns.remove(currPawn);
         }
+
         return true;
     }
 
@@ -155,7 +171,8 @@ public class GameController implements SceneLoader, Subject {
             return;
         }
 
-        player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+        // player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
+        player.remove_home_pawn(currPawn);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
@@ -165,9 +182,10 @@ public class GameController implements SceneLoader, Subject {
 
         for (Pawn pawn : player.get_pawns())
         {
-            System.out.println("logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile());
+            announcement_ = "logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: "+ pawn.get_tile();
+            System.out.println(announcement_);
+            notifyObservers(announcement_);
         }
-
     }
 
     public int getPawnsHome() {
@@ -227,11 +245,8 @@ public class GameController implements SceneLoader, Subject {
         int pawnsHome = getPawnsHome();
         announcement_ = "The card that was pulled has value = " + cardValue;
         notifyObservers("logger: " + announcement_);
-        if (cardValue == 0) {
-            announcement_ = "tracker: " + name + ",0,1," + pawnsStarted + "," + pawnsHome; //0's are temporary, need to update with proper values later
-        } else {
-            announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsStarted + "," + pawnsHome; //0's are temporary, need to update with proper values later
-        }
+        announcement_ = "tracker: " + name + "," + cardValue + ",0," + pawnsStarted + "," + pawnsHome; //0's are temporary, need to update with proper values later
+
         notifyObservers(announcement_);
     }
 
@@ -246,6 +261,9 @@ public class GameController implements SceneLoader, Subject {
 
         switch (pulledCard.get_card_value())
         {
+            case 0:
+                onSorryCardButtonVis();
+                break;
             case 7:
                 onSevenCardButtonVis();
                 break;
@@ -302,10 +320,41 @@ public class GameController implements SceneLoader, Subject {
     }
 
     @FXML
+    public void on_sorry_clicked()
+    {
+        SorryCard sorryCard = new SorryCard();
+        if (sorryCard.sorry(playerPool_)) {
+            Player player = playerPool_.get_curr_player();
+            String name = player.getColorString();
+            ArrayList<Pawn> playerPawns = player.get_pawns();
+            int pawnsAtStart = 0;
+            for (int i = 0; i < playerPawns.size(); i++) {
+                Pawn curPawn = playerPawns.get(i);
+                if (curPawn.get_tile().equals(curPawn.getStartTile_())) {
+                    pawnsAtStart++;
+                }
+            }
+            int pawnsStarted = playerPawns.size() - pawnsAtStart;
+            int pawnsHome = getPawnsHome();
+            announcement_ = "logger: Player " + name + " sorried another player!";
+            notifyObservers(announcement_);
+            announcement_ = "tracker: " + name + ",0,1," + pawnsStarted + "," + pawnsHome; //0's are temporary, need to update with proper values later
+            notifyObservers(announcement_);
+        }
+        checkGameOver();
+        playerPool_.increment_iterator();
+        disable_ui();
+        drawCard.setVisible(true);
+
+    }
+
+    @FXML
     public void on_pawnOne_clicked()
     {
         pawn_click_helper(0);
         drawCard.setVisible(true);
+        checkGameOver();
+        disable_ui();
     }
 
     @FXML
@@ -313,6 +362,8 @@ public class GameController implements SceneLoader, Subject {
     {
         pawn_click_helper(1);
         drawCard.setVisible(true);
+        checkGameOver();
+        disable_ui();
     }
 
     @FXML
@@ -320,6 +371,8 @@ public class GameController implements SceneLoader, Subject {
     {
         pawn_click_helper(2);
         drawCard.setVisible(true);
+        checkGameOver();
+        disable_ui();
     }
 
     @FXML
@@ -327,13 +380,13 @@ public class GameController implements SceneLoader, Subject {
     {
         pawn_click_helper(3);
         drawCard.setVisible(true);
+        checkGameOver();
+        disable_ui();
     }
 
     private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
-        checkGameOver();
         playerPool_.increment_iterator();
-        disable_ui();
     }
 
     private void disable_ui(){
@@ -341,6 +394,7 @@ public class GameController implements SceneLoader, Subject {
         offTenCardButtonVis();
         offSevenCardButtonVis();
         offElevenCardButtonVis();
+        offSorryCardButtonVis();
     }
 
     private void disable_ui_game_over(){
@@ -351,5 +405,6 @@ public class GameController implements SceneLoader, Subject {
         offTenCardButtonVis();
         offSevenCardButtonVis();
         offElevenCardButtonVis();
+        offSorryCardButtonVis();
     }
 }

@@ -210,7 +210,7 @@ public class GameController implements SceneLoader {
 
         drawCardLabel.setText("Card Value: " + cardValue);
         toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
-        //drawCard.setVisible(false);
+        drawCard.setVisible(false);
     }
 
     @FXML
@@ -289,7 +289,7 @@ public class GameController implements SceneLoader {
     private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
         //checkGameOver();
-        //playerPool_.increment_iterator();
+        playerPool_.increment_iterator();
         disable_ui();
     }
 

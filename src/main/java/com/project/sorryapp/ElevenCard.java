@@ -60,8 +60,14 @@ public class ElevenCard extends Card
 
         if (currPawn.get_tile().get_next() != null && opponentVictim.get_tile().get_next() != null)
         {
+            currPawn.get_tile().add_pawn(opponentVictim);
+            currPawn.get_tile().remove_pawn(currPawn);
             currPawn.set_tile(victimTile);
+
+            opponentVictim.get_tile().add_pawn(currPawn);
+            opponentVictim.get_tile().remove_pawn(opponentVictim);
             opponentVictim.set_tile(currTile);
+
         }
 
 

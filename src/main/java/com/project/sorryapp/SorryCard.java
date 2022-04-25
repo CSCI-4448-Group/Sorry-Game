@@ -68,6 +68,8 @@ public class SorryCard extends Card
 
         if (currPawn.get_tile().get_next() != null && opponentVictim.get_tile().get_next() != null)
         {
+            currPawn.get_tile().remove_pawn(currPawn);
+            victimTile.add_pawn(currPawn);
             currPawn.set_tile(victimTile);
             opponentVictim.send_home(); // Key difference between eleven card swap and sorry swap
             playerPool.get_curr_player().add_out_pawn(currPawn);

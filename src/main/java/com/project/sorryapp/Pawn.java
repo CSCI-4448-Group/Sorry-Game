@@ -52,6 +52,7 @@ public class Pawn extends Circle {
     public Text get_pawn_text(){return numText_;}
 
     public void send_home(){ //Works in the model, bugged in the view (overlap of pawns)
+        this.get_tile().remove_pawn(this);
         this.set_tile(startTile_);
         startTile_.add_pawn(this);
         GameView.align_start_pawns(startTile_);

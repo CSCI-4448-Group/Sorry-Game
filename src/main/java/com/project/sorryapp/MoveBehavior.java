@@ -20,20 +20,22 @@ public abstract class MoveBehavior{
         }
     }
     public boolean end_move(Pawn pawn){
-        if(pawn.get_tile().get_pawns().size() <= 1){
+        if(pawn.get_tile().get_pawns().size() <= 1 || pawn.get_tile().get_prev() == null){
             return false;
         }
         ArrayList<Pawn> currPawns = pawn.get_tile().get_pawns();
         ArrayList<Pawn> removePawns = new ArrayList<>();
         for (Pawn currPawn : currPawns) {
             if (!pawn.equals(currPawn)) {
+                System.out.println("RemovePawn.add " + currPawn.getColorString_() + " " + currPawn.getPawnNumber_());
                 removePawns.add(currPawn);
             }
         }
         pawn.get_tile().get_pawns().removeAll(removePawns);
         for (Pawn removePawn : removePawns) {
             removePawn.send_home();
-            removePawn.getPlayer_().remove_out_pawn(removePawn);
+            System.out.println("RemovePawn sent home: " + removePawn.getColorString_() + " " + removePawn.getPawnNumber_());
+//            removePawn.getPlayer_().remove_out_pawn(removePawn);
         }
         System.out.println("Logger: You just got sorried! punk.");
         return true;

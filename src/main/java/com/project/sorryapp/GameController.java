@@ -106,30 +106,36 @@ public class GameController implements SceneLoader {
     {
         if (currTile.equals(currPawn.get_start_tile()))
         {
-            if (getCardValue() != 1 && getCardValue() != 2 && getCardValue() != 0) // In preparation for Sorry! Card
+            if (getCardValue() != 1 && getCardValue() != 2) // && getCardValue() != 0) // In preparation for Sorry! Card
             {
                 System.out.println("Logger: Unable to move. Need to draw Sorry!, 1 or 2 card to move out of home");
                 return false;
             }
         }
-        ArrayList<Pawn> outPawns = playerPool_.get_curr_player().get_out_pawns();
-        ArrayList<Pawn> homePawns = playerPool_.get_curr_player().get_home_pawns();
+        Player currPlayer = playerPool_.get_curr_player();
+//        ArrayList<Pawn> outPawns = currPlayer.get_out_pawns();
+////        ArrayList<Pawn> homePawns = new ArrayList<>();
+////        for (Pawn p : currPlayer.get_pawns()) {
+////            if (p.get_tile().get_prev() == null) {
+////                homePawns.add(p);
+////            }
+////        }
+//
+////        for (int i = 0; i < outPawns.size(); i++)
+////        {
+////            System.out.println("Before Debug Sorry Move: " + outPawns.get(i));
+////        }
+//
+//        if (!outPawns.contains(currPawn))
+//        {
+//            playerPool_.get_curr_player().add_out_pawn(currPawn);
+//            //homePawns.remove(currPawn);
+//        }
 
-        for (int i = 0; i < outPawns.size(); i++)
-        {
-            System.out.println("Before Debug Sorry Move: " + outPawns.get(i));
-        }
-
-        if (!outPawns.contains(currPawn))
-        {
-            playerPool_.get_curr_player().add_out_pawn(currPawn);
-            //homePawns.remove(currPawn);
-        }
-
-        for (int i = 0; i < outPawns.size(); i++)
-        {
-            System.out.println("After Debug Sorry Move: " + outPawns.get(i));
-        }
+//        for (int i = 0; i < outPawns.size(); i++)
+//        {
+//            System.out.println("After Debug Sorry Move: " + outPawns.get(i));
+//        }
 
         return true;
     }
@@ -147,7 +153,7 @@ public class GameController implements SceneLoader {
         }
 
         // player.get_out_pawns().removeIf(p -> p.get_tile().get_next() == null);
-        player.remove_home_pawn(currPawn);
+//        player.remove_home_pawn(currPawn);
 
         UserPlayer user = new UserPlayer(currTile, new Invoker());
         user.begin_options(getCardValue(), currPawn);
@@ -164,7 +170,7 @@ public class GameController implements SceneLoader {
     public void checkGameOver()
     {
         int pawnsHomeCounter = 0;
-        for (Pawn p : playerPool_.get_curr_player().get_out_pawns())
+        for (Pawn p : playerPool_.get_curr_player().get_pawns())
         {
             if (p.get_tile().get_next() == null)
             {
@@ -214,16 +220,27 @@ public class GameController implements SceneLoader {
                 break;
         }
 
-        for (int i = 0; i < playerPool_.get_curr_player().get_out_pawns().size(); i++)
+        ArrayList<Pawn> outPawns = new ArrayList<>();
+        for (Pawn p : playerPool_.get_curr_player().get_pawns()) {
+            if (p.get_tile().get_prev() != null) {
+                outPawns.add(p);
+            }
+        }
+
+        for (int i = 0; i < outPawns.size(); i++)
         {
-            System.out.println("Out Pawns Sanity Check: " + playerPool_.get_curr_player().get_out_pawns().get(i).getColorString_() + " " + playerPool_.get_curr_player().get_out_pawns().get(i).getPawnNumber_());
+            System.out.println("Out Pawns Sanity Check: " + outPawns.get(i).getColorString_() + " " + outPawns.get(i).getPawnNumber_());
         }
 
         System.out.println("Logger: The card that was pulled has value = " + cardValue);
 
         deck_.get_deck().add(pulledCard);
 
-        drawCardLabel.setText("Card Value: " + cardValue);
+        if (cardValue != 0) {
+            drawCardLabel.setText("Card Value: " + cardValue);
+        } else {
+            drawCardLabel.setText("Card Value: Sorry!");
+        }
         toMove.setText("Player to Move: " + playerPool_.get_curr_player().getColorString());
         drawCard.setVisible(false);
     }
@@ -267,7 +284,6 @@ public class GameController implements SceneLoader {
         playerPool_.increment_iterator();
         disable_ui();
         drawCard.setVisible(true);
-
     }
 
     @FXML

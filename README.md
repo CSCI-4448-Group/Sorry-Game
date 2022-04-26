@@ -35,3 +35,7 @@ Note that the database schema needs to be called "sorryDB".
 In the config.properties file located in src/main/resources, update the username and password with your database credentials.
 
 If you would like to see / test the functionality of the program without connecting to the database, change the boolean value *track_and_use_db* in GameController to false.  
+
+For project 5 initial design document, project 6 update document, and project 7 final report document, please consult 
+the relevant PDFs in this repository. A link to our video demonstration is located in the project 7 final report 
+document.

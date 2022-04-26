@@ -20,11 +20,11 @@ public class UserPlayer {
     public void begin_options(int cardValue, Pawn pawn) {
         boolean running = true;
         switch(cardValue) {
-            case -4:
+            case -4: // Split four card move
                 invoker_.set_slot(new fourSplitCommand(receiver_));
                 invoker_.press_button(pawn);
                 break;
-            case -1:
+            case -1: // Chose to move backwards negative one on ten special card
                 invoker_.set_slot(new negOneCardCommand(receiver_));
                 invoker_.press_button(pawn);
                 break;

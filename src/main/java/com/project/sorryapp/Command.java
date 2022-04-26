@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 // https://www.baeldung.com/java-command-pattern
+// Command pattern abstract class 
 public abstract class Command {
         private Tile receiver_;
 
@@ -18,6 +19,7 @@ public abstract class Command {
         public abstract void execute(Pawn pawn);
 }
 
+// Backwards 10 (-1) move
 class negOneCardCommand extends Command {
     public negOneCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -29,6 +31,7 @@ class negOneCardCommand extends Command {
     }
 }
 
+// Regular one card move
 class oneCardCommand extends Command {
     public oneCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -40,6 +43,7 @@ class oneCardCommand extends Command {
     }
 }
 
+// Regular two card move
 class twoCardCommand extends Command {
     public twoCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -50,6 +54,7 @@ class twoCardCommand extends Command {
     }
 }
 
+// Regular three card move
 class threeCardCommand extends Command {
     public threeCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -60,6 +65,7 @@ class threeCardCommand extends Command {
     }
 }
 
+// Split seven four place move
 class fourSplitCommand extends Command {
     public fourSplitCommand(Tile receiver) {
         set_receiver(receiver);
@@ -70,6 +76,7 @@ class fourSplitCommand extends Command {
     }
 }
 
+// Regular four card move
 class fourCardCommand extends Command {
     public fourCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -80,6 +87,7 @@ class fourCardCommand extends Command {
     }
 }
 
+// Regular five card move
 class fiveCardCommand extends Command {
     public fiveCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -90,6 +98,7 @@ class fiveCardCommand extends Command {
     }
 }
 
+// Regular six card move
 class sixSplitCardCommand extends Command {
     public sixSplitCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -100,6 +109,7 @@ class sixSplitCardCommand extends Command {
     }
 }
 
+// Regular seven card move
 class sevenCardCommand extends Command {
     public sevenCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -110,6 +120,7 @@ class sevenCardCommand extends Command {
     }
 }
 
+// Regular eight card move
 class eightCardCommand extends Command {
     public eightCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -120,6 +131,7 @@ class eightCardCommand extends Command {
     }
 }
 
+// Regular ten card move
 class tenCardCommand extends Command {
     public tenCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -130,6 +142,7 @@ class tenCardCommand extends Command {
     }
 }
 
+// Regular eleven card move
 class elevenCardCommand extends Command {
     public elevenCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -140,6 +153,7 @@ class elevenCardCommand extends Command {
     }
 }
 
+// Regular twelve card move
 class twelveCardCommand extends Command {
     public twelveCardCommand(Tile receiver) {
         set_receiver(receiver);
@@ -150,6 +164,7 @@ class twelveCardCommand extends Command {
     }
 }
 
+// Regular sorry card move
 class sorryCardCommand extends Command {
     public sorryCardCommand(Tile receiver) {
         set_receiver(receiver);

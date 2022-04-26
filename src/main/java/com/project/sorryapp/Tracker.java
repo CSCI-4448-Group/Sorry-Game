@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tracker implements Observer {
-    private static Tracker trackerInstance = null;
+    private static Tracker trackerInstance = null; // Lazily instantiated singleton tracker
     private boolean trackingGame_ = false; // Define data structure to store relevant player information
     private PlayerPool playerPool; // playerPool
     private static DbRunner dbRunner;

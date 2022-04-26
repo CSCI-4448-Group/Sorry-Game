@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class InfoController implements SceneLoader, Initializable {
+    // Found on: https://www.youtube.com/watch?v=LoiQVoNil9Q&ab_channel=RashidIqbal
     @FXML
     public void on_home_clicked(ActionEvent event){
         load_scene_from_event("home-view.fxml", event);

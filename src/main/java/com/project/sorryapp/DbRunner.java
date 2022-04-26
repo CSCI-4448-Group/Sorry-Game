@@ -19,6 +19,7 @@ public class DbRunner {
     }
 
     public DbRunner() {
+        // See source: https://www.baeldung.com/java-connect-mysql
         try {
             InputStream input = getClass().getResourceAsStream("/config.properties");
             prop.load(input);

@@ -382,9 +382,8 @@ public class GameController implements SceneLoader, Subject {
 
     private void pawn_click_helper(int pawnToMove){
         pawnMove(playerPool_.get_curr_player(), pawnToMove);
-        //checkGameOver();
-
         playerPool_.increment_iterator();
+        disable_ui();
     }
 
     private void disable_ui(){

@@ -213,7 +213,7 @@ public class GameController implements SceneLoader, Subject {
             notifyObservers(announcement_);
             System.out.println(announcement_);
 
-            announcement_ = "logger: Please return the home screen";
+            announcement_ = "logger: Please return to the home screen";
             notifyObservers(announcement_);
             System.out.println(announcement_);
             drawCard.setVisible(false);

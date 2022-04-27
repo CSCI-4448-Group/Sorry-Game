@@ -15,7 +15,7 @@ public class GameController implements SceneLoader, Subject {
     static PlayerPool playerPool_;
     Tracker tracker;
     Logger logger;
-    public static boolean track_and_use_db = false; // True to connect and use MySQL database (see config file in resources folder), false otherwise
+    public static boolean track_and_use_db = true; // True to connect and use MySQL database (see config file in resources folder), false otherwise
     Deck deck_;
     static String announcement_;
     private static ArrayList<Observer> observersList_ = new ArrayList<>();

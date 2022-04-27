@@ -21,16 +21,17 @@ public class DbRunner {
     public DbRunner() {
         // See source: https://www.baeldung.com/java-connect-mysql
         try {
-            InputStream input = getClass().getResourceAsStream("/config.properties");
+            InputStream input = getClass().getResourceAsStream("/config.properties"); // Pulls credentials from config file so we don't need to write them in plaintext here.
             prop.load(input);
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/sorryDB?useLegacyDatetimeCode=false&serverTimezone=MST", prop.getProperty("username"), prop.getProperty("password"));
-            statement = con.createStatement();
-            gameid = getSqlGameId();
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/sorryDB?useLegacyDatetimeCode=false&serverTimezone=MST", prop.getProperty("username"), prop.getProperty("password")); // Saves connection as con to use
+            statement = con.createStatement(); // Used to execute commands in DB
+            gameid = getSqlGameId(); // Statick for this game, so can be saved and only called once
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
+    // Gets next id to use for inserting into the database. Want to make sure we are trying to insert a primary key that is not already used
     private String getNextSqlID() {
         try {
             ResultSet set = statement.executeQuery("SELECT COALESCE(MAX(id), 0) FROM sorry_table");
@@ -39,13 +40,14 @@ public class DbRunner {
                 id = set.getInt(1);
             }
             String str_id = String.valueOf(id + 1);
-            return str_id;
+            return str_id; // Returns the id it finds to use
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return "0";
     }
 
+    // Gets the sql game id which doesn't change during the game.
     private static String getSqlGameId() {
         try {
             ResultSet set = statement.executeQuery("SELECT COALESCE(MAX(gameid), 0) FROM sorry_table");
@@ -60,6 +62,7 @@ public class DbRunner {
         return "0";
     }
 
+    // Gets game id, querying database if game id is not already saved.
     public static String getGameId() {
         if (gameid.equals("0")) {
             getSqlGameId();
@@ -67,6 +70,7 @@ public class DbRunner {
         return gameid;
     }
 
+    // Inserts into database with 4 rows, 1 for each player with default values
     public void create() {
         try {
             String id = getNextSqlID();
@@ -93,6 +97,7 @@ public class DbRunner {
         }
     }
 
+    // Updates values in DB with values passed in. numSpacesMoved and numSorries increment the current value in the DB row, but numPawnsStarted and numPawnsHome replace the value.
     public void update(String nameOfPlayer, int numSpacesMoved, int numSorries, int numPawnsStarted, int numPawnsHome) {
         try {
             int[] curRow = read(nameOfPlayer);
@@ -110,6 +115,8 @@ public class DbRunner {
             e.printStackTrace();
         }
     }
+
+    // Just gets the values for the given player for this game id.
     public int[] read(String nameOfPlayer) {
         int[] result = new int[4];
         try {

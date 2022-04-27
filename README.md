@@ -7,11 +7,11 @@ Simulation of the Sorry! board game
 Java JDK Version: 18.0.0
 
 A quick highlight of some of the patterns:
-* Builder pattern in BoardBuilder
-* Command pattern in Command
+* Builder pattern in BoardBuilder.java
+* Command pattern in Command.java
 * MVC in the whole project, using controller classes, view classes, and model classes named accordingly
-* Observer / Singleton in their class files and in Tracker / Logger
-* ObjectPool pattern in the PlayerPool class
+* Observer / Singleton in their class files and in Tracker.java / Logger.java / Observer.java / Subject.java
+* ObjectPool pattern in the PlayerPool.java class
 
 There are many other OO design patterns throughout, but these are easy to glance at and understand.
 
@@ -38,4 +38,9 @@ If you would like to see / test the functionality of the program without connect
 
 For project 5 initial design document, project 6 update document, and project 7 final report document, please consult 
 the relevant PDFs in this repository. A link to our video demonstration is located in the project 7 final report 
-document.
+document. If the database is not working properly on your end, please see the video for the database in use in regard to the leaderboard page.
+
+Dependencies should be included in the pom.xml, and include:
+* JavaFX
+* MySQL
+* JUnit

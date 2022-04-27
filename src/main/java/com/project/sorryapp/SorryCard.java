@@ -13,7 +13,7 @@ public class SorryCard extends Card
         set_description("This card allows your to take one pawn from your Start and place it on any space that is occupied by any opponent. This bumps that opponent's pawn back to its Start. If there is no pawn on your Start or no opponent's pawn on any space you can move to, you forfeit your move.");
     }
 
-    public void sorry(PlayerPool playerPool)
+    public boolean sorry(PlayerPool playerPool)
     {
         // Go through currently out pawns and create list of potential victims
         ArrayList<Pawn> victimPawns = new ArrayList<>();
@@ -44,7 +44,7 @@ public class SorryCard extends Card
         // Unable to sorry due to no pawns home for current player or no victims
         if (home_pawns.size() < 1 || victimPawns.size() < 1) {
             System.out.println("Logger: No pawns swappable.");
-            return;
+            return false;
         }
 
         // https://www.geeksforgeeks.org/java-util-random-nextint-java/
@@ -86,5 +86,6 @@ public class SorryCard extends Card
         {
             System.out.println("Logger: " + pawn.getColorString_() + " Pawn " + pawn.getPawnNumber_() + " is on the tile: " + pawn.get_tile());
         }
+        return true;
     }
 }

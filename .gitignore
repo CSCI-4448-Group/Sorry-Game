@@ -21,3 +21,10 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# ignoring config file, keeps user credentials from being in repository
+# src/main/resources/config.properties
+target/classes/config.properties
+
+# Ignoring log files, as they will be different for each run.
+logger/*

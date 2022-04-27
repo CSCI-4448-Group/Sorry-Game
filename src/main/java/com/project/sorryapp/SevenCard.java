@@ -25,9 +25,9 @@ public class SevenCard extends Card
             ArrayList<Pawn> current_out_pawns = player.get_out_pawns();
             for (Pawn p : current_out_pawns)
             {
-                if (p.get_tile().get_next() == null)
+                if (p.get_tile().get_next() != null)
                 {
-                   current_out_pawns.remove(p);
+                   current_out_pawns.add(p);
                 }
             }
 

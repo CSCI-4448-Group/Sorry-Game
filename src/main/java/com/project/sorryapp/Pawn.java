@@ -62,6 +62,7 @@ public class Pawn extends Circle {
         return color_;
     }
 
+    public Tile getStartTile_() {return startTile_;}
     public String getColorString_() {
         String colorString = "";
         switch(color_.toString()){
